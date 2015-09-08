@@ -4,8 +4,11 @@ window.onload=function() {
         document.getElementById("col").value = col;
         document.getElementById("row").value = row;
 
+        if (lastClicked) {
+            lastClicked.className='';
+        }
         el.className='clicked';
-        if (lastClicked) lastClicked.className='';
+
         lastClicked = el;
     });
 
