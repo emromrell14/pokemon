@@ -5,7 +5,7 @@
 			function test() {
 				col = document.getElementById("col").value;
 				row = document.getElementById("row").value;
-				dir = document.getElementById("dir").value;
+				dir = document.getElementById("dir").value.toUpperCase();
 				alert(canMove({col, row}, dir));
 			}
 		</script>
