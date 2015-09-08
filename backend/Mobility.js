@@ -6,32 +6,39 @@ var TOP_BONDARY = 0;
 function canMove(location, direction) {
     switch(direction) {
         case "LEFT": {
-            if(location.col == LEFT_BONDARY) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        case "UP": {
-            if(location.row == TOP_BONDARY) {
-                return false;
-            } else {
-                return true;
-            }
+            return location.col != LEFT_BONDARY;
         }
         case "RIGHT": {
-            if(location.col == RIGHT_BONDARY) {
-                return false;
-            } else {
-                return true;
-            }
+            return location.col != RIGHT_BONDARY;
+		}
+		case "UP": {
+            return location.row != TOP_BONDARY;
         }
         case "DOWN": {
-            if(location.row == BOTTOM_BONDARY) {
-                return false;
-            } else {
-                return true;
-            }
+            return location.row != BOTTOM_BONDARY;
         }
     }
 }
+
+function move(location, direction) {
+    //first check if the user can move 
+    if(!canMove(location, direction)) {
+        return;
+    }
+	
+	switch(direction) {
+		case "LEFT": {
+			
+		}
+		case "RIGHT": {
+			
+		}
+		case "UP": {
+			
+		}
+		case "DOWN": {
+			
+		}
+	}
+}
+
