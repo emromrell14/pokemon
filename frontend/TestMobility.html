@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script>
-			function test() {
-				col = document.getElementById("col").value;
-				row = document.getElementById("row").value;
-				dir = document.getElementById("dir").value;
-				alert(canMove({col, row}, dir));
-			}
-		</script>
+		<script src="../frontend/TestMobility.js"></script>
 		<script src="../backend/Mobility.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css" /> 
 	</head>
 	<body>
 		<h1>Mobility Tester</h1>
 
 		Location Column:<input id="col" type="text" />
 		Location Row:<input id="row" type="text" />
-		
+
 		Direction:
 		<select id="dir">
 			<option value="LEFT">Left</option>
@@ -25,6 +19,7 @@
 			<option value="DOWN">Down</option>
 		</select>
 
-		<button onclick="test()">Test these Values!</button>
+		<button onclick="testCanMove()">Test these Values!</button>
+		<p id="result" />
 	</body>
 </html>
