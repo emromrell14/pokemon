@@ -5,7 +5,7 @@
 			function test() {
 				col = document.getElementById("col").value;
 				row = document.getElementById("row").value;
-				dir = document.getElementById("dir").value.toUpperCase();
+				dir = document.getElementById("dir").value;
 				alert(canMove({col, row}, dir));
 			}
 		</script>
@@ -16,7 +16,14 @@
 
 		Location Column:<input id="col" type="text" />
 		Location Row:<input id="row" type="text" />
-		Direction:<input id="dir" type="text" />
+		
+		Direction:
+		<select id="dir">
+			<option value="LEFT">Left</option>
+			<option value="RIGHT">Right</option>
+			<option value="UP">Up</option>
+			<option value="DOWN">Down</option>
+		</select>
 
 		<button onclick="test()">Test these Values!</button>
 	</body>
