@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			function test() {
+				col = document.getElementById("col").value;
+				row = document.getElementById("row").value;
+				dir = document.getElementById("dir").value;
+				alert(canMove({col, row}, dir));
+			}
+		</script>
+		<script src="../backend/Mobility.js"></script>
+	</head>
+	<body>
+		<h1>Mobility Tester</h1>
+
+		Location Column:<input id="col" type="text" />
+		Location Row:<input id="row" type="text" />
+		Direction:<input id="dir" type="text" />
+
+		<button onclick="test()">Test these Values!</button>
+	</body>
+</html>
