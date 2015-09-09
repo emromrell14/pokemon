@@ -13,8 +13,9 @@ window.onload=function() {
     });
 
     document.body.appendChild(grid);
-         
-    function clickableGrid( rows, cols, callback ){
+}
+
+function clickableGrid( rows, cols, callback ){
         var i=0;
         var grid = document.createElement('table');
         grid.className = 'grid';
@@ -32,7 +33,6 @@ window.onload=function() {
         }
         return grid;
     }
-}
 
 function testCanMove() {
     col = document.getElementById("col").value;
