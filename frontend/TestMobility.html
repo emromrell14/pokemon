@@ -8,8 +8,8 @@
 	<body>
 		<h1>Mobility Tester</h1>
 
-		Location Column:<input id="col" type="text" readonly />
-		Location Row:<input id="row" type="text" readonly />
+		Location Column:<input id="col" class="location" type="text" readonly />
+		Location Row:<input id="row" class="location" type="text" readonly />
 
 		Direction:
 		<select id="dir">
@@ -20,6 +20,6 @@
 		</select>
 
 		<button onclick="testCanMove()">Test these Values!</button>
-		<p id="result" />
+		<div id="mainBoard"></div>
 	</body>
 </html>
