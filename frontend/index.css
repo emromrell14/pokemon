@@ -4,9 +4,8 @@
 }
 
 .grid td {
-	width: 30px;
-	height: 30px;
-	border: 1px solid #ccc;
+	width: 20px;
+	height: 20px;
 	background-repeat: no-repeat;
 }
 
@@ -24,6 +23,14 @@
 
 .grid td.DOWN {
 	background-image: url("images/PersonDown.png");
+}
+
+.grid td.w {
+	background-color: blue;
+}
+
+.grid td.l {
+	background-color: tan;
 }
 
 #mainBoard {
