@@ -1,0 +1,31 @@
+.grid {
+	margin: 1em auto;
+	border-collapse: collapse;
+}
+
+.grid td {
+	width: 30px;
+	height: 30px;
+	border: 1px solid #ccc;
+	background-repeat: no-repeat;
+}
+
+.grid td.LEFT {
+	background-image: url("images/PersonLeft.png");
+}
+
+.grid td.UP {
+	background-image: url("images/PersonUp.png");
+}
+
+.grid td.RIGHT {
+	background-image: url("images/PersonRight.png");
+}
+
+.grid td.DOWN {
+	background-image: url("images/PersonDown.png");
+}
+
+#mainBoard {
+	float: left;
+}

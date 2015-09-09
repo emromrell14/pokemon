@@ -1,0 +1,27 @@
+.grid {
+	margin: 1em auto;
+	border-collapse: collapse;
+}
+
+.grid td {
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	border: 1px solid #ccc;
+	text-align: center;
+	font-family: sans-serif;
+	font-size: 13px;
+	background-repeat: no-repeat;
+}
+
+#mainBoard {
+	float: left;
+}
+
+.grid td.w {
+	background-color: blue;
+}
+
+.grid td.l {
+	background-color: tan;
+}
