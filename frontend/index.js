@@ -19,7 +19,7 @@ window.onload=function() {
     var grid = clickableGrid(10, 10, function(element, row, col) {});
     document.getElementById("mainBoard").appendChild(grid);
     currentCell.element = allElements[0][0];
-    currentCell.element.className = 'clicked';
+    currentCell.element.className = 'DOWN';
     currentCell.location = {row:0,col:0};
 }
 
