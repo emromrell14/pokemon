@@ -1,5 +1,15 @@
+var currentMapName = "";
+
 function getMap(mapName) {
 	return maps[mapName];
+}
+
+function setCurrentMap(mapName) {
+	currentMapName = mapName;
+}
+
+function getCurrentMap() {
+	return maps[currentMapName];
 }
 
 maps = {
@@ -17,3 +27,4 @@ maps = {
 		["l","l","l","l","l","w","w","w","w","w"]	
 	]
 }
+

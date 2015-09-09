@@ -3,20 +3,20 @@ var BOTTOM_BONDARY = 9;
 var LEFT_BONDARY = 0;
 var TOP_BONDARY = 0;
 
-function canMove(location, direction, map1) {
-    map = getMap("map1")
+function canMove(location, direction) {
+    mapData = getCurrentMap();
 	switch(direction) {
         case "LEFT": {
-			return location.col != LEFT_BONDARY and map1[location.row][location.col-1] !=== "w";
+			return location.col != LEFT_BONDARY && mapData[location.row][location.col-1] === "l";
         }
         case "RIGHT": {
-            return location.col != RIGHT_BONDARY and map1[location.row][location.col+1] !=== "w";
+            return location.col != RIGHT_BONDARY && mapData[location.row][location.col+1] === "l";
 		}
 		case "UP": {
-            return location.row != TOP_BONDARY and map1[location.row-1][location.col] !=== "w";
+            return location.row != TOP_BONDARY && mapData[location.row-1][location.col] === "l";
         }
         case "DOWN": {
-            return location.row != BOTTOM_BONDARY and map1[location.row+1][location.col] !=== "w";
+            return location.row != BOTTOM_BONDARY && mapData[location.row+1][location.col] === "l";
         }
 		
     }
