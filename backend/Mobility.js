@@ -23,22 +23,23 @@ function canMove(location, direction) {
 function move(location, direction) {
     //first check if the user can move 
     if(!canMove(location, direction)) {
-        return;
+        return location;
     }
 	
 	switch(direction) {
-		case "LEFT": {
-			
-		}
-		case "RIGHT": {
-			
-		}
-		case "UP": {
-			
-		}
-		case "DOWN": {
-			
-		}
-	}
+		case "LEFT": 
+			location.col -= 1;
+			break;
+		case "RIGHT": 
+			location.col += 1;
+			break;
+		case "UP": 
+			location.row -= 1;
+			break;
+		case "DOWN": 
+			location.row += 1;
+			break;
+	} 
+	return location;
 }
 
