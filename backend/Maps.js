@@ -1,5 +1,5 @@
 function getMap(mapName) {
-	return maps[]mapName]
+	return maps[mapName]
 }
 
 maps = {
