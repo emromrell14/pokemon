@@ -1,2 +1,4 @@
-var currentRow = 0
-var currentCol = 0
+UserLocation = {
+	currentRow: 0,
+	currentCol: 0,
+}
