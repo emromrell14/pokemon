@@ -1,12 +1,6 @@
-var LEFT = "LEFT";
-var UP = "UP";
-var RIGHT = "RIGHT";
-var DOWN = "DOWN";
-
 var currentCell = {};
 var currentTile;
 var allElements;
-var map;
 var mouseDown = false;
 
 window.onload = function() {
