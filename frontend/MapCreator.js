@@ -5,31 +5,36 @@ var DOWN = "DOWN";
 var DIRECTION_MAP = {}
 
 var currentCell = {};
-currentCell.location = {};
+var currentTile;
 var allElements;
 var map;
 
-function resizeMap() {
+window.onload = function() {
+    resizeMap(10, 10);
+    var btnResizeMap = document.getElementById("btnResizeMap");
+    btnResizeMap.addEventListener('click', function() {
+        resizeMap(document.getElementById("tbRows").value, document.getElementById("tbCols").value);
+    });
+
+    var landTile = document.getElementById("l");
+    landTile.className += " clicked";
+    currentTile = landTile;
+}
+
+function resizeMap(rows, cols) {
     var mainBoard = document.getElementById("mainBoard");
     while (mainBoard.firstChild) {
         mainBoard.removeChild(mainBoard.firstChild);
     }
-
-    var rows = document.getElementById("tbRows").value;
-    var cols = document.getElementById("tbCols").value;
 
     if (rows == "" || cols == "") {
         alert("Please enter a valid number for how many row and columns that you would like to have");
         return;
     }
 
-    document.getElementById("btnCreateMap").disabled = false;
-
     var grid = clickableGrid(rows, cols, function(element, row, col) {
         currentCell.element = element;
-        currentCell.location.row = row;
-        currentCell.location.col = col;
-        currentCell.element.className='clicked';
+        currentCell.element.id = currentTile.id;
     });
     document.getElementById("mainBoard").appendChild(grid);
 }
@@ -56,4 +61,14 @@ function clickableGrid(rows, cols, callback) {
 
 function createMap() {
     alert("Creating map...");
+}
+
+function changeCurrentTile(div) {
+    if (currentTile) {
+        currentTile.className = "colorBlock";
+    } 
+    currentTile = div;
+    if (currentTile.className.indexOf(" clicked") == -1) {
+        currentTile.className += " clicked"
+    }
 }

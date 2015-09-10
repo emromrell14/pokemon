@@ -5,11 +5,33 @@
 	</head>
 	<body>
 		<h1>Map Creator</h1>
-		<p>Create a map with...</p>
-		Rows: <input id="tbRows" type="number" value="10"></input>
-		Columns: <input id="tbCols" type="number" value="10"></input>
-		<button id="btnResizeMap" onclick="resizeMap()">Resize Map!</button><br />
+		<div class="section">
+			<p>Please choose the number of rows and columns you would like</p>
+			<p>Rows: <input id="tbRows" type="number" value="10" />
+			Columns: <input id="tbCols" type="number" value="10" />
+			<button id="btnResizeMap">Resize Map!</button></p>
+		</div>
+		<div class="section">
+			<table class="colorTable">
+				<thead>
+					<th>Land</th>
+					<th>Water</th>
+					<th>Grass</th>
+					<th>Building</th>
+					<th>Door</th>
+				</thead>
+				<tr>
+					<td><div id="l" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="w" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="g" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="b" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="d" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+				</tr>
+			</table>
+		</div>
+
 		<div id="mainBoard"></div><br />
-		<button id="btnCreateMap" onclick="createMap()" disabled>Create Map!</button>
+
+		<button id="btnCreateMap" onclick="createMap()">Create Map!</button>
 	</body>
 </html>

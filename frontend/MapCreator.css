@@ -1,18 +1,50 @@
 .grid { 
-	border-collapse:collapse; 
+	border-collapse: collapse; 
 }
 .grid td {
     cursor:pointer;
-    width:30px; 
-    height:30px;
-    min-width: 30px;
-	min-height: 30px;
+    width: 20px; 
+    height: 20px;
+    min-width: 20px;
+	min-height: 20px;
     border:1px solid #ccc;
 }
 .grid td.clicked {
-    background-color:yellow;
+    background-color: yellow;
+}
+
+.colorTable th, td {
+	text-align: center;
 }
 
 input {
 	width: 40px;
+}
+
+div.colorBlock {
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	min-width: 20px;
+	min-height: 20px;
+	display: inline-block;
+}
+
+div.clicked {
+	border: 2px solid black;
+}
+
+#l {background-color: tan;}
+#w {background-color: blue;}
+#g {background-color: green;}
+#b {background-color: gray;}
+#d {background-color: brown;}
+
+div.section {
+	border: 1px solid black;
+	padding: 5px;
+}
+
+div#mainBoard {
+	padding: 10px;
 }
