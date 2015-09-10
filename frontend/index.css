@@ -24,7 +24,7 @@
 .grid td.DOWN {
 	background-image: url("images/PersonDown.png");
 }
-
+/*
 .grid td.w {
 	background-color: blue;
 }
@@ -43,7 +43,7 @@
 
 .grid td.d {
 	background-color: brown;
-}
+}*/
 
 #mainBoard {
 	float: left;

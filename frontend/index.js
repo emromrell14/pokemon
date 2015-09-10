@@ -63,6 +63,12 @@ function getColor(tileId) {
             return "tan";
         case 'w':
             return "blue";
+        case 'g':
+            return "green";
+        case 'b':
+            return "gray";
+        case 'd':
+            return "brown";
         default:
             return "white";
     }
