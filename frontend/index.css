@@ -33,6 +33,18 @@
 	background-color: tan;
 }
 
+.grid td.g {
+	background-color: green;
+}
+
+.grid td.b {
+	background-color: gray;
+}
+
+.grid td.d {
+	background-color: brown;
+}
+
 #mainBoard {
 	float: left;
 }
