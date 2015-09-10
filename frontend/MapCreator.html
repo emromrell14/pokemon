@@ -1,0 +1,15 @@
+<html>
+	<head>
+		<script src="../frontend/MapCreator.js"></script>
+		<link rel="stylesheet" type="text/css" href="../frontend/MapCreator.css" />
+	</head>
+	<body>
+		<h1>Map Creator</h1>
+		<p>Create a map with...</p>
+		Rows: <input id="tbRows" type="number" value="10"></input>
+		Columns: <input id="tbCols" type="number" value="10"></input>
+		<button id="btnResizeMap" onclick="resizeMap()">Resize Map!</button><br />
+		<div id="mainBoard"></div><br />
+		<button id="btnCreateMap" onclick="createMap()" disabled>Create Map!</button>
+	</body>
+</html>
