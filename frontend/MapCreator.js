@@ -52,19 +52,20 @@ function clickableGrid(rows, cols, callback) {
         var tr = grid.appendChild(document.createElement('tr'));
         for (var col = 0; col < cols; col++) {
             var cell = tr.appendChild(document.createElement('td'));
-            cell.addEventListener('mousemove',(function(element, row, col) {
+            cell.addEventListener('mousemove', (function(element, row, col) {
                 return function() {
                     callback(element, row, col);
                 }
             })(cell, row, col), false);
-
-            cell.addEventListener("mousedown", function() {
-                mouseDown = true;
-            }, false);
+            cell.addEventListener("mousedown", (function(element, row, col) {
+                return function() {
+                    mouseDown = true;
+                    callback(element, row, col);
+                }
+            })(cell, row, col), false);
             cell.addEventListener("mouseup", function() {
                 mouseDown = false;
             }, false);
-
 
             allElements[row][col] = cell;
         }
