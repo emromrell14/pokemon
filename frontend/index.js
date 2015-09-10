@@ -10,7 +10,7 @@ var allElements;
 var map;
 
 window.onload=function() {
-    setCurrentMap("map1");
+    setCurrentMap("map2");
     map = getCurrentMap();
     var grid = mapGrid(map);
     document.getElementById("mainBoard").appendChild(grid);
