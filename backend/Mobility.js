@@ -3,20 +3,22 @@ var BOTTOM_BONDARY = 9;
 var LEFT_BONDARY = 0;
 var TOP_BONDARY = 0;
 
+
+
 function canMove(location, direction) {
     mapData = getCurrentMap();
 	switch(direction) {
         case "LEFT": {
-			return location.col != LEFT_BONDARY && mapData[location.row][location.col-1] === "l";
+			return location.col != 0 && mapData[location.row][location.col-1] === "l";
         }
         case "RIGHT": {
-            return location.col != RIGHT_BONDARY && mapData[location.row][location.col+1] === "l";
+            return location.col != mapData[0].length && mapData[location.row][location.col+1] === "l";
 		}
 		case "UP": {
-            return location.row != TOP_BONDARY && mapData[location.row-1][location.col] === "l";
+            return location.row != 0 && mapData[location.row-1][location.col] === "l";
         }
         case "DOWN": {
-            return location.row != BOTTOM_BONDARY && mapData[location.row+1][location.col] === "l";
+            return location.row != mapData.length && mapData[location.row+1][location.col] === "l";
         }
 		
     }
