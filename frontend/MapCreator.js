@@ -36,8 +36,6 @@ function resizeMap(rows, cols) {
         if(mouseDown && currentCell.element != element) {
             currentCell.element = element;
             currentCell.element.id = currentTile.id;
-        } else {
-            console.log("up");
         }
     });
     document.getElementById("mainBoard").appendChild(grid);
