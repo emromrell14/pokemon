@@ -59,10 +59,6 @@ function clickableGrid(rows, cols, callback) {
     return grid;
 }
 
-function createMap() {
-    alert("Creating map...");
-}
-
 function changeCurrentTile(div) {
     if (currentTile) {
         currentTile.className = "colorBlock";
@@ -71,4 +67,24 @@ function changeCurrentTile(div) {
     if (currentTile.className.indexOf(" clicked") == -1) {
         currentTile.className += " clicked"
     }
+}
+
+
+function createMap() {
+    var result = document.getElementById("result");
+    result.innerHTML = "[<br />"
+    for (var i = 0; i < allElements.length; i++) {
+        result.innerHTML += "[";
+        for (var j = 0; j < allElements[i].length; j++) {
+            result.innerHTML += "'" + allElements[i][j].id + "'";
+            if (j != allElements[i].length - 1) {
+                result.innerHTML += ", ";
+            }
+        }
+        result.innerHTML += "]";
+        if (i != allElements.length - 1) {
+            result.innerHTML += ",<br />";
+        }
+    }
+    result.innerHTML += "<br />]"
 }
