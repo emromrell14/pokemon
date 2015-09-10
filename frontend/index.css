@@ -1,5 +1,4 @@
 .grid {
-	margin: 1em auto;
 	border-collapse: collapse;
 }
 
@@ -23,28 +22,4 @@
 
 .grid td.DOWN {
 	background-image: url("images/PersonDown.png");
-}
-/*
-.grid td.w {
-	background-color: blue;
-}
-
-.grid td.l {
-	background-color: tan;
-}
-
-.grid td.g {
-	background-color: green;
-}
-
-.grid td.b {
-	background-color: gray;
-}
-
-.grid td.d {
-	background-color: brown;
-}*/
-
-#mainBoard {
-	float: left;
 }
