@@ -2,12 +2,12 @@ var LEFT = "LEFT";
 var UP = "UP";
 var RIGHT = "RIGHT";
 var DOWN = "DOWN";
-var DIRECTION_MAP = {}
 
 var currentCell = {};
 var currentTile;
 var allElements;
 var map;
+var mouseDown = false;
 
 window.onload = function() {
     resizeMap(10, 10);
@@ -33,8 +33,12 @@ function resizeMap(rows, cols) {
     }
 
     var grid = clickableGrid(rows, cols, function(element, row, col) {
-        currentCell.element = element;
-        currentCell.element.id = currentTile.id;
+        if(mouseDown && currentCell.element != element) {
+            currentCell.element = element;
+            currentCell.element.id = currentTile.id;
+        } else {
+            console.log("up");
+        }
     });
     document.getElementById("mainBoard").appendChild(grid);
 }
@@ -48,11 +52,20 @@ function clickableGrid(rows, cols, callback) {
         var tr = grid.appendChild(document.createElement('tr'));
         for (var col = 0; col < cols; col++) {
             var cell = tr.appendChild(document.createElement('td'));
-            cell.addEventListener('click',(function(element, row, col) {
+            cell.addEventListener('mousemove',(function(element, row, col) {
                 return function() {
                     callback(element, row, col);
                 }
             })(cell, row, col), false);
+
+            cell.addEventListener("mousedown", function() {
+                mouseDown = true;
+            }, false);
+            cell.addEventListener("mouseup", function() {
+                mouseDown = false;
+            }, false);
+
+
             allElements[row][col] = cell;
         }
     }
