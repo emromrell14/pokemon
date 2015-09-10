@@ -36,21 +36,24 @@ function mapGrid(rows, cols, map) {
 }
 
 window.onkeydown = function(e) {
-    if (e.keyCode === 37 && canMove(currentCell.location, LEFT)) {
-        executeMove(LEFT);
-    } else if (e.keyCode === 38 && canMove(currentCell.location, UP)) {
-        executeMove(UP);
-    } else if (e.keyCode === 39 && canMove(currentCell.location, RIGHT)) {
-        executeMove(RIGHT);
-    } else if (e.keyCode === 40 && canMove(currentCell.location, DOWN)) {
-        executeMove(DOWN);
+    var dir;
+    if (e.keyCode === 37) {
+        attemptMove(LEFT);
+    } else if (e.keyCode === 38) {
+        attemptMove(UP);
+    } else if (e.keyCode === 39) {
+        attemptMove(RIGHT);
+    } else if (e.keyCode === 40) {
+        attemptMove(DOWN);
     }
 }
 
-function executeMove(dir) {
-    currentCell.element.className = map[currentCell.location.row][currentCell.location.col];
-    currentCell.location = move(currentCell.location, dir);
-    currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
+function attemptMove(dir) {
+    if (canMove(currentCell.location, dir)) {
+        currentCell.element.className = map[currentCell.location.row][currentCell.location.col];
+        currentCell.location = move(currentCell.location, dir);
+        currentCell.element = allElements[currentCell.location.row][currentCell.location.col];        
+    }
     currentCell.element.className = dir;
 }
 
