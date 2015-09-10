@@ -1,7 +1,4 @@
-var RIGHT_BONDARY = 9;
-var BOTTOM_BONDARY = 9;
-var LEFT_BONDARY = 0;
-var TOP_BONDARY = 0;
+var POKEMON_CHANCE = 25;
 
 var walkableTiles = ["l","d","g"];
 
@@ -48,6 +45,16 @@ function move(location, direction) {
 			location.row += 1;
 			break;
 	} 
+	popUp(getCurrentMap()[location.row][location.col]);
 	return location;
+	
 }
 
+function popUp(tileId) {
+	if (tileId == "g") {
+		rand = Math.floor(Math.random()*POKEMON_CHANCE);
+		if (rand == 1) {
+			alert("POKEMON!!!!");
+		}
+	}
+}
