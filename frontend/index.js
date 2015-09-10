@@ -12,21 +12,21 @@ var map;
 window.onload=function() {
     setCurrentMap("map1");
     map = getCurrentMap();
-    var grid = mapGrid(10, 10, map);
+    var grid = mapGrid(map);
     document.getElementById("mainBoard").appendChild(grid);
     currentCell.element = allElements[5][5];
     currentCell.element.className = 'DOWN';
     currentCell.location = {row:5,col:5};
 }
 
-function mapGrid(rows, cols, map) {
+function mapGrid(map) {
     var grid = document.createElement('table');
     grid.className = 'grid';
     allElements = new Array(map.length)
-    for (var row = 0; row < rows; row++) {
+    for (var row = 0; row < map.length; row++) {
         allElements[row] = new Array(map[row].length);
         var tr = grid.appendChild(document.createElement('tr'));
-        for (var col = 0; col < cols; col++){
+        for (var col = 0; col < map[0].length; col++){
             var cell = tr.appendChild(document.createElement('td'));
             cell.style.backgroundColor = getColor(map[row][col]);
             allElements[row][col] = cell;
