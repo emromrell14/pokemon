@@ -10,7 +10,8 @@ var allElements;
 var map;
 
 window.onload=function() {
-    map = getMap('map1');
+    setCurrentMap("map1");
+    map = getCurrentMap();
     var grid = mapGrid(10, 10, map);
     document.getElementById("mainBoard").appendChild(grid);
     currentCell.element = allElements[5][5];
@@ -35,13 +36,13 @@ function mapGrid(rows, cols, map) {
 }
 
 window.onkeydown = function(e) {
-    if (e.keyCode === 37 && canMove(currentCell, LEFT)) {
+    if (e.keyCode === 37 && canMove(currentCell.location, LEFT)) {
         executeMove(LEFT);
-    } else if (e.keyCode === 38 && canMove(currentCell, UP)) {
+    } else if (e.keyCode === 38 && canMove(currentCell.location, UP)) {
         executeMove(UP);
-    } else if (e.keyCode === 39 && canMove(currentCell, RIGHT)) {
+    } else if (e.keyCode === 39 && canMove(currentCell.location, RIGHT)) {
         executeMove(RIGHT);
-    } else if (e.keyCode === 40 && canMove(currentCell, DOWN)) {
+    } else if (e.keyCode === 40 && canMove(currentCell.location, DOWN)) {
         executeMove(DOWN);
     }
 }
