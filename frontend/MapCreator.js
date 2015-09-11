@@ -1,18 +1,90 @@
-var currentCell = {};
 var currentTile;
 var allElements;
 var mouseDown = false;
 
 window.onload = function() {
+    initMapSelector();
     resizeMap(10, 10);
     var btnResizeMap = document.getElementById("btnResizeMap");
     btnResizeMap.addEventListener('click', function() {
         resizeMap(document.getElementById("tbRows").value, document.getElementById("tbCols").value);
     });
 
-    var landTile = document.getElementById("l");
+    var landTile = document.getElementById("land");
     landTile.className += " clicked";
     currentTile = landTile;
+}
+
+function initMapSelector() {
+    var mapNames = getAllMapNames();
+    var mapSelector = document.getElementById("mapSelector");
+    for (var i = 0; i < mapNames.length; i++) {
+        var option = document.createElement("option");
+        option.text = mapNames[i];
+        if (i == 0) {
+            option.selected = true;
+        }
+        mapSelector.add(option);
+    }
+}
+
+function loadMap() {
+    //Remove any map that is already there
+    var mainBoard = document.getElementById("mainBoard");
+    while (mainBoard.firstChild) {
+        mainBoard.removeChild(mainBoard.firstChild);
+    }
+
+    //Select the map from the dropdown list and load it up
+    setCurrentMap(mapSelector.options[mapSelector.selectedIndex].text);
+    var map = getCurrentMap();
+    document.getElementById("mainBoard").appendChild(buildGridFromMap(map, function(element, row, col) {
+        if(mouseDown) {
+            element.id = currentTile.id;
+        }
+    }));
+}
+
+function buildGridFromMap(map, callback) {
+    var grid = document.createElement('table');
+    grid.className = 'grid';
+    allElements = new Array(map.length)
+    for (var row = 0; row < map.length; row++) {
+        allElements[row] = new Array(map[row].length);
+        var tr = grid.appendChild(document.createElement('tr'));
+        for (var col = 0; col < map[0].length; col++) {
+            var cell = tr.appendChild(document.createElement('td'));
+            cell.addEventListener('mousemove', (function(element, row, col) {
+                return function() {
+                    callback(element, row, col);
+                }
+            })(cell, row, col), false);
+            cell.addEventListener("mousedown", (function(element, row, col) {
+                return function() {
+                    mouseDown = true;
+                    callback(element, row, col);
+                }
+            })(cell, row, col), false);
+            cell.addEventListener("mouseup", function() {
+                mouseDown = false;
+            }, false);
+            cell.id = map[row][col];
+            cell.style.backgroundColor = getColor(map[row][col]);
+            allElements[row][col] = cell;
+        }
+    }
+    return grid;
+}
+
+function getColor(tileId) {
+    switch(tileId) {
+        case 'l':return "tan";
+        case 'w':return "blue";
+        case 'g':return "green";
+        case 'b':return "gray";
+        case 'd':return "brown";
+        default:return "white";
+    }
 }
 
 function resizeMap(rows, cols) {
@@ -27,9 +99,9 @@ function resizeMap(rows, cols) {
     }
 
     var grid = clickableGrid(rows, cols, function(element, row, col) {
-        if(mouseDown && currentCell.element != element) {
-            currentCell.element = element;
-            currentCell.element.id = currentTile.id;
+        if(mouseDown) {
+            // currentCell.element = element;
+            element.id = currentTile.id;
         }
     });
     document.getElementById("mainBoard").appendChild(grid);

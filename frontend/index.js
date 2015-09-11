@@ -16,10 +16,6 @@ function initMapSelector() {
         }
         mapSelector.add(option);
     }
-    mapSelector.addEventListener("select", function() {
-        mapSelector = document.getElementById("mapSelector");
-        loadMap();
-    });
     loadMap();
 }
 
@@ -36,9 +32,9 @@ function loadMap() {
     document.getElementById("mainBoard").appendChild(buildGridFromMap(map));
 
     //Set the starting location
-    currentCell.element = allElements[5][5];
-    currentCell.element.className = 'DOWN';
-    currentCell.location = {row:5,col:5};
+    currentCell.element = allElements[4][4];
+    currentCell.element.childNodes.item('foreground').className = 'DOWN';
+    currentCell.location = {row:4,col:4};
 }
 
 function buildGridFromMap(map) {
@@ -48,24 +44,15 @@ function buildGridFromMap(map) {
     for (var row = 0; row < map.length; row++) {
         allElements[row] = new Array(map[row].length);
         var tr = grid.appendChild(document.createElement('tr'));
-        for (var col = 0; col < map[0].length; col++){
+        for (var col = 0; col < map[0].length; col++) {
             var cell = tr.appendChild(document.createElement('td'));
-            cell.style.backgroundColor = getColor(map[row][col]);
+            cell.id = map[row][col];
+            var div = cell.appendChild(document.createElement('div'));
+            div.id = "foreground";
             allElements[row][col] = cell;
         }
     }
     return grid;
-}
-
-function getColor(tileId) {
-    switch(tileId) {
-        case 'l':return "tan";
-        case 'w':return "blue";
-        case 'g':return "green";
-        case 'b':return "gray";
-        case 'd':return "brown";
-        default:return "white";
-    }
 }
 
 window.onkeydown = function(e) {
@@ -83,11 +70,12 @@ window.onkeydown = function(e) {
 
 function attemptMove(dir) {
     if (canMove(currentCell.location, dir)) {
-        currentCell.element.className = getCurrentMap()[currentCell.location.row][currentCell.location.col];
+        // currentCell.element.id = getCurrentMap()[currentCell.location.row][currentCell.location.col];
+        currentCell.element.childNodes.item('foreground').className = '';
         currentCell.location = move(currentCell.location, dir);
         currentCell.element = allElements[currentCell.location.row][currentCell.location.col];        
     }
 
     //Still change the direction that the person is facing, even if they don't move
-    currentCell.element.className = dir;
+    currentCell.element.childNodes.item('foreground').className = dir;
 }

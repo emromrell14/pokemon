@@ -3,10 +3,9 @@
 }
 
 .grid td {
-	width: 20px;
-	height: 20px;
-	min-width: 20px;
-	min-height: 20px;
+	width: 16px;
+	height: 16px;
+	max-width: 14px;
 	background-repeat: no-repeat;
 }
 
@@ -24,4 +23,21 @@
 
 .grid td.DOWN {
 	background-image: url("images/PersonDown.png");
+}
+
+div.LEFT {
+	background-image: url("images/PersonLeft.png");
+	min-height: 14px;
+}
+div.UP {
+	background-image: url("images/PersonUp.png");
+	min-height: 14px;
+}
+div.RIGHT {
+	background-image: url("images/PersonRight.png");
+	min-height: 14px;
+}
+div.DOWN {
+	background-image: url("images/PersonDown.png");
+	min-height: 14px;
 }

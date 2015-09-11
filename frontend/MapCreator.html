@@ -1,7 +1,9 @@
 <html>
 	<head>
 		<script src="../frontend/MapCreator.js"></script>
+		<script src="../backend/Maps.js"></script>
 		<link rel="stylesheet" type="text/css" href="../frontend/MapCreator.css" />
+		<link rel="stylesheet" type="text/css" href="../frontend/tiles.css" />
 	</head>
 	<body>
 		<h1>Map Creator</h1>
@@ -9,23 +11,40 @@
 			<p>Please choose the number of rows and columns you would like</p>
 			<p>Rows: <input id="tbRows" type="number" value="10" />
 			Columns: <input id="tbCols" type="number" value="10" />
-			<button id="btnResizeMap">Resize Map!</button></p>
+			<button id="btnResizeMap">Resize Map</button></p>
+			<p>Or load a current map: <select id="mapSelector"></select><button id="btnLoadMap" onclick="loadMap()">Load Map</button></p>
 		</div>
 		<div class="section">
 			<table class="colorTable">
-				<thead>
-					<th>Land</th>
-					<th>Water</th>
-					<th>Grass</th>
-					<th>Building</th>
-					<th>Door</th>
-				</thead>
 				<tr>
-					<td><div id="l" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="w" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="g" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="b" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="d" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="groundYellow" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="groundWhite" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="water" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="waterLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="waterTopLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="waterTop" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="waterTopRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="waterRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="grass" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="buildingGreenShortGroundLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="buildingGreenShortGroundRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="buildingGreenShortGroundTwoWindows" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="buildingGreenShortGroundWindowLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="buildingGreenShortGroundWindowRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="buildingGreenShortRoofCenter" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="buildingGreenShortRoofLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="buildingGreenShortRoofRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="door" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="cliffLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="cliffDownLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="cliffDown" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="cliffDownRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="cliffRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="smallTree" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="cylinderBarrier" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="signWhite" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="signYellow" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="fence" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
 				</tr>
 			</table>
 		</div>
