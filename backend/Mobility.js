@@ -1,33 +1,56 @@
 var POKEMON_CHANCE = 25;
 
-var walkableTiles = ["l","d","g"];
+var walkableTiles = ["land","door","grass"];
 
-var topJumpTiles = ["tc"];
-var rightJumpTiles = ["rc"];
-var leftJumpTiles = ["lc"];
-var bottomJumpTiles = ["bc"]
+var leftJumpTile = "cliffLeft";
+var rightJumpTile = "cliffRight";
+var downJumpTile = "cliffDown"
 
 
 function canWalk (tileId) {
 	return walkableTiles.indexOf(tileId) !== -1;
 }
 
-
-
 function canMove(location, direction) {
     mapData = getCurrentMap();
 	switch(direction) {
         case "LEFT": {
-			return location.col != 0 && canWalk(mapData[location.row][location.col-1]) || leftJumpTiles === (mapData[location.row][location.col-1]);
+			if (location.col == 0){
+				return false;
+			}
+			var nextLoc = mapData[location.row][location.col - 1];
+			if (nextLoc === leftJumpTile){
+				return true;
+			}
+			return canWalk(nextLoc);
+			
         }
         case "RIGHT": {
-            return location.col != mapData[0].length-1 && canWalk(mapData[location.row][location.col+1]) || rightJumpTiles === (mapData[location.row][location.col-1]);
+            if (location.col == mapData[0].length - 1){
+				return false;
+			}
+			var nextLoc = mapData[location.row][location.col - 1];
+			if (nextLoc === rightJumpTile){
+				return true;
+			}
+			return canWalk(nextLoc);
 		}
 		case "UP": {
-            return location.row != 0 && canWalk(mapData[location.row-1][location.col]) || bottomJumpTiles === (mapData[location.row-1][location.col]);
+            if (location.row == 0){
+				return false;
+			}
+			var nextLoc = mapData[location.row - 1][location.col];
+			return canWalk(nextLoc);
         }
         case "DOWN": {
-            return location.row != mapData.length-1 && canWalk(mapData[location.row+1][location.col]) || topJumpTiles === (mapData[location.row+1][location.col]);
+            if (location.row == mapData.length - 1){
+				return false;
+			}
+			var nextLoc = mapData[location.row + 1][location.col];
+			if (nextLoc === downJumpTile){
+				return true;
+			}
+			return canWalk(nextLoc);
         }
 		
     }
