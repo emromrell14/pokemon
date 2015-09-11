@@ -2,9 +2,13 @@ var POKEMON_CHANCE = 25;
 
 var walkableTiles = ["l","d","g"];
 
+var topJumpTiles = ["tc"];
+
 function canWalk (tileId) {
 	return walkableTiles.indexOf(tileId) !== -1;
 }
+
+
 
 function canMove(location, direction) {
     mapData = getCurrentMap();
@@ -19,7 +23,7 @@ function canMove(location, direction) {
             return location.row != 0 && canWalk(mapData[location.row-1][location.col]);
         }
         case "DOWN": {
-            return location.row != mapData.length-1 && canWalk(mapData[location.row+1][location.col]);
+            return location.row != mapData.length-1 && canWalk(mapData[location.row+1][location.col]) || topJumpTiles;
         }
 		
     }
