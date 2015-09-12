@@ -10,7 +10,7 @@ window.onload = function() {
         resizeMap(document.getElementById("tbRows").value, document.getElementById("tbCols").value);
     });
 
-    var landTile = document.getElementById("land");
+    var landTile = document.getElementById("groundBrown");
     landTile.className += " clicked";
     currentTile = landTile;
 }

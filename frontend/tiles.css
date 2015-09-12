@@ -43,6 +43,15 @@
 #groundGreen {background-image: url("images/groundGreen.png");}
 #groundWhite {background-image: url("images/groundWhite.png");}
 #groundYellow {background-image: url("images/groundYellow.png");}
+#mountainBottom {background-image: url("images/mountainBottom.png");}
+#mountainBottomLeft {background-image: url("images/mountainBottomLeft.png");}
+#mountainBottomRight {background-image: url("images/mountainBottomRight.png");}
+#mountainCenter {background-image: url("images/mountainCenter.png");}
+#mountainLeft {background-image: url("images/mountainLeft.png");}
+#mountainRight {background-image: url("images/mountainRight.png");}
+#mountainTop {background-image: url("images/mountainTop.png");}
+#mountainTopLeft {background-image: url("images/mountainTopLeft.png");}
+#mountainTopRight {background-image: url("images/mountainTopRight.png");}
 #signWhite {background-image: url("images/signWhite.png");}
 #signYellow {background-image: url("images/signYellow.png");}
 #smallTree {background-image: url("images/smallTree.png");}
