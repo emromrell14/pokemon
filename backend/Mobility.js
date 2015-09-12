@@ -74,8 +74,14 @@ function move(location, direction) {
 			location.row += 1;
 			break;
 	} 
-	popUp(getCurrentMap()[location.row][location.col]);
+	var nextTile = getCurrentMap()[location.row][location.col]
+	
+	popUp(nextTile);
+	alertLocation(location, nextTile);
+	
+	
 	return location;
+	
 	
 }
 
@@ -85,5 +91,20 @@ function popUp(tileId) {
 		if (rand == 1) {
 			alert("POKEMON!!!!");
 		}
+	}
+}
+
+function alertLocation(location, tileId) {
+	var mapData = getCurrentMap()
+	if (location.col == 0) {
+		alert (location.row + "-" + location.col);
+	} else if (location.col == mapData[0].length-1) {
+		alert (location.row + "-" + location.col);
+	} else if (location.row == 0) {
+		alert (location.row + "-" + location.col);
+	} else if (location.row == mapData.length-1) {
+		alert (location.row + "-" + location.col);
+	} else if (tileId === "door") {
+		alert (location.row + "-" + location.col);
 	}
 }

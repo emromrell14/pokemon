@@ -16,6 +16,15 @@ function getAllMapNames() {
 	return Object.keys(maps);
 }
 
+function getLinkingLocation(mapName, location) {
+	return mapLinks[mapName][location.row + "-" + location.col];
+}
+
+var mapLinks = {
+	PalletTown: {		
+	}
+}
+
 maps = {
 	PalletTown: [
 		['groundYellow', 'groundYellow', 'groundYellow', 'cylinderBarrier', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'cylinderBarrier', 'grass', 'grass', 'cylinderBarrier', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'cylinderBarrier', 'land'],
