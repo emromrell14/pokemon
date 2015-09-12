@@ -48,3 +48,7 @@ div.section {
 div#mainBoard {
 	padding: 10px;
 }
+
+p#result {
+	font-size: 6px;
+}
