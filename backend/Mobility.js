@@ -6,8 +6,7 @@ var leftJumpTile = "cliffLeft";
 var rightJumpTile = "cliffRight";
 var downJumpTile = "cliffDown"
 
-
-function canWalk (tileId) {
+function canWalk(tileId) {
 	return walkableTiles.indexOf(tileId) !== -1;
 }
 
@@ -52,7 +51,6 @@ function canMove(location, direction) {
 			}
 			return canWalk(nextLoc);
         }
-		
     }
 }
 
@@ -63,7 +61,7 @@ function move(location, direction) {
     }
 	
 	switch(direction) {
-		case "LEFT": 
+		case "LEFT":
 			location.col -= 1;
 			break;
 		case "RIGHT": 
@@ -82,7 +80,7 @@ function move(location, direction) {
 }
 
 function popUp(tileId) {
-	if (tileId == "g") {
+	if (tileId == "grass") {
 		rand = Math.floor(Math.random()*POKEMON_CHANCE);
 		if (rand == 1) {
 			alert("POKEMON!!!!");
