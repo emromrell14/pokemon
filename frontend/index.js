@@ -16,6 +16,7 @@ function initMapSelector() {
         }
         mapSelector.add(option);
     }
+	setCurrentMap(mapSelector.options[mapSelector.selectedIndex].text);
     loadMap();
 }
 
@@ -27,14 +28,16 @@ function loadMap() {
     }
 
     //Select the map from the dropdown list and load it up
-    setCurrentMap(mapSelector.options[mapSelector.selectedIndex].text);
+    //setCurrentMap(mapSelector.options[mapSelector.selectedIndex].text);
     var map = getCurrentMap();
     document.getElementById("mainBoard").appendChild(buildGridFromMap(map));
 
     //Set the starting location
-    currentCell.element = allElements[4][4];
-    currentCell.element.childNodes.item('foreground').className = 'DOWN';
-    currentCell.location = {row:4,col:4};
+    if (currentCell.element == null) {
+		currentCell.element = allElements[6][5];
+		currentCell.element.childNodes.item('foreground').className = 'DOWN';
+		currentCell.location = {row:6,col:5};
+	}
 }
 
 function buildGridFromMap(map) {
@@ -72,7 +75,12 @@ function attemptMove(dir) {
     if (canMove(currentCell.location, dir)) {
         // currentCell.element.id = getCurrentMap()[currentCell.location.row][currentCell.location.col];
         currentCell.element.childNodes.item('foreground').className = '';
-        currentCell.location = move(currentCell.location, dir);
+        var result = move(currentCell.location, dir);
+		if (getCurrentMapName() !== result.mapName) {
+			setCurrentMap(result.mapName);
+			loadMap();
+		}
+		currentCell.location = result.location;
         currentCell.element = allElements[currentCell.location.row][currentCell.location.col];        
     }
 
