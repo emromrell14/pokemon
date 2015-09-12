@@ -1,6 +1,6 @@
 var POKEMON_CHANCE = 25;
 
-var walkableTiles = ["land","door","grass"];
+var walkableTiles = ["groundGreen","groundBrown","groundWhite","groundYellow","door","grass"];
 
 var leftJumpTile = "cliffLeft";
 var rightJumpTile = "cliffRight";
@@ -28,7 +28,7 @@ function canMove(location, direction) {
             if (location.col == mapData[0].length - 1){
 				return false;
 			}
-			var nextLoc = mapData[location.row][location.col - 1];
+			var nextLoc = mapData[location.row][location.col + 1];
 			if (nextLoc === rightJumpTile){
 				return true;
 			}
