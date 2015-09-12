@@ -15,7 +15,7 @@ function canMove(location, direction) {
 	switch(direction) {
         case "LEFT": {
 			if (location.col == 0){
-				return false;
+				return true;
 			}
 			var nextLoc = mapData[location.row][location.col - 1];
 			if (nextLoc === leftJumpTile){
@@ -26,7 +26,7 @@ function canMove(location, direction) {
         }
         case "RIGHT": {
             if (location.col == mapData[0].length - 1){
-				return false;
+				return true;
 			}
 			var nextLoc = mapData[location.row][location.col + 1];
 			if (nextLoc === rightJumpTile){
@@ -36,14 +36,14 @@ function canMove(location, direction) {
 		}
 		case "UP": {
             if (location.row == 0){
-				return false;
+				return true;
 			}
 			var nextLoc = mapData[location.row - 1][location.col];
 			return canWalk(nextLoc);
         }
         case "DOWN": {
             if (location.row == mapData.length - 1){
-				return false;
+				return true;
 			}
 			var nextLoc = mapData[location.row + 1][location.col];
 			if (nextLoc === downJumpTile){
@@ -59,7 +59,8 @@ function move(location, direction) {
     if(!canMove(location, direction)) {
         return location;
     }
-	
+	var mapData = getCurrentMap();
+	var oldLocation = {row: location.row, col: location.col};
 	switch(direction) {
 		case "LEFT":
 			location.col -= 1;
@@ -73,14 +74,19 @@ function move(location, direction) {
 		case "DOWN": 
 			location.row += 1;
 			break;
-	} 
+	}
+	if (location.col == -1 || location.row == -1 || 
+		location.col == mapData[0].length || location.row == mapData.length) {
+		console.log(getLinkingLocation(getCurrentMapName(), oldLocation));
+		return getLinkingLocation(getCurrentMapName(), oldLocation);
+	}
 	var nextTile = getCurrentMap()[location.row][location.col]
 	
-	popUp(nextTile);
+	//popUp(nextTile);
 	alertLocation(location, nextTile);
 	
 	
-	return location;
+	return {mapName: currentMapName, location: location};
 	
 	
 }
@@ -96,15 +102,9 @@ function popUp(tileId) {
 
 function alertLocation(location, tileId) {
 	var mapData = getCurrentMap()
-	if (location.col == 0) {
-		alert (location.row + "-" + location.col);
-	} else if (location.col == mapData[0].length-1) {
-		alert (location.row + "-" + location.col);
-	} else if (location.row == 0) {
-		alert (location.row + "-" + location.col);
-	} else if (location.row == mapData.length-1) {
-		alert (location.row + "-" + location.col);
-	} else if (tileId === "door") {
-		alert (location.row + "-" + location.col);
+	if (location.col == 0 || location.col == mapData[0].length-1 || 
+			location.row == 0 || location.row == mapData.length-1 ||
+			tileId === "door") {
+		console.log(location.row + "-" + location.col);
 	}
 }
