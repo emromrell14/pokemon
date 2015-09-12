@@ -28,7 +28,6 @@ function loadMap() {
     }
 
     //Select the map from the dropdown list and load it up
-    //setCurrentMap(mapSelector.options[mapSelector.selectedIndex].text);
     var map = getCurrentMap();
     document.getElementById("mainBoard").appendChild(buildGridFromMap(map));
 
