@@ -24,7 +24,8 @@ function getLinkingLocation(mapName, location) {
 	console.log(mapName);
 	console.log(location);
 	console.log(mapLinks);
-	return mapLinks[mapName][location.row + "-" + location.col];
+	var result = mapLinks[mapName][location.row + "-" + location.col];
+	return {mapName: result.mapName, location: {row: result.location.row, col: result.location.col}}
 }
 
 var mapLinks = {
@@ -42,6 +43,18 @@ var mapLinks = {
 				row: 35,
 				col: 8
 			}
+		},
+		"17-4": {
+		
+		},
+		"17-5": {
+			
+		},
+		"17-6": {
+			
+		},
+		"17-7": {
+			
 		}
 	},
 	"Route1": {

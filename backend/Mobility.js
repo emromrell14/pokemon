@@ -76,7 +76,7 @@ function move(location, direction) {
 			break;
 	}
 	if (location.col == -1 || location.row == -1 || 
-		location.col == mapData[0].length || location.row == mapData.length) {
+			location.col == mapData[0].length || location.row == mapData.length) {
 		console.log(getLinkingLocation(getCurrentMapName(), oldLocation));
 		return getLinkingLocation(getCurrentMapName(), oldLocation);
 	}
