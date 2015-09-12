@@ -21,12 +21,44 @@ function getAllMapNames() {
 }
 
 function getLinkingLocation(mapName, location) {
+	console.log(mapName);
+	console.log(location);
+	console.log(mapLinks);
 	return mapLinks[mapName][location.row + "-" + location.col];
 }
 
 var mapLinks = {
-	PalletTown: {
-		
+	"PalletTown": {
+		"0-10": {
+			mapName: "Route1",
+			location: {
+				row: 35,
+				col: 7
+			}
+		},
+		"0-11": {
+			mapName: "Route1",
+			location: {
+				row: 35,
+				col: 8
+			}
+		}
+	},
+	"Route1": {
+		"35-7": {
+			mapName: "PalletTown",
+			location: {
+				row: 0,
+				col: 10
+			}
+		},
+		"35-8": {
+			mapName: "PalletTown",
+			location: {
+				row: 0,
+				col: 11
+			}
+		}
 	}
 }
 
