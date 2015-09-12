@@ -16,7 +16,11 @@ function initMapSelector() {
         }
         mapSelector.add(option);
     }
-	setCurrentMap(mapSelector.options[mapSelector.selectedIndex].text);
+	loadMapManual();
+}
+
+function loadMapManual() {
+    setCurrentMap(mapSelector.options[mapSelector.selectedIndex].text);
     loadMap();
 }
 
