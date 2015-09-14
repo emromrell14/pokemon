@@ -6,11 +6,15 @@ window.onload=function() {
 }
 
 function init() {
-    setCurrentMap('PalletTown');
-    currentCell.location = {row:6,col:5};
+    setStartLocation();
     reloadMap();
     currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
     currentCell.element.childNodes.item('foreground').className = 'DOWN';
+}
+
+function setStartLocation() {
+    setCurrentMap('PalletTown');
+    currentCell.location = getTestStartLocation('PalletTown');
 }
 
 function reloadMap() {
@@ -24,7 +28,7 @@ function reloadMap() {
 function buildPortlet() {
     var mapData = getCurrentMap();
 
-    var startingLocation = getUpperLeftCorner(currentCell.location, mapData);
+    var startingLocation = getUpperLeftCorner(currentCell.location, mapData[0].length, mapData.length);
 
     var portlet = document.createElement('table');
     portlet.className = 'grid';
@@ -43,41 +47,32 @@ function buildPortlet() {
     return portlet;
 }
 
-function getUpperLeftCorner(currentLocation, mapData) {
-    var result = {};
+function getUpperLeftCorner(currentLocation, mapWidth, mapHeight) {
+    return {
+        row: getNormalizedValue(currentLocation.row, mapHeight),
+        col: getNormalizedValue(currentLocation.col, mapWidth)
+    };
+}
 
-    if (currentLocation.row < 4) {result.row = 0;} 
-    else if (currentLocation.row > mapData.length - 6) {result.row = mapData.length - 10;} 
-    else {result.row = currentLocation.row - 4;}
-
-    if (currentLocation.col < 4) {result.col = 0;} 
-    else if (currentLocation.col > mapData[0].length - 6) {result.col = mapData[0].length - 10;} 
-    else {result.col = currentLocation.col - 4;}
-
-    return result;
+function getNormalizedValue(value, max) {
+    if (value < 4) {return 0;}
+    else if (value > max - 6) {return max - 10;}
+    else {return value - 4;}
 }
 
 window.onkeydown = function(e) {
-    var dir;
-    if (e.keyCode === 37) {
-        attemptMove("LEFT");
-    } else if (e.keyCode === 38) {
-        attemptMove("UP");
-    } else if (e.keyCode === 39) {
-        attemptMove("RIGHT");
-    } else if (e.keyCode === 40) {
-        attemptMove("DOWN");
-    }
+    if (e.keyCode === 37) {attemptMove("LEFT");} 
+    else if (e.keyCode === 38) {attemptMove("UP");} 
+    else if (e.keyCode === 39) {attemptMove("RIGHT");} 
+    else if (e.keyCode === 40) {attemptMove("DOWN");}
 }
 
 function attemptMove(dir) {
     if (canMove(currentCell.location, dir)) {
-        // currentCell.element.id = getCurrentMap()[currentCell.location.row][currentCell.location.col];
         currentCell.element.childNodes.item('foreground').className = '';
         var result = move(currentCell.location, dir);
 		if (getCurrentMapName() !== result.mapName) {
 			setCurrentMap(result.mapName);
-			reloadMap();
 		}
 		currentCell.location = result.location;
         reloadMap(); 
