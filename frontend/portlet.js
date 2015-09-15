@@ -1,13 +1,15 @@
 var currentCell = {};
 var allElements;
+var inFight;
 
-window.onload=function() {
+window.onload = function() {
     init();
 }
 
 function init() {
     setStartLocation();
-    reloadMap();
+    $("#mainBoard").empty().append(buildPortlet());
+    $("#fightScene").empty().append(buildFightScene());
     currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
     currentCell.element.childNodes.item('foreground').className = 'DOWN';
 }
@@ -18,11 +20,7 @@ function setStartLocation() {
 }
 
 function reloadMap() {
-    var mainBoard = document.getElementById("mainBoard");
-    while (mainBoard.firstChild) {
-        mainBoard.removeChild(mainBoard.firstChild);
-    }
-    document.getElementById("mainBoard").appendChild(buildPortlet());
+    $("#mainBoard").empty().append(buildPortlet());
 }
 
 function buildPortlet() {
@@ -68,17 +66,76 @@ window.onkeydown = function(e) {
 }
 
 function attemptMove(dir) {
-    if (canMove(currentCell.location, dir)) {
-        currentCell.element.childNodes.item('foreground').className = '';
-        var result = move(currentCell.location, dir);
-		if (getCurrentMapName() !== result.mapName) {
-			setCurrentMap(result.mapName);
-		}
-		currentCell.location = result.location;
-        reloadMap(); 
-        currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
-    }
+    if (!inFight) {
+        if (canMove(currentCell.location, dir)) {
+            currentCell.element.childNodes.item('foreground').className = '';
+            var result = move(currentCell.location, dir);
+            if (getCurrentMapName() !== result.mapName) {
+                $("#mainBoard").fadeOut(500, function() {
+                    setCurrentMap(result.mapName);
+                    currentCell.location = result.location;
+                    reloadMap();
+                    currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
+                }).fadeIn(500);
+            } else {
+                currentCell.location = result.location;
+                reloadMap();
+                currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
+            }
+        }
 
-    //Still change the direction that the person is facing, even if they don't move
-    currentCell.element.childNodes.item('foreground').className = dir;
+        //Still change the direction that the person is facing, even if they don't move
+        currentCell.element.childNodes.item('foreground').className = dir;        
+    }
+    
+}
+
+function foundPokemon(pokemon) {
+    inFight = true;
+    $("#mainBoard").hide(1000, function() {
+        startFightScene(pokemon);
+    });
+}
+
+function buildFightScene() {
+    var fightTable = $("<table></table>").addClass('fightScene');
+    
+    var theirTr = $("<tr></tr>").addClass('fightTr');
+    var foePokemonStats = $("<td></td>").addClass('fightTd').attr('id', 'foeStats').attr('colSpan', '2');
+    var foePokemonImage = $("<td></td>").addClass('fightTd').attr('id', 'foeImage');
+    theirTr.append(foePokemonStats, foePokemonImage);
+
+    var yourTr = $("<tr></tr>").addClass('fightTr');
+    var yourPokemonImage = $("<td></td>").addClass('fightTd').attr('id', 'yourImage');
+    var yourPokemonStats = $("<td></td>").addClass('fightTd').attr('id', 'yourStats').attr('colSpan', '2');
+    yourTr.append(yourPokemonImage, yourPokemonStats);
+
+    var optionsTr = $("<tr></tr>").addClass('optionsTr');
+    var optionsTd = $("<td></td>").addClass('optionsTd').attr('id', 'options').attr("colSpan", "3");
+    optionsTr.append(optionsTd)
+
+    fightTable.append(theirTr, yourTr, optionsTr);
+
+    $("#fightScene").append(fightTable);
+    $("#fightScene").hide();
+}
+
+function startFightScene(pokemon) {
+    var foeStats = $("<img></img>").attr("src", "images/foeStats.png");
+    $("#fightScene").find("#foeStats").empty().append(foeStats);
+
+    var foeImage = $("<img></img>").attr("src", "images/pokemon/" + pokemon.national_id + ".png");
+    $("#fightScene").find("#foeImage").empty().append(foeImage);
+
+    var yourImage = $("<img></img>").attr("src", "")
+
+    $("#fightScene").show(1000);
+}
+
+function backToMap() {
+    $('#fightScene').hide(1000, function() {
+        $("#mainBoard").show(1000, function() {
+            inFight = false;
+        });
+    });
 }
