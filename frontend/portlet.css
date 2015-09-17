@@ -82,8 +82,6 @@ p {
 	float: right;
 	width: 104px;
 	height: 56px;
-	background-repeat: no-repeat;
-	background-image: url("images/yourStats.png");
 }
 
 #yourStatBar {
@@ -99,13 +97,23 @@ p {
 	font-size: 9px;
 }
 
+#yourHp {
+	padding-left: 45px;
+}
+
 .pokemonName {
 	display: inline;
+	position: relative;
 	font-weight: bold;
 }
 
 .pokemonLevel {
 	display: inline;
+	font-size: 9px;
+	font-weight: bold;
+}
+
+.pokemonHp {
 	font-size: 9px;
 	font-weight: bold;
 }
@@ -118,6 +126,7 @@ p {
 
 #optionsText {
 	margin: 4px;
+	display: inline;
 }
 
 #startOptions {

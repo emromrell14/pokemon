@@ -16,7 +16,7 @@ function init() {
 
 function setStartLocation() {
     setCurrentMap('PalletTown');
-    currentCell.location = getTestStartLocation('PalletTown');
+    currentCell.location = getTestStartLocation(getCurrentMapName());
 }
 
 function reloadMap() {
@@ -108,8 +108,6 @@ function startFightScene(pokemon) {
     $("#theirImage").attr("src", "images/pokemon/" + pokemon.info.national_id + ".png");
 
     $("#yourImage").empty().attr("src", "images/pokemon/back/trainer.png");
-    $("#yourLevel").empty().append("L:18");
-    $("#yourName").empty().append("ERIC");
 
     $("#startOptions").hide();
     $("#fightScene").show(1000, function() {
@@ -117,22 +115,21 @@ function startFightScene(pokemon) {
     });
 }
 
-function scrollText(paragraphId, newText, callback) {
-    var contentArray = newText.split("");
-    var current = 0;
-    var elem = $("#" + paragraphId);
-    var interval = setInterval(function() {
-        if(current < contentArray.length) {
-            elem.text(elem.text() + contentArray[current++]);
-        } else {
-            clearInterval(interval);
-            callback();
-        }
-    }, 50);
-}
-
 function sendOutPokemon() {
-    
+    var firstPokemon = getFirstLivePokemonInParty();
+    scrollText("optionsText", "Go, " + firstPokemon.name.toUpperCase() + "!", function() {});
+    $("#yourImage").hide(500, function() {
+        $("#yourImage").attr("src", "images/pokemon/back/" + firstPokemon.national_id + ".png");
+        $("#yourImage").show(500, function() {
+            $("#yourName").empty().append(firstPokemon.name.toUpperCase());
+            $("#yourLevel").empty().append("L:" + firstPokemon.level);
+            $("#yourHp").empty().append(firstPokemon.hp + "/" + firstPokemon.maxHp);
+            delay(2000, function() {
+                $("#optionsText").empty();
+                $("#startOptions").show();
+            });
+        });
+    });
 }
 
 function backToMap() {
@@ -141,4 +138,22 @@ function backToMap() {
             inFight = false;
         });
     });
+}
+
+function scrollText(paragraphId, newText, callback) {
+    var contentArray = newText.split("");
+    var current = 0;
+    var elem = $("#" + paragraphId).empty();
+    var interval = setInterval(function() {
+        if(current < contentArray.length) {
+            elem.text(elem.text() + contentArray[current++]);
+        } else {
+            clearInterval(interval);
+            delay(2000, callback);
+        }
+    }, 50);
+}
+
+function delay(time, callback) {
+    setTimeout(callback, time);
 }
