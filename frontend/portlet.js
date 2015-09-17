@@ -9,7 +9,7 @@ window.onload = function() {
 function init() {
     setStartLocation();
     $("#mainBoard").empty().append(buildPortlet());
-    $("#fightScene").empty().append(buildFightScene());
+    $("#fightScene").hide();
     currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
     currentCell.element.childNodes.item('foreground').className = 'DOWN';
 }
@@ -59,10 +59,16 @@ function getNormalizedValue(value, max) {
 }
 
 window.onkeydown = function(e) {
-    if (e.keyCode === 37) {attemptMove("LEFT");} 
-    else if (e.keyCode === 38) {attemptMove("UP");} 
-    else if (e.keyCode === 39) {attemptMove("RIGHT");} 
-    else if (e.keyCode === 40) {attemptMove("DOWN");}
+    switch (e.keyCode) {
+        case 32: executeAction();break;
+        case 37: attemptMove("LEFT");break;
+        case 38: attemptMove("UP");break;
+        case 39: attemptMove("RIGHT");break;
+        case 40: attemptMove("DOWN");break;
+    }
+}
+
+function executeAction() {
 }
 
 function attemptMove(dir) {
@@ -87,49 +93,46 @@ function attemptMove(dir) {
         //Still change the direction that the person is facing, even if they don't move
         currentCell.element.childNodes.item('foreground').className = dir;        
     }
-    
 }
 
 function foundPokemon(pokemon) {
     inFight = true;
     $("#mainBoard").hide(1000, function() {
-        startFightScene(pokemon);
+        startFightScene({info: pokemon, level: 16});
     });
 }
 
-function buildFightScene() {
-    var fightTable = $("<table></table>").addClass('fightScene');
-    
-    var theirTr = $("<tr></tr>").addClass('fightTr');
-    var foePokemonStats = $("<td></td>").addClass('fightTd').attr('id', 'foeStats').attr('colSpan', '2');
-    var foePokemonImage = $("<td></td>").addClass('fightTd').attr('id', 'foeImage');
-    theirTr.append(foePokemonStats, foePokemonImage);
+function startFightScene(pokemon) {
+    $("#theirName").empty().append(pokemon.info.name.toUpperCase());
+    $("#theirLevel").empty().append("L:" + pokemon.level);
+    $("#theirImage").attr("src", "images/pokemon/" + pokemon.info.national_id + ".png");
 
-    var yourTr = $("<tr></tr>").addClass('fightTr');
-    var yourPokemonImage = $("<td></td>").addClass('fightTd').attr('id', 'yourImage');
-    var yourPokemonStats = $("<td></td>").addClass('fightTd').attr('id', 'yourStats').attr('colSpan', '2');
-    yourTr.append(yourPokemonImage, yourPokemonStats);
+    $("#yourImage").empty().attr("src", "images/pokemon/back/trainer.png");
+    $("#yourLevel").empty().append("L:18");
+    $("#yourName").empty().append("ERIC");
 
-    var optionsTr = $("<tr></tr>").addClass('optionsTr');
-    var optionsTd = $("<td></td>").addClass('optionsTd').attr('id', 'options').attr("colSpan", "3");
-    optionsTr.append(optionsTd)
-
-    fightTable.append(theirTr, yourTr, optionsTr);
-
-    $("#fightScene").append(fightTable);
-    $("#fightScene").hide();
+    $("#startOptions").hide();
+    $("#fightScene").show(1000, function() {
+        scrollText("optionsText", "Wild " + pokemon.info.name.toUpperCase() + " appeared!", sendOutPokemon);
+    });
 }
 
-function startFightScene(pokemon) {
-    var foeStats = $("<img></img>").attr("src", "images/foeStats.png");
-    $("#fightScene").find("#foeStats").empty().append(foeStats);
+function scrollText(paragraphId, newText, callback) {
+    var contentArray = newText.split("");
+    var current = 0;
+    var elem = $("#" + paragraphId);
+    var interval = setInterval(function() {
+        if(current < contentArray.length) {
+            elem.text(elem.text() + contentArray[current++]);
+        } else {
+            clearInterval(interval);
+            callback();
+        }
+    }, 50);
+}
 
-    var foeImage = $("<img></img>").attr("src", "images/pokemon/" + pokemon.national_id + ".png");
-    $("#fightScene").find("#foeImage").empty().append(foeImage);
-
-    var yourImage = $("<img></img>").attr("src", "")
-
-    $("#fightScene").show(1000);
+function sendOutPokemon() {
+    
 }
 
 function backToMap() {

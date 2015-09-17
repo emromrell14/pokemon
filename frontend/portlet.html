@@ -10,7 +10,37 @@
 	</head>
 	<body>
 		<div id="mainBoard"></div>
-		<div id="fightScene"></div>
+		<div id="fightScene">
+			<div id="theirDiv">
+				<div id="theirStats">
+					<img id="theirStatBar" src="images/theirStats.png"></img>
+					<p id="theirName" class="pokemonName"></p><br/>
+					<p id="theirLevel" class="pokemonLevel"></p>
+				</div>
+				<div id="theirImageDiv">
+					<img id="theirImage"></img>
+				</div>
+			</div>
+			<div id="yourDiv">
+				<div id="yourImageDiv">
+					<img id="yourImage"></img>
+				</div>
+				<div id="yourStats">
+					<img id="yourStatBar" src="images/yourStats.png"></img>
+					<p id="yourName" class="pokemonName"></p>
+					<p id="yourLevel" class="pokemonLevel"></p>
+				</div>
+			</div>
+			<div id="optionsDiv">
+				<p id="optionsText"></p>
+				<div id="startOptions">
+					<button class="option">PKMN</button>
+					<button class="option">FIGHT</button>
+					<button class="option">RUN</button>
+					<button class="option">PACK</button>
+				</div>
+			</div>
+		</div>
 		<button id="start" onclick="backToMap()">Back to Map</button>
 	</body>
 </html>

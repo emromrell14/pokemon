@@ -2,10 +2,6 @@
 	border-collapse: collapse;
 }
 
-.fightScene {
-	border-collapse: collapse;
-}
-
 .grid td {
 	width: 16px;
 	height: 16px;
@@ -30,44 +26,112 @@ div.DOWN {
 	min-height: 14px;
 }
 
-td.fightTd#foeStats {
-	height: 56px;
-	max-width: 104px;
-	max-height: 56px;
-	background-color: gray;
-	table-layout: fixed;
+p {
+	font-size: 10px;
+	font-family: "Lucida Console", Monaco, monospace;
 }
 
-td.fightTd#foeImage {
-	width: 56px;
-	height: 56px;
-	max-width: 56px;
-	max-height: 56px;
-	vertical-align: text-top;
-	text-align: right;
+#fightScene {
+	width: 160px;
+	height: 160px;
+	border: 1px solid black;
 }
 
-td.fightTd#yourImage {
-	width: 56px;
+#theirDiv {
+	width: 160px;
 	height: 56px;
-	max-width: 56px;
-	max-height: 56px;
-	vertical-align: text-bottom;
-	text-align: left;
 }
 
-td.fightTd#yourStats {
+#theirStats {
+	float: left;
 	width: 104px;
 	height: 56px;
-	max-width: 104px;
-	max-height: 56px;
-	background-color: gray;
-	vertical-align: text-bottom;
-	text-align
 }
 
-td.optionsTd {
+#theirStatBar {
+	position: absolute;
+}
+
+#theirName {
+	padding-left: 10px;
+}
+
+#theirLevel {
+	padding-left: 44px;
+	font-size: 9px;
+}
+
+#theirImageDiv {
+	float: right;
+	width: 56px;
+	height: 56px;
+}
+
+#yourDiv {
 	width: 160px;
-	height: 48;
-	background-color: black;
+	height: 56px;
+}
+
+#yourImageDiv {
+	float: left;
+	width: 56px;
+	height: 56px;
+}
+
+#yourStats {
+	float: right;
+	width: 104px;
+	height: 56px;
+	background-repeat: no-repeat;
+	background-image: url("images/yourStats.png");
+}
+
+#yourStatBar {
+	position: absolute;
+}
+
+#yourName {
+	padding-left: 25px;
+}
+
+#yourLevel {
+	padding-left: 53px;
+	font-size: 9px;
+}
+
+.pokemonName {
+	display: inline;
+	font-weight: bold;
+}
+
+.pokemonLevel {
+	display: inline;
+	font-size: 9px;
+	font-weight: bold;
+}
+
+#optionsDiv {
+	width: 160px;
+	height: 48px;
+	border-top: 1px solid black;
+}
+
+#optionsText {
+	margin: 4px;
+}
+
+#startOptions {
+	width: 80px;
+	height: 48px;
+	border-left: 1px solid black;
+	float: right;
+}
+
+.option {
+	float: right;
+	background-color: #fff;
+	border: none;
+	width: 40px;
+	cursor: pointer;
+	padding: 5px 0px;
 }
