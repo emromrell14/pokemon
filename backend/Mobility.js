@@ -4,31 +4,31 @@ var walkableTiles = ["groundGreen","groundBrown","groundWhite","groundYellow","d
 
 var leftJumpTile = "cliffLeft";
 var rightJumpTile = "cliffRight";
-var downJumpTile = "cliffDown"
+var downJumpTile = "cliffDown";
 
 function canWalk(tileId) {
 	return walkableTiles.indexOf(tileId) !== -1;
 }
 
 function canMove(location, direction) {
-    mapData = getCurrentMap();
+    var mapData = getCurrentMap();
+	var nextLoc;
 	switch(direction) {
         case "LEFT": {
 			if (location.col == 0){
 				return true;
 			}
-			var nextLoc = mapData[location.row][location.col - 1];
+			nextLoc = mapData[location.row][location.col - 1];
 			if (nextLoc === leftJumpTile){
 				return true;
 			}
 			return canWalk(nextLoc);
-			
         }
         case "RIGHT": {
             if (location.col == mapData[0].length - 1){
 				return true;
 			}
-			var nextLoc = mapData[location.row][location.col + 1];
+			nextLoc = mapData[location.row][location.col + 1];
 			if (nextLoc === rightJumpTile){
 				return true;
 			}
@@ -38,14 +38,13 @@ function canMove(location, direction) {
             if (location.row == 0){
 				return true;
 			}
-			var nextLoc = mapData[location.row - 1][location.col];
-			return canWalk(nextLoc);
+			return canWalk(mapData[location.row - 1][location.col]);
         }
         case "DOWN": {
             if (location.row == mapData.length - 1){
 				return true;
 			}
-			var nextLoc = mapData[location.row + 1][location.col];
+			nextLoc = mapData[location.row + 1][location.col];
 			if (nextLoc === downJumpTile){
 				return true;
 			}
@@ -80,7 +79,7 @@ function move(location, direction) {
 		console.log(getLinkingLocation(getCurrentMapName(), oldLocation));
 		return getLinkingLocation(getCurrentMapName(), oldLocation);
 	}
-	var nextTile = getCurrentMap()[location.row][location.col]
+	var nextTile = getCurrentMap()[location.row][location.col];
 	
 	queryForPokemon(nextTile);
 
@@ -95,7 +94,6 @@ function queryForPokemon(tileId) {
 		if (rand == 1) {
 			setInFight(true);
 			getRandomPokemon(foundPokemon);
-			return;
 		}
 	}
 }
