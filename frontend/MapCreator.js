@@ -10,6 +10,9 @@ window.onload = function() {
         resizeMap(document.getElementById("tbRows").value, document.getElementById("tbCols").value);
     });
 
+    $(".tileSection").hide();
+    $("#ground").show();
+
     var landTile = document.getElementById("groundBrown");
     landTile.className += " clicked";
     currentTile = landTile;
@@ -69,22 +72,10 @@ function buildGridFromMap(map, callback) {
                 mouseDown = false;
             }, false);
             cell.id = map[row][col];
-            cell.style.backgroundColor = getColor(map[row][col]);
             allElements[row][col] = cell;
         }
     }
     return grid;
-}
-
-function getColor(tileId) {
-    switch(tileId) {
-        case 'l':return "tan";
-        case 'w':return "blue";
-        case 'g':return "green";
-        case 'b':return "gray";
-        case 'd':return "brown";
-        default:return "white";
-    }
 }
 
 function resizeMap(rows, cols) {
@@ -147,6 +138,10 @@ function changeCurrentTile(div) {
     }
 }
 
+function sectionClicked(id) {
+    $(".tileSection").hide();
+    $("#" + id).show();
+}
 
 function createMap() {
     var result = document.getElementById("result");
