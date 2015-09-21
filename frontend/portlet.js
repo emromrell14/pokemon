@@ -114,7 +114,7 @@ function startFightScene(pokemonInfo) {
     activeBattle.setTheirPokemon(pokemon);
     $("#theirName").empty().append(pokemon.name.toUpperCase());
     $("#theirLevel").empty().append("L:" + pokemon.level);
-    changeHealthBarColorAndSize($("#theirHealthBar"), pokemon.hp / pokemon.maxHp, false);
+    activeBattle.changeHealthBarColorAndSize($("#theirHealthBar"), pokemon.hp / pokemon.maxHp, false);
     $("#theirImage").attr("src", "images/pokemon/" + pokemon.nationalId + ".png").show();
 
     $("#yourImage").empty().attr("src", "images/pokemon/back/trainer.png");
@@ -138,7 +138,7 @@ function sendOutFirstPokemon() {
         yourImage.show(500, function() {
             $("#yourName").empty().append(pokemon.name.toUpperCase());
             $("#yourLevel").empty().append("L:" + pokemon.level);
-            changeHealthBarColorAndSize($("#yourHealthBar"), pokemon.hp / pokemon.maxHp, false);
+            activeBattle.changeHealthBarColorAndSize($("#yourHealthBar"), pokemon.hp / pokemon.maxHp, false);
             $("#yourExpBar").css("width", (pokemon.exp / pokemon.maxExp * 64));
             $("#yourHp").empty().append(pokemon.hp + "/" + pokemon.maxHp);
             $("#yourStats").show();

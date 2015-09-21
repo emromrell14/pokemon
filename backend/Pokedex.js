@@ -3150,4 +3150,4 @@ var pokedex = {
         }*/
     ],
     "resource_uri": "/api/v1/pokedex/1/"
-}
+};
