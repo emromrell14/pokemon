@@ -1,9 +1,12 @@
 <html>
 	<head>
 		<script src="../frontend/portlet.js"></script>
+		<script src="../backend/Battle.js"></script>
+		<script src="../backend/LevelRange.js"></script>
 		<script src="../backend/Maps.js"></script>
 		<script src="../backend/Mobility.js"></script>
 		<script src="../backend/Pokedex.js"></script>
+		<script src="../backend/Pokemon.js"></script>
 		<script src="../backend/Party.js"></script>
 		<script src="../jquery-1.11.3.js"></script>
 		<link rel="stylesheet" type="text/css" href="portlet.css" />
@@ -14,35 +17,49 @@
 		<div id="fightScene">
 			<div id="theirDiv">
 				<div id="theirStats">
-					<img id="theirStatBar" src="images/theirStats.png"></img>
-					<p id="theirName" class="pokemonName"></p><br/>
+					<img id="theirStatBar" src="images/theirStats.png" />
+					<div id="theirHealthBarWrapper">
+						<img id="theirHealthBar" />
+					</div>
+					<p id="theirName" class="pokemonName"></p><br />
 					<p id="theirLevel" class="pokemonLevel"></p>
 				</div>
 				<div id="theirImageDiv">
-					<img id="theirImage"></img>
+					<img id="theirImage" />
 				</div>
 			</div>
 			<div id="yourDiv">
 				<div id="yourImageDiv">
-					<img id="yourImage"></img>
+					<img id="yourImage" />
 				</div>
 				<div id="yourStats">
-					<img id="yourStatBar" src="images/yourStats.png"></img>
+					<img id="yourStatBar" src="images/yourStats.png" />
 					<p id="yourName" class="pokemonName"></p>
 					<p id="yourLevel" class="pokemonLevel"></p>
+					<div id="yourHealthBarWrapper">
+						<img id="yourHealthBar" />
+					</div>
 					<p id="yourHp" class="pokemonHp"></p>
+					<div id="yourExpBarWrapper">
+						<img id="yourExpBar" src="images/expBar.png" />
+					</div>
 				</div>
 			</div>
 			<div id="optionsDiv">
 				<p id="optionsText"></p>
 				<div id="startOptions">
-					<button class="option">PKMN</button>
-					<button class="option">FIGHT</button>
-					<button class="option">RUN</button>
-					<button class="option">PACK</button>
+					<button class="startOption" onclick="pokemonOptionClicked()">PKMN</button>
+					<button class="startOption" onclick="fightOptionClicked()">FIGHT</button>
+					<button class="startOption" onclick="runOptionClicked()">RUN</button>
+					<button class="startOption" onclick="packOptionClicked()">PACK</button>
+				</div>
+				<div id="moveOptions">
+					<button id="move0" class="moveOption" onclick="moveSelected(this)"></button>
+					<button id="move1" class="moveOption" onclick="moveSelected(this)"></button>
+					<button id="move2" class="moveOption" onclick="moveSelected(this)"></button>
+					<button id="move3" class="moveOption" onclick="moveSelected(this)"></button>
 				</div>
 			</div>
 		</div>
-		<button id="start" onclick="backToMap()">Back to Map</button>
 	</body>
 </html>

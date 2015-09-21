@@ -52,6 +52,16 @@ p {
 	position: absolute;
 }
 
+#theirHealthBarWrapper {
+	position: absolute;
+	top: 28px;
+	left: 41px;
+}
+
+#theirHealthBar {
+	height: 5px;
+}
+
 #theirName {
 	padding-left: 10px;
 }
@@ -97,6 +107,27 @@ p {
 	font-size: 9px;
 }
 
+#yourHealthBarWrapper {
+	position: absolute;
+	left: 107px;
+	top: 84px;
+}
+
+#yourHealthBar {
+	height: 5px;
+}
+
+#yourExpBarWrapper {
+	position: relative;
+	top: -9px;
+	right: 14px;
+}
+
+#yourExpBar {
+	height: 5px;
+	float: right;
+}
+
 #yourHp {
 	padding-left: 45px;
 }
@@ -136,11 +167,29 @@ p {
 	float: right;
 }
 
-.option {
+#moveOptions {
+	position: absolute;
+	width: 160px;
+	height: 48px;
+	background-color: gray;
+}
+
+.startOption {
 	float: right;
 	background-color: #fff;
 	border: none;
 	width: 40px;
 	cursor: pointer;
 	padding: 5px 0px;
+}
+
+.moveOption {
+	float: left;
+	width: 80px;
+	height: 23px;
+	padding: 0px;
+}
+
+.startOption:focus {
+	outline: 0px;
 }

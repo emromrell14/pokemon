@@ -1,10 +1,16 @@
 var currentCell = {};
 var allElements;
 var inFight;
+var activeBattle;
+var BAR_WIDTH = 48;
+
+function setInFight(bool) {
+    inFight = bool;
+}
 
 window.onload = function() {
     init();
-}
+};
 
 function init() {
     setStartLocation();
@@ -66,7 +72,7 @@ window.onkeydown = function(e) {
         case 39: attemptMove("RIGHT");break;
         case 40: attemptMove("DOWN");break;
     }
-}
+};
 
 function executeAction() {
 }
@@ -74,7 +80,7 @@ function executeAction() {
 function attemptMove(dir) {
     if (!inFight) {
         if (canMove(currentCell.location, dir)) {
-            currentCell.element.childNodes.item('foreground').className = '';
+            currentCell.element.childNodes.item("foreground").className = '';
             var result = move(currentCell.location, dir);
             if (getCurrentMapName() !== result.mapName) {
                 $("#mainBoard").fadeOut(500, function() {
@@ -82,6 +88,7 @@ function attemptMove(dir) {
                     currentCell.location = result.location;
                     reloadMap();
                     currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
+                    currentCell.element.childNodes.item('foreground').className = dir;
                 }).fadeIn(500);
             } else {
                 currentCell.location = result.location;
@@ -96,34 +103,45 @@ function attemptMove(dir) {
 }
 
 function foundPokemon(pokemon) {
-    inFight = true;
     $("#mainBoard").hide(1000, function() {
-        startFightScene({info: pokemon, level: 16});
+        startFightScene(pokemon);
     });
 }
 
-function startFightScene(pokemon) {
-    $("#theirName").empty().append(pokemon.info.name.toUpperCase());
+function startFightScene(pokemonInfo) {
+    activeBattle = new Battle();
+    var pokemon = Pokemon.createPokemonFromResource(pokemonInfo, getRandomLevelForCurrentMap());
+    activeBattle.setTheirPokemon(pokemon);
+    $("#theirName").empty().append(pokemon.name.toUpperCase());
     $("#theirLevel").empty().append("L:" + pokemon.level);
-    $("#theirImage").attr("src", "images/pokemon/" + pokemon.info.national_id + ".png");
+    changeHealthBarColorAndSize($("#theirHealthBar"), pokemon.hp / pokemon.maxHp, false);
+    $("#theirImage").attr("src", "images/pokemon/" + pokemon.nationalId + ".png").show();
 
     $("#yourImage").empty().attr("src", "images/pokemon/back/trainer.png");
+    $("#yourStats").hide();
 
     $("#startOptions").hide();
+    $("#moveOptions").hide();
+    $("#optionsText").empty();
     $("#fightScene").show(1000, function() {
-        scrollText("optionsText", "Wild " + pokemon.info.name.toUpperCase() + " appeared!", sendOutPokemon);
+        scrollText("optionsText", "Wild " + pokemon.name.toUpperCase() + " appeared!", sendOutFirstPokemon);
     });
 }
 
-function sendOutPokemon() {
-    var firstPokemon = getFirstLivePokemonInParty();
-    scrollText("optionsText", "Go, " + firstPokemon.name.toUpperCase() + "!", function() {});
+function sendOutFirstPokemon() {
+    var pokemon = getFirstLivePokemonInParty();
+    activeBattle.setYourPokemon(pokemon);
+    scrollText("optionsText", "Go, " + pokemon.name.toUpperCase() + "!", function() {});
     $("#yourImage").hide(500, function() {
-        $("#yourImage").attr("src", "images/pokemon/back/" + firstPokemon.national_id + ".png");
-        $("#yourImage").show(500, function() {
-            $("#yourName").empty().append(firstPokemon.name.toUpperCase());
-            $("#yourLevel").empty().append("L:" + firstPokemon.level);
-            $("#yourHp").empty().append(firstPokemon.hp + "/" + firstPokemon.maxHp);
+        var yourImage = $("#yourImage");
+        yourImage.attr("src", "images/pokemon/back/" + pokemon.nationalId + ".png");
+        yourImage.show(500, function() {
+            $("#yourName").empty().append(pokemon.name.toUpperCase());
+            $("#yourLevel").empty().append("L:" + pokemon.level);
+            changeHealthBarColorAndSize($("#yourHealthBar"), pokemon.hp / pokemon.maxHp, false);
+            $("#yourExpBar").css("width", (pokemon.exp / pokemon.maxExp * 64));
+            $("#yourHp").empty().append(pokemon.hp + "/" + pokemon.maxHp);
+            $("#yourStats").show();
             delay(2000, function() {
                 $("#optionsText").empty();
                 $("#startOptions").show();
@@ -132,8 +150,45 @@ function sendOutPokemon() {
     });
 }
 
-function backToMap() {
-    $('#fightScene').hide(1000, function() {
+function fightOptionClicked() {
+    for (var i = 0; i < 4; i++) {
+        if (i < activeBattle.yourPokemon.moves.length) {
+            $("#move" + i).empty().append(activeBattle.yourPokemon.moves[i].name).attr("value", i);
+        } else {
+            $("#move" + i).empty().append("--");
+        }
+    }
+    $("#moveOptions").show();
+}
+
+function pokemonOptionClicked() {
+    console.log(getAllPokemonInParty());
+}
+
+function packOptionClicked() {
+    $("#startOptions").hide();
+    scrollText("optionsText", "You don't have anything in your pack!", function() {
+        $("#startOptions").show();
+    });
+}
+
+function runOptionClicked() {
+    $("#startOptions").hide();
+    scrollText("optionsText", "Got away safely!", function() {
+        exitFightScene();
+    });
+}
+
+function moveSelected(button) {
+    $("#moveOptions").hide();
+    $("#startOptions").hide();
+    scrollText("optionsText", activeBattle.yourPokemon.name.toUpperCase() + " used " + activeBattle.yourPokemon.moves[button.value].name, function() {
+        activeBattle.attack(activeBattle.yourPokemon.moves[button.value].damage);
+    });
+}
+
+function exitFightScene() {
+    $("#fightScene").hide(1000, function() {
         $("#mainBoard").show(1000, function() {
             inFight = false;
         });
@@ -149,7 +204,7 @@ function scrollText(paragraphId, newText, callback) {
             elem.text(elem.text() + contentArray[current++]);
         } else {
             clearInterval(interval);
-            delay(2000, callback);
+            delay(1500, callback);
         }
     }, 50);
 }
