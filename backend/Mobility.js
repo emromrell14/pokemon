@@ -1,4 +1,4 @@
-var POKEMON_CHANCE = 20;
+var POKEMON_CHANCE = 1;
 
 var walkableTiles = ["groundGreen","groundBrown","groundWhite","groundYellow","door","grass"];
 
@@ -91,7 +91,7 @@ function move(location, direction) {
 function queryForPokemon(tileId) {
 	if (tileId == "grass") {
 		rand = Math.floor(Math.random()*POKEMON_CHANCE);
-		if (rand == 1) {
+		if (rand == 0) {
 			setInFight(true);
 			getRandomPokemon(foundPokemon);
 		}
