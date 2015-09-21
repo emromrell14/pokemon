@@ -1,4 +1,4 @@
-var POKEMON_CHANCE = 25;
+var POKEMON_CHANCE = 20;
 
 var walkableTiles = ["groundGreen","groundBrown","groundWhite","groundYellow","door","grass"];
 
@@ -82,29 +82,20 @@ function move(location, direction) {
 	}
 	var nextTile = getCurrentMap()[location.row][location.col]
 	
-	//popUp(nextTile);
-	alertLocation(location, nextTile);
-	
-	
+	queryForPokemon(nextTile);
+
 	return {mapName: currentMapName, location: location};
 	
 	
 }
 
-function popUp(tileId) {
+function queryForPokemon(tileId) {
 	if (tileId == "grass") {
 		rand = Math.floor(Math.random()*POKEMON_CHANCE);
 		if (rand == 1) {
-			alert("POKEMON!!!!");
+			setInFight(true);
+			getRandomPokemon(foundPokemon);
+			return;
 		}
-	}
-}
-
-function alertLocation(location, tileId) {
-	var mapData = getCurrentMap()
-	if (location.col == 0 || location.col == mapData[0].length-1 || 
-			location.row == 0 || location.row == mapData.length-1 ||
-			tileId === "door") {
-		console.log(location.row + "-" + location.col);
 	}
 }
