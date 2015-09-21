@@ -112,7 +112,7 @@ var mapLinks = {
 			}
 		}
 	}
-}
+};
 
 var maps = {
 	PalletTown: [
@@ -323,11 +323,11 @@ var maps = {
 		['groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'groundWhite', 'groundWhite', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen'],
 		['groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'groundWhite', 'groundWhite', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen', 'groundGreen']
 	]
-}
+};
 
 var mapLevels = {
 	'PalletTown': new LevelRange(2, 4),
 	'Route1': new LevelRange(2, 5),
 	'VeridianCity': new LevelRange(3, 6),
 	'Route2': new LevelRange(4, 8)
-}
+};
