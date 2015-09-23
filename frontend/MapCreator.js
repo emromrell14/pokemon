@@ -16,10 +16,10 @@ window.onload = function() {
     var landTile = document.getElementById("groundBrown");
     landTile.className += " clicked";
     currentTile = landTile;
-}
+};
 
 function initMapSelector() {
-    var mapNames = getAllMapNames();
+    var mapNames = Maps.getAllMapNames();
     var mapSelector = document.getElementById("mapSelector");
     for (var i = 0; i < mapNames.length; i++) {
         var option = document.createElement("option");
@@ -39,8 +39,8 @@ function loadMap() {
     }
 
     //Select the map from the dropdown list and load it up
-    setCurrentMap(mapSelector.options[mapSelector.selectedIndex].text);
-    var map = getCurrentMap();
+    Maps.setCurrentMap(mapSelector.options[mapSelector.selectedIndex].text);
+    var map = Maps.getCurrentMap();
     document.getElementById("mainBoard").appendChild(buildGridFromMap(map, function(element, row, col) {
         if(mouseDown) {
             element.id = currentTile.id;
@@ -131,7 +131,7 @@ function clickableGrid(rows, cols, callback) {
 function changeCurrentTile(div) {
     if (currentTile) {
         currentTile.className = "colorBlock";
-    } 
+    }
     currentTile = div;
     if (currentTile.className.indexOf(" clicked") == -1) {
         currentTile.className += " clicked"
