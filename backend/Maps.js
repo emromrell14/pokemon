@@ -1,41 +1,42 @@
+var Maps = {};
 var currentMapName = "";
 
-function getMap(mapName) {
+Maps.getMap = function(mapName) {
 	return maps[mapName];
-}
+};
 
-function getCurrentMapName() {
+Maps.getCurrentMapName = function() {
 	return currentMapName;
-}
+};
 
-function setCurrentMap(mapName) {
+Maps.setCurrentMap = function(mapName) {
 	currentMapName = mapName;
-}
+};
 
-function getCurrentMap() {
+Maps.getCurrentMap = function() {
 	return maps[currentMapName];
-}
+};
 
-function getAllMapNames() {
+Maps.getAllMapNames = function() {
 	return Object.keys(maps);
-}
+};
 
-function getLinkingLocation(mapName, location) {
+Maps.getLinkingLocation = function(mapName, location) {
 	console.log(mapName);
 	console.log(location);
 	console.log(mapLinks);
 	var result = mapLinks[mapName][location.row + "-" + location.col];
 	return {mapName: result.mapName, location: {row: result.location.row, col: result.location.col}}
-}
+};
 
-function getTestStartLocation(mapName) {
+Maps.getTestStartLocation = function(mapName) {
 	return {row: 6, col: 5};
-}
+};
 
-function getRandomLevelForCurrentMap() {
-	var range = mapLevels[getCurrentMapName()];
+Maps.getRandomLevelForCurrentMap = function() {
+	var range = mapLevels[Maps.getCurrentMapName()];
 	return Math.floor(Math.random() * (range.endLevel - range.startLevel + 1)) + range.startLevel;
-}
+};
 
 var mapLinks = {
 	"PalletTown": {

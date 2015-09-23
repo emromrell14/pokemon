@@ -11,7 +11,7 @@ function canWalk(tileId) {
 }
 
 function canMove(location, direction) {
-    var mapData = getCurrentMap();
+    var mapData = Maps.getCurrentMap();
 	var nextLoc;
 	switch(direction) {
         case "LEFT": {
@@ -58,7 +58,7 @@ function move(location, direction) {
     if(!canMove(location, direction)) {
         return location;
     }
-	var mapData = getCurrentMap();
+	var mapData = Maps.getCurrentMap();
 	var oldLocation = {row: location.row, col: location.col};
 	switch(direction) {
 		case "LEFT":
@@ -76,10 +76,9 @@ function move(location, direction) {
 	}
 	if (location.col == -1 || location.row == -1 || 
 			location.col == mapData[0].length || location.row == mapData.length) {
-		console.log(getLinkingLocation(getCurrentMapName(), oldLocation));
-		return getLinkingLocation(getCurrentMapName(), oldLocation);
+		return Maps.getLinkingLocation(Maps.getCurrentMapName(), oldLocation);
 	}
-	var nextTile = getCurrentMap()[location.row][location.col];
+	var nextTile = mapData[location.row][location.col];
 	
 	queryForPokemon(nextTile);
 
@@ -93,7 +92,7 @@ function queryForPokemon(tileId) {
 		rand = Math.floor(Math.random()*POKEMON_CHANCE);
 		if (rand == 0) {
 			setInFight(true);
-			getRandomPokemon(foundPokemon);
+			Pokemon.getRandomPokemon(foundPokemon);
 		}
 	}
 }

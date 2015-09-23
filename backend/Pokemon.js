@@ -1,23 +1,30 @@
-var Pokemon = function(name, nationalId, level, hp, maxHp, exp, maxExp, moves) {
-	this.name = name; 
-	this.nationalId = nationalId;
+var Pokemon = function(resource, level, hp, maxHp, exp, maxExp, moves) {
+	this.info = resource;
 	this.level = level;
 	this.hp = hp;
-	this.maxHp = maxHp; 
+	this.maxHp = maxHp;
 	this.exp = exp;
 	this.maxExp = maxExp;
 	this.moves = moves;
 };
 
-Pokemon.createPokemonFromResource = function(pokemon, level) {
-	var moves = [];
-	for (var i = 0; i < pokemon.moves.length; i++) {
-		if (pokemon.moves[i].learn_type === "level up" && pokemon.moves[i].level < level) {
-			moves.push(pokemon.moves[i]);
-			if (moves.length > 4) {
-				moves.splice(0, 1);
-			}			
+Pokemon.getRandomPokemon = function(callback) {
+	PokemonResource.getRandomPokemonResource(function(resource) {
+		var level = Maps.getRandomLevelForCurrentMap();
+		var pokemon = new Pokemon(resource, level, resource.hp, resource.hp, 0, 200, Move.getDefaultMovesForPokemon(resource, level));
+		callback(pokemon);
+	});
+};
+
+Pokemon.prototype.getEvolutionByLevel = function(level, callback) {
+	for (var i = 0; i < this.info.evolutions.length; i++) {
+		if (this.info.evolutions[i].level == level) {
+			PokemonResource.getByResourceUri(this.info.evolutions[i].resource_uri, function(pokemon) {
+				var evolution = new Pokemon(pokemon, level, this.hp, this.maxHp, this.exp, this.maxExp, this.moves);
+				callback(evolution);
+				return;
+			});
 		}
 	}
-	return new Pokemon(pokemon.name, pokemon.national_id, level, 40, 40, 0, 200, moves);
+	callback(null);
 };

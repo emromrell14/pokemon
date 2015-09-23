@@ -5,8 +5,11 @@
 		<script src="../backend/LevelRange.js"></script>
 		<script src="../backend/Maps.js"></script>
 		<script src="../backend/Mobility.js"></script>
+		<script src="../backend/Move.js"></script>
+		<script src="../backend/MoveResource.js"></script>
 		<script src="../backend/Pokedex.js"></script>
 		<script src="../backend/Pokemon.js"></script>
+		<script src="../backend/PokemonResource.js"></script>
 		<script src="../backend/Party.js"></script>
 		<script src="../jquery-1.11.3.js"></script>
 		<link rel="stylesheet" type="text/css" href="portlet.css" />
@@ -52,12 +55,14 @@
 					<button class="startOption" onclick="fightOptionClicked()">FIGHT</button>
 					<button class="startOption" onclick="runOptionClicked()">RUN</button>
 					<button class="startOption" onclick="packOptionClicked()">PACK</button>
+					<button id="yesOption" class="yesNoOption">YES</button>
+					<button id="noOption" class="yesNoOption">NO</button>
 				</div>
 				<div id="moveOptions">
-					<button id="move0" class="moveOption" onclick="moveSelected(this)"></button>
-					<button id="move1" class="moveOption" onclick="moveSelected(this)"></button>
-					<button id="move2" class="moveOption" onclick="moveSelected(this)"></button>
-					<button id="move3" class="moveOption" onclick="moveSelected(this)"></button>
+					<button id="move0" class="moveOption"></button>
+					<button id="move1" class="moveOption"></button>
+					<button id="move2" class="moveOption"></button>
+					<button id="move3" class="moveOption"></button>
 				</div>
 			</div>
 		</div>
