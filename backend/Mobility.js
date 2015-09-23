@@ -6,11 +6,13 @@ var leftJumpTile = "cliffLeft";
 var rightJumpTile = "cliffRight";
 var downJumpTile = "cliffDown";
 
-function canWalk(tileId) {
-	return walkableTiles.indexOf(tileId) !== -1;
-}
+var Mobility = {};
 
-function canMove(location, direction) {
+Mobility.canWalk = function(tileId) {
+	return walkableTiles.indexOf(tileId) !== -1;
+};
+
+Mobility.canMove = function(location, direction) {
     var mapData = Maps.getCurrentMap();
 	var nextLoc;
 	switch(direction) {
@@ -22,7 +24,7 @@ function canMove(location, direction) {
 			if (nextLoc === leftJumpTile){
 				return true;
 			}
-			return canWalk(nextLoc);
+			break;
         }
         case "RIGHT": {
             if (location.col == mapData[0].length - 1){
@@ -32,13 +34,14 @@ function canMove(location, direction) {
 			if (nextLoc === rightJumpTile){
 				return true;
 			}
-			return canWalk(nextLoc);
+			break;
 		}
 		case "UP": {
             if (location.row == 0){
 				return true;
 			}
-			return canWalk(mapData[location.row - 1][location.col]);
+			nextLoc = mapData[location.row - 1][location.col];
+			break;
         }
         case "DOWN": {
             if (location.row == mapData.length - 1){
@@ -48,14 +51,15 @@ function canMove(location, direction) {
 			if (nextLoc === downJumpTile){
 				return true;
 			}
-			return canWalk(nextLoc);
+			break;
         }
     }
-}
+	return Mobility.canWalk(nextLoc);
+};
 
-function move(location, direction) {
+Mobility.move = function(location, direction) {
     //first check if the user can move 
-    if(!canMove(location, direction)) {
+    if(!Mobility.canMove(location, direction)) {
         return location;
     }
 	var mapData = Maps.getCurrentMap();
@@ -80,19 +84,19 @@ function move(location, direction) {
 	}
 	var nextTile = mapData[location.row][location.col];
 	
-	queryForPokemon(nextTile);
+	Mobility.queryForPokemon(nextTile);
 
 	return {mapName: currentMapName, location: location};
 	
 	
-}
+};
 
-function queryForPokemon(tileId) {
+Mobility.queryForPokemon = function(tileId) {
 	if (tileId == "grass") {
-		rand = Math.floor(Math.random()*POKEMON_CHANCE);
+		var rand = Math.floor(Math.random()*POKEMON_CHANCE);
 		if (rand == 0) {
 			setInFight(true);
 			Pokemon.getRandomPokemon(foundPokemon);
 		}
 	}
-}
+};

@@ -79,12 +79,12 @@ function executeAction() {
 
 function attemptMove(dir) {
     if (!inFight) {
-        if (canMove(currentCell.location, dir)) {
+        if (Mobility.canMove(currentCell.location, dir)) {
             currentCell.element.childNodes.item("foreground").className = '';
-            var result = move(currentCell.location, dir);
+            var result = Mobility.move(currentCell.location, dir);
             if (Maps.getCurrentMapName() !== result.mapName) {
                 $("#mainBoard").fadeOut(500, function() {
-                    setCurrentMap(result.mapName);
+                    Maps.setCurrentMap(result.mapName);
                     currentCell.location = result.location;
                     reloadMap();
                     currentCell.element = allElements[currentCell.location.row][currentCell.location.col];

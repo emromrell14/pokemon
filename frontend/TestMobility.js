@@ -18,7 +18,7 @@ window.onload=function() {
     });
 
     document.getElementById("mainBoard").appendChild(grid);
-}
+};
 
 function clickableGrid( rows, cols, callback ) {
     var i=0;
@@ -43,7 +43,7 @@ function testCanMove() {
     col = document.getElementById("col").value;
     row = document.getElementById("row").value;
     dir = document.getElementById("dir").value;
-    if (canMove({col, row}, dir)) {
+    if (Mobility.canMove({col: col, row: row}, dir)) {
         currentCell.className = 'successCell';
     } else {
         currentCell.className = 'failCell';

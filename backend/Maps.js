@@ -22,9 +22,6 @@ Maps.getAllMapNames = function() {
 };
 
 Maps.getLinkingLocation = function(mapName, location) {
-	console.log(mapName);
-	console.log(location);
-	console.log(mapLinks);
 	var result = mapLinks[mapName][location.row + "-" + location.col];
 	return {mapName: result.mapName, location: {row: result.location.row, col: result.location.col}}
 };

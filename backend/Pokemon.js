@@ -17,14 +17,18 @@ Pokemon.getRandomPokemon = function(callback) {
 };
 
 Pokemon.prototype.getEvolutionByLevel = function(level, callback) {
+	var evolutionFound = false;
+
 	for (var i = 0; i < this.info.evolutions.length; i++) {
 		if (this.info.evolutions[i].level == level) {
+			evolutionFound = true;
 			PokemonResource.getByResourceUri(this.info.evolutions[i].resource_uri, function(pokemon) {
 				var evolution = new Pokemon(pokemon, level, this.hp, this.maxHp, this.exp, this.maxExp, this.moves);
 				callback(evolution);
-				return;
 			});
 		}
 	}
-	callback(null);
+	if(!evolutionFound) {
+		callback(null);
+	}
 };
