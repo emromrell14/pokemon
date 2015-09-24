@@ -3,6 +3,7 @@ var allElements;
 var inFight;
 var activeBattle;
 var BAR_WIDTH = 48;
+var EXP_BAR_WIDTH = 64;
 
 function setInFight(bool) {
     inFight = bool;
@@ -105,7 +106,7 @@ function attemptMove(dir) {
 function foundPokemon(theirPokemon) {
     $("#mainBoard").hide(1000, function() {
         $("#theirName").empty().append(theirPokemon.info.name.toUpperCase());
-        $("#theirLevel").empty().append("L:" + theirPokemon.level);
+        $("#theirLevel").empty().append("L:" + Util.pad(3, theirPokemon.level, " "));
         $("#theirImage").attr("src", "images/pokemon/" + theirPokemon.info.nationalId + ".png").show();
 
         $("#yourImage").empty().attr("src", "images/pokemon/back/trainer.png");
@@ -117,7 +118,7 @@ function foundPokemon(theirPokemon) {
 
         var yourPokemon = Party.getFirstLivePokemonInParty();
         activeBattle = new Battle(yourPokemon, theirPokemon);
-        activeBattle.changeHealthBarColorAndSize($("#theirHealthBar"), theirPokemon.hp / theirPokemon.maxHp, false);
+        activeBattle.changeHealthBarColorAndSize($("#theirHealthBar"), theirPokemon.stats.hp / theirPokemon.stats.maxHp, false);
 
         $("#fightScene").show(1000, function() {
             scrollText("optionsText", "Wild " + theirPokemon.info.name.toUpperCase() + " appeared!", function() {
@@ -127,10 +128,10 @@ function foundPokemon(theirPokemon) {
                     yourImage.attr("src", "images/pokemon/back/" + yourPokemon.info.nationalId + ".png");
                     yourImage.show(500, function() {
                         $("#yourName").empty().append(yourPokemon.info.name.toUpperCase());
-                        $("#yourLevel").empty().append("L:" + yourPokemon.level);
-                        activeBattle.changeHealthBarColorAndSize($("#yourHealthBar"), yourPokemon.hp / yourPokemon.maxHp, false);
-                        $("#yourExpBar").css("width", (yourPokemon.exp / yourPokemon.maxExp * 64));
-                        $("#yourHp").empty().append(yourPokemon.hp + "/" + yourPokemon.maxHp);
+                        $("#yourLevel").empty().append("L:" + Util.pad(3, yourPokemon.level, " "));
+                        activeBattle.changeHealthBarColorAndSize($("#yourHealthBar"), yourPokemon.stats.hp / yourPokemon.stats.maxHp, false);
+                        $("#yourExpBar").css("width", (yourPokemon.getExpPercentage() * EXP_BAR_WIDTH));
+                        $("#yourHp").empty().append(Util.pad(4, yourPokemon.stats.hp, " ") + "/" + Util.pad(4, yourPokemon.stats.maxHp, " "));
                         $("#yourStats").show();
                         delay(2000, function() {
                             $("#optionsText").empty();
@@ -144,6 +145,7 @@ function foundPokemon(theirPokemon) {
 }
 
 function showStartOptions() {
+    $("#optionsText").empty();
     $(".yesNoOption").hide();
     $(".startOption").show();
     $("#startOptions").show();
@@ -156,7 +158,7 @@ function showYesNoOptions() {
 }
 
 function showMoveOptions(action) {
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < MAX_MOVES; i++) {
         if (i < activeBattle.yourPokemon.moves.length) {
             $("#move" + i).attr("value", i).prop("disabled", false).empty().append(activeBattle.yourPokemon.moves[i].info.name).unbind("click").click(action);
         } else {
@@ -193,9 +195,8 @@ function runOptionClicked() {
 function moveSelected(button) {
     $("#moveOptions").hide();
     $("#startOptions").hide();
-    scrollText("optionsText", activeBattle.yourPokemon.info.name.toUpperCase() + " used " + activeBattle.yourPokemon.moves[button.value].info.name, function() {
-        activeBattle.attack(activeBattle.yourPokemon.moves[button.value].info.power);
-    });
+    var move = activeBattle.yourPokemon.moves[button.value];
+    activeBattle.startTurn(move);
 }
 
 function exitFightScene() {

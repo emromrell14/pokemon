@@ -96,7 +96,7 @@ Mobility.queryForPokemon = function(tileId) {
 		var rand = Math.floor(Math.random()*POKEMON_CHANCE);
 		if (rand == 0) {
 			setInFight(true);
-			Pokemon.getRandomPokemon(foundPokemon);
+			foundPokemon(Pokemon.getRandomPokemon());
 		}
 	}
 };

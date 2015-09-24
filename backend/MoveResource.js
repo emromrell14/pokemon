@@ -11,20 +11,6 @@ var MoveResource = function(resource) {
     this.resourceUri = resource.resource_uri;
 };
 
-MoveResource.getByResourceUri = function(resourceUri, callback) {
-    if (resourceUri in moveCache) {
-        console.log("Using cache for move...");
-        callback(moveCache[resourceUri]);
-    } else {
-        $.ajax({
-            url: "http://pokeapi.co" + resourceUri,
-            success: function(data) {
-                var resource = new MoveResource(data);
-                moveCache[resourceUri] = resource;
-                callback(resource);
-            }
-        });
-    }
+MoveResource.getByResourceUri = function(resourceUri) {
+    return new MoveResource(MoveCache.getByResourceUri(resourceUri));
 };
-
-var moveCache = {};

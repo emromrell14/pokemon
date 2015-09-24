@@ -1,3 +1,7 @@
+var MAX_MOVES = 4;
+var GREEN_BAR_END = .5;
+var YELLOW_BAR_END = .2;
+
 var Battle = function(yourPokemon, theirPokemon) {
 	this.yourPokemon = yourPokemon;
 	this.theirPokemon = theirPokemon;
@@ -11,36 +15,83 @@ Battle.prototype.setTheirPokemon = function(pokemon) {
 	this.theirPokemon = pokemon;
 };
 
-Battle.prototype.attack = function(defaultDamage) {
-	var yourPokemon = this.yourPokemon;
-	var theirPokemon = this.theirPokemon;
+Battle.prototype.startTurn = function(yourMove) {
+	var battle = this;
+	var theirMove = battle.theirPokemon.moves[Math.floor(Math.random() * battle.theirPokemon.moves.length)];
 
+	if (battle.yourPokemon.info.speed >= battle.theirPokemon.info.speed) {
+		battle.youAttackThem(yourMove, function() {
+			battle.theyAttackYou(theirMove, function() {
+				showStartOptions();
+			});
+		});
+	} else {
+		battle.theyAttackYou(theirMove, function() {
+			battle.youAttackThem(yourMove, function() {
+				showStartOptions();
+			});
+		});
+	}
+};
+
+Battle.prototype.theyAttackYou = function(move, callback) {
 	var battle = this;
 
-	theirPokemon.hp -= (defaultDamage < theirPokemon.hp ? defaultDamage : theirPokemon.hp);
+	var damage = move.getDamageByPokemon(battle.theirPokemon, battle.yourPokemon);
+	battle.yourPokemon.stats.hp -= (damage < battle.yourPokemon.stats.hp ? damage : battle.yourPokemon.stats.hp);
 
-	this.changeHealthBarColorAndSize($("#theirHealthBar"), theirPokemon.hp / theirPokemon.maxHp, true, function() {
-		if (theirPokemon.hp > 0) {
-			$("#optionsText").empty();
-			$("#startOptions").show();
-		} else {
-			$("#theirImage").hide();
-			scrollText("optionsText", "Enemy " + theirPokemon.info.name.toUpperCase() + " fainted!", function() {
-				scrollText("optionsText", yourPokemon.info.name.toUpperCase() + " gained 25 exp points!", function() {
-					yourPokemon.exp += 25;
-					var newPercentage = yourPokemon.exp / yourPokemon.maxExp;
-					if (newPercentage >= 1) {
-						battle.growLevel(function() {
-							exitFightScene();
+	scrollText("optionsText", "Enemy " + this.theirPokemon.info.name.toUpperCase() + " used " + move.info.name, function() {
+		battle.changeHealthBarColorAndSize($("#yourHealthBar"), battle.yourPokemon.stats.hp / battle.yourPokemon.stats.maxHp, true, function() {
+			$("#yourHp").empty().append(Util.pad(4, battle.yourPokemon.stats.hp, " ") + "/" + Util.pad(4, battle.yourPokemon.stats.maxHp, " "));
+			if (battle.yourPokemon.stats.hp > 0) {
+				callback();
+			} else {
+				scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " fainted.", function() {
+					if (Party.getFirstLivePokemonInParty() != null) {
+						scrollText("optionsText", "Please select another pokemon to send out.", function() {
+							alert(Party.getAllPokemonInParty());
 						});
 					} else {
-						$("#yourExpBar").animate({width: (yourPokemon.exp / yourPokemon.maxExp * 64)}, 500, function() {
-							exitFightScene();
-						});
+						alert("You have no more pokemon. You lose");
 					}
 				});
-			});
-		}
+			}
+		});
+	});
+};
+
+Battle.prototype.youAttackThem = function(move, callback) {
+	var battle = this;
+
+	var damage = move.getDamageByPokemon(battle.yourPokemon, battle.theirPokemon);
+
+	battle.theirPokemon.stats.hp -= (damage < battle.theirPokemon.stats.hp ? damage : battle.theirPokemon.stats.hp);
+
+	scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " used " + move.info.name, function() {
+		battle.changeHealthBarColorAndSize($("#theirHealthBar"), battle.theirPokemon.stats.hp / battle.theirPokemon.stats.maxHp, true, function() {
+			if (battle.theirPokemon.stats.hp > 0) {
+				callback();
+			} else {
+				$("#theirImage").hide();
+				scrollText("optionsText", "Enemy " + battle.theirPokemon.info.name.toUpperCase() + " fainted!", function() {
+					var expGained = battle.theirPokemon.getExperienceToGive();
+					battle.yourPokemon.stats.totalExp += expGained;
+
+					scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " gained " + expGained + " exp points!", function() {
+						var newPercentage = battle.yourPokemon.getExpPercentage();
+						if (newPercentage >= 1) {
+							battle.growLevel(function() {
+								exitFightScene();
+							});
+						} else {
+							$("#yourExpBar").animate({width: (newPercentage * EXP_BAR_WIDTH)}, 500, function() {
+								exitFightScene();
+							});
+						}
+					});
+				});
+			}
+		});
 	});
 };
 
@@ -50,18 +101,18 @@ Battle.prototype.changeHealthBarColorAndSize = function(image, newPercentage, an
 
 		if (currentPercentage > newPercentage) {
 			//They're going down in health
-			if (currentPercentage >= .5) {
+			if (currentPercentage >= GREEN_BAR_END) {
 				//They are starting in the green zone
-				if (newPercentage < .5) {
+				if (newPercentage < GREEN_BAR_END) {
 					//They are going into the yellow zone
 					this.changeHealthBarGreen(image, newPercentage, callback);
 				} else {
 					//They are staying in the green zone
 					this.changeHealthBarSameZone(image, newPercentage, callback);
 				}
-			} else if (currentPercentage >= .25) {
+			} else if (currentPercentage >= YELLOW_BAR_END) {
 				//They are starting in the yellow zone
-				if (newPercentage < .25) {
+				if (newPercentage < YELLOW_BAR_END) {
 					//They are going into the red zone
 					this.changeHealthBarYellow(image, newPercentage, callback);
 				} else {
@@ -81,9 +132,9 @@ Battle.prototype.changeHealthBarColorAndSize = function(image, newPercentage, an
 		}
 	} else {
 		image.css("width", (newPercentage * BAR_WIDTH) + "px");
-		if (newPercentage >= .5) {
+		if (newPercentage >= GREEN_BAR_END) {
 			image.attr("src", "images/greenHealthBar.png");
-		} else if (newPercentage >= .25) {
+		} else if (newPercentage >= YELLOW_BAR_END) {
 			image.attr("src", "images/yellowHealthBar.png");
 		} else {
 			image.attr("src", "images/redHealthBar.png");
@@ -93,9 +144,9 @@ Battle.prototype.changeHealthBarColorAndSize = function(image, newPercentage, an
 
 Battle.prototype.changeHealthBarGreen = function(image, newPercentage, callback) {
 	var battle = this;
-	image.animate({width: (.5 * BAR_WIDTH)}, function() {
+	image.animate({width: (GREEN_BAR_END * BAR_WIDTH)}, function() {
 		image.attr("src", "images/yellowHealthBar.png");
-		if (newPercentage < .25) {
+		if (newPercentage < YELLOW_BAR_END) {
 			battle.changeHealthBarYellow(image, newPercentage, callback);
 		} else {
 			battle.changeHealthBarSameZone(image, newPercentage, callback);
@@ -105,7 +156,7 @@ Battle.prototype.changeHealthBarGreen = function(image, newPercentage, callback)
 
 Battle.prototype.changeHealthBarYellow = function(image, newPercentage, callback) {
 	var battle = this;
-	image.animate({width: (.25 * BAR_WIDTH)}, function() {
+	image.animate({width: (YELLOW_BAR_END * BAR_WIDTH)}, function() {
 		image.attr("src", "images/redHealthBar.png");
 		battle.changeHealthBarSameZone(image, newPercentage, callback);
 	});
@@ -122,19 +173,18 @@ Battle.prototype.growLevel = function(callback) {
 	var yourExpBar = $("#yourExpBar");
 
 	//Animate the experience up to the level mark
-	yourExpBar.animate({width: 64}, 500, function() {
+	yourExpBar.animate({width: EXP_BAR_WIDTH}, 500, function() {
 		//Reset the experience to 0
 		yourExpBar.css("width", 0);
-		battle.yourPokemon.exp = battle.yourPokemon.exp - battle.yourPokemon.maxExp;
-		battle.yourPokemon.maxExp *= 1.15;
+		battle.yourPokemon.raiseLevel();
 
 		//Change the level
-		$("#yourLevel").empty().append("L:" + (++battle.yourPokemon.level));
+		$("#yourLevel").empty().append("L:" + Util.pad(3, (battle.yourPokemon.level), " "));
 
 		scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " grew to level " + battle.yourPokemon.level + "!", function() {
 			battle.checkForEvolution(function() {
 				battle.checkForNewMove(function() {
-					yourExpBar.animate({width: (battle.yourPokemon.exp / battle.yourPokemon.maxExp * 64)}, 500, function() {
+					yourExpBar.animate({width: (battle.yourPokemon.getExpPercentage() * EXP_BAR_WIDTH)}, 500, function() {
 						callback();
 					});
 				});
@@ -147,20 +197,22 @@ Battle.prototype.checkForEvolution = function(callback) {
 	var battle = this;
 
 	//Check for evolution
-	battle.yourPokemon.getEvolutionByLevel(battle.yourPokemon.level, function(evolution) {
-		if (evolution != null) {
-			scrollText("optionsText", "Wait! " + battle.yourPokemon.info.name.toUpperCase() + " is evolving!", function() {
-				$("#yourImage").attr("src", "images/pokemon/back/" + evolution.info.nationalId + ".png");
-				$("#yourName").empty().append(evolution.info.name.toUpperCase());
-				scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " evolved into " + evolution.info.name.toUpperCase(), function() {
-					battle.yourPokemon = evolution;
-					callback();
-				});
+	var evolution = battle.yourPokemon.getEvolutionByLevel(battle.yourPokemon.level);
+	if (evolution != null) {
+		scrollText("optionsText", "Wait! " + battle.yourPokemon.info.name.toUpperCase() + " is evolving!", function() {
+			$("#yourImage").attr("src", "images/pokemon/back/" + evolution.info.nationalId + ".png");
+			$("#yourName").empty().append(evolution.info.name.toUpperCase());
+			scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " evolved into " + evolution.info.name.toUpperCase(), function() {
+				console.log(battle.yourPokemon);
+				battle.yourPokemon.info = evolution.info;
+				battle.yourPokemon.refreshStats();
+				console.log(battle.yourPokemon);
+				callback();
 			});
-		} else {
-			callback();
-		}
-	});
+		});
+	} else {
+		callback();
+	}
 };
 
 Battle.prototype.checkForNewMove = function(callback) {
@@ -172,44 +224,43 @@ Battle.prototype.checkForNewMove = function(callback) {
 		var moveLookup = battle.yourPokemon.info.moves[i];
 		if (moveLookup.learn_type === "level up" && moveLookup.level === battle.yourPokemon.level) {
 			foundMove = true;
-			MoveResource.getByResourceUri(moveLookup.resource_uri, function(resource) {
-				var move = new Move(resource);
-				if (battle.yourPokemon.moves.length < 4) {
-					battle.yourPokemon.moves.push(move);
-					scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " learned " + move.info.name, function() {
-						callback();
-					});
-				} else {
-					scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " is trying to learn " + move.info.name + ", but " + battle.yourPokemon.info.name.toUpperCase() + " already knows 4 moves...", function() {
-						scrollText("optionsText", "Would you like to overwrite a move to learn " + move.info.name + "?", function() {
-							$("#optionsText").empty();
-							showYesNoOptions();
-							$("#yesOption").click(function() {
-								$("#startOptions").hide();
-								scrollText("optionsText", "Which move would you like to delete?", function() {
-									$("#optionsText").empty();
-									showMoveOptions(function() {
-										var oldMoveName = battle.yourPokemon.moves[this.value].info.name;
-										battle.replaceMove(this.value, move);
-										delay(1000, function() {
-											$("#moveOptions").hide();
-											scrollText("optionsText", battle.yourPokemon.info.name + " forgot " + oldMoveName + " and learned " + move.info.name, function() {
-												callback();
-											});
+			var resource = MoveResource.getByResourceUri(moveLookup.resource_uri);
+			var move = new Move(resource, resource.pp, resource.pp);
+			if (battle.yourPokemon.moves.length < MAX_MOVES) {
+				battle.yourPokemon.moves.push(move);
+				scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " learned " + move.info.name, function() {
+					callback();
+				});
+			} else {
+				scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " is trying to learn " + move.info.name + ", but " + battle.yourPokemon.info.name.toUpperCase() + " already knows " + MAX_MOVES + " moves...", function() {
+					scrollText("optionsText", "Would you like to overwrite a move to learn " + move.info.name + "?", function() {
+						$("#optionsText").empty();
+						showYesNoOptions();
+						$("#yesOption").click(function() {
+							$("#startOptions").hide();
+							scrollText("optionsText", "Which move would you like to delete?", function() {
+								$("#optionsText").empty();
+								showMoveOptions(function() {
+									var oldMoveName = battle.yourPokemon.moves[this.value].info.name;
+									battle.replaceMove(this.value, move);
+									delay(1000, function() {
+										$("#moveOptions").hide();
+										scrollText("optionsText", battle.yourPokemon.info.name + " forgot " + oldMoveName + " and learned " + move.info.name, function() {
+											callback();
 										});
 									});
 								});
 							});
-							$("#noOption").click(function() {
-								$("#startOptions").hide();
-								scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " did not learn " + move.info.name, function() {
-									callback();
-								});
+						});
+						$("#noOption").click(function() {
+							$("#startOptions").hide();
+							scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " did not learn " + move.info.name, function() {
+								callback();
 							});
 						});
 					});
-				}
-			});
+				});
+			}
 		}
 	}
 	if (!foundMove) {
