@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script>
+            window.onload = function() {
+                var fullKeys = Object.keys(mapPokemonPercentages);
+                for (var i = 0; i < fullKeys.length; i++) {
+                    var mapKeys = Object.keys(mapPokemonPercentages[fullKeys[i]]);
+                    var total = 0;
+
+                    for (var j = 0; j < mapKeys.length; j++) {
+                        total += mapPokemonPercentages[fullKeys[i]][mapKeys[j]];
+                    }
+
+                    var result = $("<li></li>");
+                    if (total != 1) {
+                        result.css("color", "red");
+                    }
+                    result.append(fullKeys[i] + ": " + total);
+                    $("#results").append(result);
+                }
+            };
+        </script>
+        <script src="../backend/LevelRange.js"></script>
+        <script src="../backend/Maps.js"></script>
+        <script src="../jquery-1.11.3.js"></script>
+    </head>
+    <body>
+        <ul id="results"></ul>
+    </body>
+</html>
