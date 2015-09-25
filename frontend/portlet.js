@@ -187,9 +187,20 @@ function packOptionClicked() {
 
 function runOptionClicked() {
     $("#startOptions").hide();
-    scrollText("optionsText", "Got away safely!", function() {
-        exitFightScene();
-    });
+
+    activeBattle.escapeAttempts++;
+    var canEscape = activeBattle.canRunAway();
+    if (canEscape) {
+        scrollText("optionsText", "Got away safely!", function() {
+            exitFightScene();
+        });
+    } else {
+        scrollText("optionsText", activeBattle.yourPokemon.info.name.toUpperCase() + " tried to escape, but couldn't get away!", function() {
+            activeBattle.theyAttackYou(activeBattle.theirPokemon.getRandomMove(), function() {
+                showStartOptions();
+            });
+        });
+    }
 }
 
 function moveSelected(button) {

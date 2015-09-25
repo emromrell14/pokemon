@@ -21,7 +21,7 @@ Move.getDefaultMovesForPokemon = function(pokemonResource, level) {
 
 Move.prototype.getDamageByPokemon = function(attackingPokemon, defendingPokemon) {
     var modifier = 1;
-	var damage = Math.round((((2 * attackingPokemon.level + 10) / 250) * (attackingPokemon.stats.attack / defendingPokemon.stats.defense) * this.info.power) * modifier);
+	var damage = Math.ceil((((2 * attackingPokemon.level + 10) / 250) * (attackingPokemon.stats.attack / defendingPokemon.stats.defense) * this.info.power) * modifier);
     console.log(this.info.name + " on " + defendingPokemon.info.name + " does: (2 * " + attackingPokemon.level + " + 10) / 250) * " + attackingPokemon.stats.attack + " / " + defendingPokemon.stats.defense + ") * " + this.info.power + ") = " + damage + " damage");
     return damage;
 

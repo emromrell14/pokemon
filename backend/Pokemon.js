@@ -73,3 +73,7 @@ Pokemon.prototype.refreshStats = function() {
 	this.stats.defense = this.getStat("defense");
 	this.stats.speed = this.getStat("speed");
 };
+
+Pokemon.prototype.getRandomMove = function() {
+	return this.moves[Math.floor(Math.random() * this.moves.length)];
+};

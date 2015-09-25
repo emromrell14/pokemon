@@ -5,6 +5,7 @@ var YELLOW_BAR_END = .2;
 var Battle = function(yourPokemon, theirPokemon) {
 	this.yourPokemon = yourPokemon;
 	this.theirPokemon = theirPokemon;
+	this.escapeAttempts = 0;
 };
 
 Battle.prototype.setYourPokemon = function(pokemon) {
@@ -17,7 +18,7 @@ Battle.prototype.setTheirPokemon = function(pokemon) {
 
 Battle.prototype.startTurn = function(yourMove) {
 	var battle = this;
-	var theirMove = battle.theirPokemon.moves[Math.floor(Math.random() * battle.theirPokemon.moves.length)];
+	var theirMove = battle.theirPokemon.getRandomMove();
 
 	if (battle.yourPokemon.info.speed >= battle.theirPokemon.info.speed) {
 		battle.youAttackThem(yourMove, function() {
@@ -271,4 +272,19 @@ Battle.prototype.checkForNewMove = function(callback) {
 Battle.prototype.replaceMove = function(index, move) {
 	this.yourPokemon.moves[index] = move;
 	$("#move" + index).empty().append(move.info.name);
+};
+
+Battle.prototype.canRunAway = function() {
+	var b = (this.theirPokemon.stats.speed / 4) % 256;
+	if (b == 0) return true;
+	var f = ((this.yourPokemon.stats.speed * 32) / b) + 30 * this.escapeAttempts;
+	console.log("F = " + f);
+
+	if (f > 255) {
+		return true;
+	} else {
+		var random = Math.floor(Math.random() * 256);
+		console.log("Rand = " + random);
+		return random < f;
+	}
 };

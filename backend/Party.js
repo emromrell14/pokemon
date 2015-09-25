@@ -519,7 +519,7 @@ var party = [
 			}
 		],
 		"weight": "69"
-	}), 21, [
+	}), 5, [
 		new Move(new MoveResource({
 			"accuracy": 100,
 			"category": "",
@@ -544,7 +544,7 @@ var party = [
 			"pp": 40,
 			"resource_uri": "/api/v1/move/45/"
 		}), 40, 40)
-	], null), //, null, null, null, null),
+	], null),
 	new Pokemon(new PokemonResource({
 		"abilities": [
 			{
@@ -1377,7 +1377,7 @@ var party = [
 			"pp": 20,
 			"resource_uri": "/api/v1/move/129/"
 		}), 20, 20)
-	], null) //, null, null, null, null)
+	], null)
 ];
 
 var Party = {};
