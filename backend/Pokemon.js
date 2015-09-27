@@ -21,12 +21,6 @@ Pokemon.prototype.initializeStats = function(level) {
 	};
 };
 
-Pokemon.getRandomPokemon = function() {
-	var resource = PokemonResource.getRandomPokemonResource();
-	var level = Maps.getRandomLevelForCurrentMap();
-	return new Pokemon(resource, level, Move.getDefaultMovesForPokemon(resource, level), null);
-};
-
 Pokemon.prototype.getEvolutionByLevel = function(level) {
 	for (var i = 0; i < this.info.evolutions.length; i++) {
 		if (this.info.evolutions[i].level <= level) {

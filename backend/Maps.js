@@ -35,6 +35,22 @@ Maps.getRandomLevelForCurrentMap = function() {
 	return Math.floor(Math.random() * (range.endLevel - range.startLevel + 1)) + range.startLevel;
 };
 
+Maps.getRandomPokemonForCurrentMap = function() {
+	var mapValues = pokemonEncounters[Maps.getCurrentMapName()];
+	var listOfPokemon = Object.keys(mapValues);
+	var rand = Math.random();
+
+	var j = 0;
+	for (var i = 0; i < listOfPokemon.length; i++) {
+		j += mapValues[listOfPokemon[i]];
+		if (rand < j) {
+			var resource = PokemonResource.getByResourceUri("/api/v1/pokemon/" + listOfPokemon[i] + "/");
+			var level = Maps.getRandomLevelForCurrentMap();
+			return new Pokemon(resource, level, Move.getDefaultMovesForPokemon(resource, level), null);
+		}
+	}
+};
+
 var mapLinks = {
 	"PalletTown": {
 		"0-10": {

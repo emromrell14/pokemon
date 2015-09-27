@@ -28,11 +28,6 @@ var PokemonResource = function(resource) {
     this.weight = resource.weight;
 };
 
-PokemonResource.getRandomPokemonResource = function() {
-    var rand = Math.floor(Math.random()*150) + 1;
-    return PokemonResource.getByResourceUri("/api/v1/pokemon/" + rand + "/");
-};
-
 PokemonResource.getByResourceUri = function(resourceUri) {
     return new PokemonResource(PokemonCache.getByResourceUri(resourceUri));
 };
