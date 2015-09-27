@@ -2,17 +2,18 @@
     <head>
         <script>
             window.onload = function() {
-                var fullKeys = Object.keys(mapPokemonPercentages);
+                var fullKeys = Object.keys(pokemonEncounters);
                 for (var i = 0; i < fullKeys.length; i++) {
-                    var mapKeys = Object.keys(mapPokemonPercentages[fullKeys[i]]);
+                    var mapKeys = Object.keys(pokemonEncounters[fullKeys[i]]);
                     var total = 0;
 
                     for (var j = 0; j < mapKeys.length; j++) {
-                        total += mapPokemonPercentages[fullKeys[i]][mapKeys[j]];
+                        console.log(total + " + " + pokemonEncounters[fullKeys[i]][mapKeys[j]]);
+                        total += pokemonEncounters[fullKeys[i]][mapKeys[j]];
                     }
 
                     var result = $("<li></li>");
-                    if (total != 1) {
+                    if (total != 1 && total != 0) {
                         result.css("color", "red");
                     }
                     result.append(fullKeys[i] + ": " + total);

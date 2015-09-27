@@ -94,7 +94,7 @@ var mapLinks = {
 			}
 		}
 	},
-	"VeridianCity": {
+	"ViridianCity": {
 		"35-28": {
 			mapName: "Route1",
 			location: {
@@ -171,7 +171,7 @@ var maps = {
 		['smallTree', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'cylinderBarrier', 'grass', 'grass', 'cylinderBarrier', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'smallTree'],
 		['smallTree', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'cylinderBarrier', 'grass', 'grass', 'cylinderBarrier', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'groundYellow', 'smallTree']
 	],
-	VeridianCity: [
+	ViridianCity: [
 		['mountainCenter', 'mountainCenter', 'mountainCenter', 'mountainCenter', 'mountainCenter', 'mountainRight', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'fence', 'groundWhite', 'groundWhite', 'groundWhite', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree'],
 		['mountainCenter', 'mountainCenter', 'mountainCenter', 'mountainCenter', 'mountainCenter', 'mountainRight', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'fence', 'groundWhite', 'groundWhite', 'signYellow', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree'],
 		['mountainCenter', 'mountainCenter', 'mountainCenter', 'mountainCenter', 'mountainCenter', 'mountainRight', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'fence', 'groundWhite', 'groundWhite', 'groundWhite', 'smallTree', 'smallTree', 'smallTree', 'smallTree', 'groundWhite', 'groundWhite', 'groundWhite', 'groundWhite', 'groundWhite', 'groundWhite', 'groundWhite', 'groundWhite', 'groundWhite', 'groundWhite', 'groundWhite', 'groundWhite', 'smallTree', 'smallTree', 'smallTree', 'smallTree'],
@@ -324,8 +324,77 @@ var maps = {
 };
 
 var mapLevels = {
-	'PalletTown': new LevelRange(2, 4),
-	'Route1': new LevelRange(2, 5),
-	'VeridianCity': new LevelRange(3, 6),
-	'Route2': new LevelRange(4, 8)
+	"PalletTown": new LevelRange(2, 4),
+	"Route1": new LevelRange(2, 5),
+	"ViridianCity": new LevelRange(3, 6),
+	"Route2": new LevelRange(4, 8)
+};
+
+var pokemonEncounters = {
+	"PalletTown": {16:.55, 19:.45},
+	"Route1": {16:.55, 19:.45},
+	"ViridianCity": {},
+	"Route22": {19:.10, 21:.10, 56:.20, 29:.30, 32:.30},
+	"Route2": {19:.40, 16:.30, 29:.15, 32:.15},
+	"ViridianForest": {10:.55, 11:.20, 16:.24, 17:.01},
+	"PewterCity": {},
+	"Route3": {21:.55, 19:.15, 27:.15, 56:.15},
+	"MtMoon1": {41:.75, 74:.20, 35:.01, 27:.04},
+	"MtMoon2": {41:.65, 74:.20, 46:.10, 35:.05},
+	"MtMoon3": {41:.60, 74:.15, 46:.15, 35:.10},
+	"Route4": {19:.15, 21:.55, 27:.15, 56:.15},
+	"CeruleanCity": {},
+	"Route24": {69:.25, 48:.10, 16:.29, 17:.01, 43:.35},
+	"Route25": {16:.29, 17:.01, 43:.30, 69:.30, 48:.10},
+	"Route5": {16:.45, 17:.05, 19:.25, 39:.10, 63:.15},
+	"Route6": {16:.45, 17:.05, 19:.25, 39:.10, 63:.15},
+	"VermillionCity": {},
+	"S.S.Anne": {},
+	"Route11": {96:.24, 16:.40, 17:.10, 19:.25, 20:.01},
+	"DiglettsCave": {50:.95, 51:.05},
+	"Route9": {21:.10, 22:.01, 19:.15, 20:.04, 32:.35, 33:.05, 29:.25, 30:.05},
+	"Route10": {19:.15, 20:.05, 32:.10, 35:.10, 66:.05, 81:.55},
+	"RockTunnel1": {41:.55, 74:.35, 66:.10},
+	"RockTunnel2": {41:.45, 74:.25, 66:.20, 95:.10},
+	"LavenderTown": {},
+	"Route7": {16:.40, 17:.10, 19:.15, 39:.10, 63:.25},
+	"Route8": {16:.40, 17:.10, 19:.15, 39:.10, 63:.20, 64:.05},
+	"CeladonCity": {},
+	"RocketHideout": {},
+	"PokemonTower": {92:.90, 93:.05, 104:.05},
+	"SaffronCity": {},
+	"SilphCompany": {},
+	"Route16": {19:.25, 20:.05, 21:.30, 22:.05, 84:.35},
+	"Route17": {21:.30, 33:.20, 77:.24, 84:.25, 86:.01},
+	"Route18": {19:.25, 20:.05, 21:.30, 22:.05, 84:.35},
+	"FuchsiaCity": {},
+	"SafariZone1": {29:.15, 32:.25, 33:.10, 102:.15, 46:.05, 47:.15, 111:.10, 113:.01, 114:.04},
+	"SafariZone2": {29:.15, 30:.10, 32:.25, 102:.20, 113:.04, 123:.01, 128:.10, 104:.10, 105:.05},
+	"SafariZone3": {29:.15, 30:.10, 32:.25, 102:.15, 111:.10, 123:.04, 127:.01, 115:.15, 104:.05},
+	"SafariZone4": {29:.15, 32:.25, 33:.10, 102:.20, 127:.04, 128:.10, 104:.10, 105:.05, 114:.01},
+	"Route12": {16:.15, 17:.10, 69:.25, 70:.05, 83:.05, 43:.35, 44:.05},
+	"Route13": {16:.10, 17:.15, 69:.25, 70:.05, 83:.05, 43:.35, 44:.05},
+	"Route14": {17:.10, 48:.19, 49:.01, 69:.25, 70:.05, 43:.35, 44:.05},
+	"Route15": {17:.10, 48:.19, 49:.01, 69:.25, 70:.05, 43:.35, 44:.05},
+	"Route21": {19:.25, 20:.05, 16:.60, 17:.10},
+	"CinnabarIsland": {},
+	"PokemonMansion1": {88:.20, 19:.35, 20:.25, 58:.20},
+	"PokemonMansion2": {88:.35, 89:.05, 19:.35, 20:.25},
+	"PokemonMansion3": {88:.35, 89:.05, 19:.35, 20:.25},
+	"PokemonMansion4": {88:.40, 89:.10, 20:.40, 132:.10},
+	"PowerPlant": {81:.40, 82:.20, 88:.15, 89:.05, 100:.20},
+	"Route19": {},
+	"Route20": {},
+	"SeafoamIsland1": {41:.50, 42:.05, 79:.15, 98:.30},
+	"SeafoamIsland2": {41:.45, 42:.10, 79:.10, 86:.05, 98:.25, 99:.05},
+	"SeafoamIsland3": {41:.40, 42:.15, 79:.04, 80:.01, 86:.10, 98:.20, 99:.10},
+	"SeafoamIsland4": {41:.25, 42:.25, 86:.15, 87:.05, 98:.20, 99:.10},
+	"SeafoamIsland5": {41:.20, 42:.30, 86:.20, 87:.05, 98:.15, 99:.10},
+	"Route23": {22:.15, 30:.25, 33:.35, 56:.20, 57:.05},
+	"VictoryRoad1": {41:.10, 42:.10, 74:.55, 75:.10, 67:.05, 95:.10},
+	"VictoryRoad2": {42:.15, 74:.50, 75:.15, 67:.10, 95:.10},
+	"VictoryRoad3": {41:.20, 74:.65, 75:.05, 95:.10},
+	"UnknownDungeon1": {28:.10, 42:.40, 44:.05, 70:.05, 75:.15, 111:.15, 112:.05, 132:.05},
+	"UnknownDungeon2": {28:.10, 42:.40, 44:.10, 70:.10, 75:.15, 47:.05, 49:.05, 132:.05},
+	"UnknownDungeon3": {42:.40, 75:.15, 132:.15, 111:.10, 112:.10, 113:.05, 108:.05}
 };
