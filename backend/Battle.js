@@ -97,6 +97,8 @@ Battle.prototype.youAttackThem = function(move, callback) {
 };
 
 Battle.prototype.changeHealthBarColorAndSize = function(image, newPercentage, animate, callback) {
+	var battle = this;
+
 	if (animate) {
 		var currentPercentage = image.css("width").slice(0, -2) / BAR_WIDTH;
 
@@ -106,7 +108,17 @@ Battle.prototype.changeHealthBarColorAndSize = function(image, newPercentage, an
 				//They are starting in the green zone
 				if (newPercentage < GREEN_BAR_END) {
 					//They are going into the yellow zone
-					this.changeHealthBarGreen(image, newPercentage, callback);
+					this.changeHealthBarToGreenLimit(image, newPercentage, function() {
+						if (newPercentage < YELLOW_BAR_END) {
+							//They are going into the red zone
+							battle.changeHealthBarToYellowLimit(image, newPercentage, function() {
+								battle.changeHealthBarSameZone(image, newPercentage, callback);
+							});
+						} else {
+							//They are staying in the yellow zone
+							battle.changeHealthBarSameZone(image, newPercentage, callback);
+						}
+					});
 				} else {
 					//They are staying in the green zone
 					this.changeHealthBarSameZone(image, newPercentage, callback);
@@ -115,7 +127,9 @@ Battle.prototype.changeHealthBarColorAndSize = function(image, newPercentage, an
 				//They are starting in the yellow zone
 				if (newPercentage < YELLOW_BAR_END) {
 					//They are going into the red zone
-					this.changeHealthBarYellow(image, newPercentage, callback);
+					this.changeHealthBarToYellowLimit(image, newPercentage, function() {
+						battle.changeHealthBarSameZone(image, newPercentage, callback);
+					});
 				} else {
 					//They are staying in the yellow zone
 					this.changeHealthBarSameZone(image, newPercentage, callback);
@@ -126,7 +140,40 @@ Battle.prototype.changeHealthBarColorAndSize = function(image, newPercentage, an
 			}
 		} else if (currentPercentage < newPercentage) {
 			//They're going up in health
-			callback();
+			if (currentPercentage < YELLOW_BAR_END) {
+				//They are starting in the red zone
+				if (newPercentage >= YELLOW_BAR_END) {
+					//They are going into the yellow zone
+					this.changeHealthBarToYelloLimit(image, newPercentage, function() {
+						if (newPercentage >= GREEN_BAR_END) {
+							//They are going into the green zone
+							battle.changeHealthBarToGreenLimit(image, newPercentage, function() {
+								battle.changeHealthBarSameZone(image, newPercentage, callback);
+							});
+						} else {
+							//They are staying in the yellow zone
+							battle.changeHealthBarSameZone(image, newPercentage, callback);
+						}
+					});
+				} else {
+					//They are staying in the red zone
+					this.changeHealthBarSameZone(image, newPercentage, callback);
+				}
+			} else if (currentPercentage < GREEN_BAR_END) {
+				//They are starting in the yellow zone
+				if (newPercentage >= GREEN_BAR_END) {
+					//They are going into the green zone
+					this.changeHealthBarToGreenLimit(image, newPercentage, function() {
+						battle.changeHealthBarSameZone(image, newPercentage, callback);
+					});
+				} else {
+					//They are staying in the yellow zone
+					this.changeHealthBarSameZone(image, newPercentage, callback);
+				}
+			} else {
+				//They are starting in the green zone
+				this.changeHealthBarSameZone(image, newPercentage, callback);
+			}
 		} else {
 			//No change in health
 			callback();
@@ -143,23 +190,19 @@ Battle.prototype.changeHealthBarColorAndSize = function(image, newPercentage, an
 	}
 };
 
-Battle.prototype.changeHealthBarGreen = function(image, newPercentage, callback) {
+Battle.prototype.changeHealthBarToGreenLimit = function(image, newPercentage, callback) {
 	var battle = this;
 	image.animate({width: (GREEN_BAR_END * BAR_WIDTH)}, function() {
 		image.attr("src", "images/yellowHealthBar.png");
-		if (newPercentage < YELLOW_BAR_END) {
-			battle.changeHealthBarYellow(image, newPercentage, callback);
-		} else {
-			battle.changeHealthBarSameZone(image, newPercentage, callback);
-		}
+		callback();
 	});
 };
 
-Battle.prototype.changeHealthBarYellow = function(image, newPercentage, callback) {
+Battle.prototype.changeHealthBarToYellowLimit = function(image, newPercentage, callback) {
 	var battle = this;
 	image.animate({width: (YELLOW_BAR_END * BAR_WIDTH)}, function() {
 		image.attr("src", "images/redHealthBar.png");
-		battle.changeHealthBarSameZone(image, newPercentage, callback);
+		callback();
 	});
 };
 

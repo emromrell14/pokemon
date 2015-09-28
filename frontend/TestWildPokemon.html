@@ -7,14 +7,23 @@
                 var allMapNames = Object.keys(pokemonEncounters);
                 for (var i = 0; i < allMapNames.length; i++) {
                     var mapName = allMapNames[i];
-                    fullList.append($("<li></li>").append(mapName));
+                    var header = $("<li></li>").append(mapName);
+                    fullList.append(header);
 
                     var subList = $("<ul></ul>");
+                    var totalPercentage = 0;
                     for (var j = 0; j < pokemonEncounters[mapName].length; j++) {
                         var encounter = pokemonEncounters[mapName][j];
+                        totalPercentage += Math.round(encounter.encounterRate * 100);
                         var pokemonName = PokemonResource.getByResourceUri("/api/v1/pokemon/" + encounter.pokemonId + "/").name;
                         subList.append($("<li></li>").append(pokemonName));
                     }
+
+                    header.append(": " + totalPercentage);
+                    if (totalPercentage != 0 && totalPercentage != 100) {
+                        header.css("color", "red");
+                    }
+                    subList.append($("<li></li>").append(totalPercentage));
                     fullList.append(subList);
                 }
             }
