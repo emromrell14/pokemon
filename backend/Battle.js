@@ -247,10 +247,8 @@ Battle.prototype.checkForEvolution = function(callback) {
 			$("#yourImage").attr("src", "images/pokemon/back/" + evolution.info.nationalId + ".png");
 			$("#yourName").empty().append(evolution.info.name.toUpperCase());
 			scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " evolved into " + evolution.info.name.toUpperCase(), function() {
-				console.log(battle.yourPokemon);
 				battle.yourPokemon.info = evolution.info;
 				battle.yourPokemon.refreshStats();
-				console.log(battle.yourPokemon);
 				callback();
 			});
 		});

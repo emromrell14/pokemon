@@ -84,7 +84,7 @@ function executeAction() {
         if (inFight) {
             activeBattle.changeHealthBarColorAndSize($("#yourHealthBar"), pokemon.stats.hp / pokemon.stats.maxHp, true, function() {
                 $("#yourHp").empty().append(Util.pad(4, activeBattle.yourPokemon.stats.hp, " ") + "/" + Util.pad(4, activeBattle.yourPokemon.stats.maxHp, " "));
-                console.log(pokemon.info.name + " been healed");
+                console.log(pokemon.info.name + " has been healed");
             });
         }
     }
