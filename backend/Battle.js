@@ -278,13 +278,11 @@ Battle.prototype.canRunAway = function() {
 	var b = (this.theirPokemon.stats.speed / 4) % 256;
 	if (b == 0) return true;
 	var f = ((this.yourPokemon.stats.speed * 32) / b) + 30 * this.escapeAttempts;
-	console.log("F = " + f);
 
 	if (f > 255) {
 		return true;
 	} else {
 		var random = Math.floor(Math.random() * 256);
-		console.log("Rand = " + random);
 		return random < f;
 	}
 };

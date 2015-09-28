@@ -30,22 +30,17 @@ Maps.getTestStartLocation = function(mapName) {
 	return {row: 6, col: 5};
 };
 
-Maps.getRandomLevelForCurrentMap = function() {
-	var range = mapLevels[Maps.getCurrentMapName()];
-	return Math.floor(Math.random() * (range.endLevel - range.startLevel + 1)) + range.startLevel;
-};
-
 Maps.getRandomPokemonForCurrentMap = function() {
-	var mapValues = pokemonEncounters[Maps.getCurrentMapName()];
-	var listOfPokemon = Object.keys(mapValues);
+	var wildPokemonEncounters = pokemonEncounters[Maps.getCurrentMapName()];
 	var rand = Math.random();
 
 	var j = 0;
-	for (var i = 0; i < listOfPokemon.length; i++) {
-		j += mapValues[listOfPokemon[i]];
+	for (var i = 0; i < wildPokemonEncounters.length; i++) {
+		var wildPokemonEncounter = wildPokemonEncounters[i];
+		j += wildPokemonEncounter.encounterRate;
 		if (rand < j) {
-			var resource = PokemonResource.getByResourceUri("/api/v1/pokemon/" + listOfPokemon[i] + "/");
-			var level = Maps.getRandomLevelForCurrentMap();
+			var resource = PokemonResource.getByResourceUri("/api/v1/pokemon/" + wildPokemonEncounter.pokemonId + "/");
+			var level = wildPokemonEncounter.levelRange.getRandomLevel();
 			return new Pokemon(resource, level, Move.getDefaultMovesForPokemon(resource, level), null);
 		}
 	}
@@ -67,18 +62,10 @@ var mapLinks = {
 				col: 8
 			}
 		},
-		"17-4": {
-		
-		},
-		"17-5": {
-			
-		},
-		"17-6": {
-			
-		},
-		"17-7": {
-			
-		}
+		"17-4": {},
+		"17-5": {},
+		"17-6": {},
+		"17-7": {}
 	},
 	"Route1": {
 		"35-7": {
@@ -339,78 +326,398 @@ var maps = {
 	]
 };
 
-var mapLevels = {
-	"PalletTown": new LevelRange(2, 4),
-	"Route1": new LevelRange(2, 5),
-	"ViridianCity": new LevelRange(3, 6),
-	"Route2": new LevelRange(4, 8)
-};
-
 var pokemonEncounters = {
-	"PalletTown": {16:.55, 19:.45},
-	"Route1": {16:.55, 19:.45},
-	"ViridianCity": {},
-	"Route22": {19:.10, 21:.10, 56:.20, 29:.30, 32:.30},
-	"Route2": {19:.40, 16:.30, 29:.15, 32:.15},
-	"ViridianForest": {10:.55, 11:.20, 16:.24, 17:.01},
-	"PewterCity": {},
-	"Route3": {21:.55, 19:.15, 27:.15, 56:.15},
-	"MtMoon1": {41:.75, 74:.20, 35:.01, 27:.04},
-	"MtMoon2": {41:.65, 74:.20, 46:.10, 35:.05},
-	"MtMoon3": {41:.60, 74:.15, 46:.15, 35:.10},
-	"Route4": {19:.15, 21:.55, 27:.15, 56:.15},
-	"CeruleanCity": {},
-	"Route24": {69:.25, 48:.10, 16:.29, 17:.01, 43:.35},
-	"Route25": {16:.29, 17:.01, 43:.30, 69:.30, 48:.10},
-	"Route5": {16:.45, 17:.05, 19:.25, 39:.10, 63:.15},
-	"Route6": {16:.45, 17:.05, 19:.25, 39:.10, 63:.15},
-	"VermillionCity": {},
-	"S.S.Anne": {},
-	"Route11": {96:.24, 16:.40, 17:.10, 19:.25, 20:.01},
-	"DiglettsCave": {50:.95, 51:.05},
-	"Route9": {21:.10, 22:.01, 19:.15, 20:.04, 32:.35, 33:.05, 29:.25, 30:.05},
-	"Route10": {19:.15, 20:.05, 32:.10, 35:.10, 66:.05, 81:.55},
-	"RockTunnel1": {41:.55, 74:.35, 66:.10},
-	"RockTunnel2": {41:.45, 74:.25, 66:.20, 95:.10},
-	"LavenderTown": {},
-	"Route7": {16:.40, 17:.10, 19:.15, 39:.10, 63:.25},
-	"Route8": {16:.40, 17:.10, 19:.15, 39:.10, 63:.20, 64:.05},
-	"CeladonCity": {},
-	"RocketHideout": {},
-	"PokemonTower": {92:.90, 93:.05, 104:.05},
-	"SaffronCity": {},
-	"SilphCompany": {},
-	"Route16": {19:.25, 20:.05, 21:.30, 22:.05, 84:.35},
-	"Route17": {21:.30, 33:.20, 77:.24, 84:.25, 86:.01},
-	"Route18": {19:.25, 20:.05, 21:.30, 22:.05, 84:.35},
-	"FuchsiaCity": {},
-	"SafariZone1": {29:.15, 32:.25, 33:.10, 102:.15, 46:.05, 47:.15, 111:.10, 113:.01, 114:.04},
-	"SafariZone2": {29:.15, 30:.10, 32:.25, 102:.20, 113:.04, 123:.01, 128:.10, 104:.10, 105:.05},
-	"SafariZone3": {29:.15, 30:.10, 32:.25, 102:.15, 111:.10, 123:.04, 127:.01, 115:.15, 104:.05},
-	"SafariZone4": {29:.15, 32:.25, 33:.10, 102:.20, 127:.04, 128:.10, 104:.10, 105:.05, 114:.01},
-	"Route12": {16:.15, 17:.10, 69:.25, 70:.05, 83:.05, 43:.35, 44:.05},
-	"Route13": {16:.10, 17:.15, 69:.25, 70:.05, 83:.05, 43:.35, 44:.05},
-	"Route14": {17:.10, 48:.19, 49:.01, 69:.25, 70:.05, 43:.35, 44:.05},
-	"Route15": {17:.10, 48:.19, 49:.01, 69:.25, 70:.05, 43:.35, 44:.05},
-	"Route21": {19:.25, 20:.05, 16:.60, 17:.10},
-	"CinnabarIsland": {},
-	"PokemonMansion1": {88:.20, 19:.35, 20:.25, 58:.20},
-	"PokemonMansion2": {88:.35, 89:.05, 19:.35, 20:.25},
-	"PokemonMansion3": {88:.35, 89:.05, 19:.35, 20:.25},
-	"PokemonMansion4": {88:.40, 89:.10, 20:.40, 132:.10},
-	"PowerPlant": {81:.40, 82:.20, 88:.15, 89:.05, 100:.20},
-	"Route19": {},
-	"Route20": {},
-	"SeafoamIsland1": {41:.50, 42:.05, 79:.15, 98:.30},
-	"SeafoamIsland2": {41:.45, 42:.10, 79:.10, 86:.05, 98:.25, 99:.05},
-	"SeafoamIsland3": {41:.40, 42:.15, 79:.04, 80:.01, 86:.10, 98:.20, 99:.10},
-	"SeafoamIsland4": {41:.25, 42:.25, 86:.15, 87:.05, 98:.20, 99:.10},
-	"SeafoamIsland5": {41:.20, 42:.30, 86:.20, 87:.05, 98:.15, 99:.10},
-	"Route23": {22:.15, 30:.25, 33:.35, 56:.20, 57:.05},
-	"VictoryRoad1": {41:.10, 42:.10, 74:.55, 75:.10, 67:.05, 95:.10},
-	"VictoryRoad2": {42:.15, 74:.50, 75:.15, 67:.10, 95:.10},
-	"VictoryRoad3": {41:.20, 74:.65, 75:.05, 95:.10},
-	"UnknownDungeon1": {28:.10, 42:.40, 44:.05, 70:.05, 75:.15, 111:.15, 112:.05, 132:.05},
-	"UnknownDungeon2": {28:.10, 42:.40, 44:.10, 70:.10, 75:.15, 47:.05, 49:.05, 132:.05},
-	"UnknownDungeon3": {42:.40, 75:.15, 132:.15, 111:.10, 112:.10, 113:.05, 108:.05}
+	"PalletTown": [
+		new WildPokemonRate(16, .55, new LevelRange(2, 7)),
+		new WildPokemonRate(19, .45, new LevelRange(2, 4))
+	],
+	"Route1": [
+		new WildPokemonRate(16, .55, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .45, new LevelRange(0, 0))
+	],
+	"ViridianCity": [],
+	"Route22": [
+		new WildPokemonRate(19, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(21, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(56, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(29, .30, new LevelRange(0, 0)),
+		new WildPokemonRate(32, .30, new LevelRange(0, 0))
+	],
+	"Route2": [
+		new WildPokemonRate(19, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(16, .30, new LevelRange(0, 0)),
+		new WildPokemonRate(29, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(32, .15, new LevelRange(0, 0))
+	],
+	"ViridianForest": [
+		new WildPokemonRate(10, .55, new LevelRange(0, 0)),
+		new WildPokemonRate(11, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(16, .24, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .01, new LevelRange(0, 0))
+	],
+	"PewterCity": [],
+	"Route3": [
+		new WildPokemonRate(21, .55, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(27, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(56, .15, new LevelRange(0, 0))
+	],
+	"MtMoon1": [
+		new WildPokemonRate(41, .75, new LevelRange(0, 0)),
+		new WildPokemonRate(74, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(35, .01, new LevelRange(0, 0)),
+		new WildPokemonRate(27, .04, new LevelRange(0, 0))
+	],
+	"MtMoon2": [
+		new WildPokemonRate(41, .65, new LevelRange(0, 0)),
+		new WildPokemonRate(74, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(46, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(35, .05, new LevelRange(0, 0))
+	],
+	"MtMoon3": [
+		new WildPokemonRate(41, .60, new LevelRange(0, 0)),
+		new WildPokemonRate(74, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(46, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(35, .10, new LevelRange(0, 0))
+	],
+	"Route4": [
+		new WildPokemonRate(19, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(21, .55, new LevelRange(0, 0)),
+		new WildPokemonRate(27, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(56, .15, new LevelRange(0, 0))
+	],
+	"CeruleanCity": [],
+	"Route24": [
+		new WildPokemonRate(69, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(48, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(16, .29, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .01, new LevelRange(0, 0)),
+		new WildPokemonRate(43, .35, new LevelRange(0, 0))
+	],
+	"Route25": [
+		new WildPokemonRate(16, .29, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .01, new LevelRange(0, 0)),
+		new WildPokemonRate(43, .30, new LevelRange(0, 0)),
+		new WildPokemonRate(69, .30, new LevelRange(0, 0)),
+		new WildPokemonRate(48, .10, new LevelRange(0, 0))
+	],
+	"Route5": [
+		new WildPokemonRate(16, .45, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(39, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(63, .15, new LevelRange(0, 0))
+	],
+	"Route6": [
+		new WildPokemonRate(16, .45, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(39, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(63, .15, new LevelRange(0, 0))
+	],
+	"VermillionCity": [],
+	"S.S.Anne": [],
+	"Route11": [
+		new WildPokemonRate(96, .24, new LevelRange(0, 0)),
+		new WildPokemonRate(16, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(20, .01, new LevelRange(0, 0))
+	],
+	"DiglettsCave": [
+		new WildPokemonRate(50, .95, new LevelRange(0, 0)),
+		new WildPokemonRate(51, .05, new LevelRange(0, 0))
+	],
+	"Route9": [
+		new WildPokemonRate(21, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(22, .01, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(20, .04, new LevelRange(0, 0)),
+		new WildPokemonRate(32, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(33, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(29, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(30, .05, new LevelRange(0, 0))
+	],
+	"Route10": [
+		new WildPokemonRate(19, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(20, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(32, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(35, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(66, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(81, .55, new LevelRange(0, 0))
+	],
+	"RockTunnel1": [
+		new WildPokemonRate(41, .55, new LevelRange(0, 0)),
+		new WildPokemonRate(74, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(66, .10, new LevelRange(0, 0))
+	],
+	"RockTunnel2": [
+		new WildPokemonRate(41, .45, new LevelRange(0, 0)),
+		new WildPokemonRate(74, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(66, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(95, .10, new LevelRange(0, 0))
+	],
+	"LavenderTown": [],
+	"Route7": [
+		new WildPokemonRate(16, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(39, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(63, .25, new LevelRange(0, 0))
+	],
+	"Route8": [
+		new WildPokemonRate(16, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(39, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(63, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(64, .05, new LevelRange(0, 0))
+	],
+	"CeladonCity": [],
+	"RocketHideout": [],
+	"PokemonTower": [
+		new WildPokemonRate(92, .90, new LevelRange(0, 0)),
+		new WildPokemonRate(93, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(104, .05, new LevelRange(0, 0))
+	],
+	"SaffronCity": [],
+	"SilphCompany": [],
+	"Route16": [
+		new WildPokemonRate(19, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(20, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(21, .30, new LevelRange(0, 0)),
+		new WildPokemonRate(22, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(84, .35, new LevelRange(0, 0))
+	],
+	"Route17": [
+		new WildPokemonRate(21, .30, new LevelRange(0, 0)),
+		new WildPokemonRate(33, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(77, .24, new LevelRange(0, 0)),
+		new WildPokemonRate(84, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(86, .01, new LevelRange(0, 0))
+	],
+	"Route18": [
+		new WildPokemonRate(19, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(20, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(21, .30, new LevelRange(0, 0)),
+		new WildPokemonRate(22, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(84, .35, new LevelRange(0, 0))
+	],
+	"FuchsiaCity": [],
+	"SafariZone1": [
+		new WildPokemonRate(29, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(32, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(33, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(102, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(46, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(47, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(111, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(113, .01, new LevelRange(0, 0)),
+		new WildPokemonRate(114, .04, new LevelRange(0, 0))
+	],
+	"SafariZone2": [
+		new WildPokemonRate(29, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(30, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(32, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(102, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(113, .04, new LevelRange(0, 0)),
+		new WildPokemonRate(123, .01, new LevelRange(0, 0)),
+		new WildPokemonRate(128, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(104, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(105, .05, new LevelRange(0, 0))
+	],
+	"SafariZone3": [
+		new WildPokemonRate(29, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(30, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(32, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(102, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(111, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(123, .04, new LevelRange(0, 0)),
+		new WildPokemonRate(127, .01, new LevelRange(0, 0)),
+		new WildPokemonRate(115, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(104, .05, new LevelRange(0, 0))
+	],
+	"SafariZone4": [
+		new WildPokemonRate(29, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(32, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(33, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(102, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(127, .04, new LevelRange(0, 0)),
+		new WildPokemonRate(128, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(104, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(105, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(114, .01, new LevelRange(0, 0))
+	],
+	"Route12": [
+		new WildPokemonRate(16, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(69, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(70, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(83, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(43, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(44, .05, new LevelRange(0, 0))
+	],
+	"Route13": [
+		new WildPokemonRate(16, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(69, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(70, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(83, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(43, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(44, .05, new LevelRange(0, 0))
+	],
+	"Route14": [
+		new WildPokemonRate(17, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(48, .19, new LevelRange(0, 0)),
+		new WildPokemonRate(49, .01, new LevelRange(0, 0)),
+		new WildPokemonRate(69, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(70, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(43, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(44, .05, new LevelRange(0, 0))
+	],
+	"Route15": [
+		new WildPokemonRate(17, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(48, .19, new LevelRange(0, 0)),
+		new WildPokemonRate(49, .01, new LevelRange(0, 0)),
+		new WildPokemonRate(69, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(70, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(43, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(44, .05, new LevelRange(0, 0))
+	],
+	"Route21": [
+		new WildPokemonRate(19, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(20, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(16, .60, new LevelRange(0, 0)),
+		new WildPokemonRate(17, .10, new LevelRange(0, 0))
+	],
+	"CinnabarIsland": [],
+	"PokemonMansion1": [
+		new WildPokemonRate(88, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(20, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(58, .20, new LevelRange(0, 0))
+	],
+	"PokemonMansion2": [
+		new WildPokemonRate(88, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(89, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(20, .25, new LevelRange(0, 0))
+	],
+	"PokemonMansion3": [
+		new WildPokemonRate(88, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(89, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(19, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(20, .25, new LevelRange(0, 0))
+	],
+	"PokemonMansion4": [
+		new WildPokemonRate(88, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(89, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(20, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(132, .10, new LevelRange(0, 0))
+	],
+	"PowerPlant": [
+		new WildPokemonRate(81, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(82, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(88, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(89, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(100, .20, new LevelRange(0, 0))
+	],
+	"Route19": [],
+	"Route20": [],
+	"SeafoamIsland1": [
+		new WildPokemonRate(41, .50, new LevelRange(0, 0)),
+		new WildPokemonRate(42, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(79, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(98, .30, new LevelRange(0, 0))
+	],
+	"SeafoamIsland2": [
+		new WildPokemonRate(41, .45, new LevelRange(0, 0)),
+		new WildPokemonRate(42, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(79, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(86, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(98, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(99, .05, new LevelRange(0, 0))
+	],
+	"SeafoamIsland3": [
+		new WildPokemonRate(41, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(42, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(79, .04, new LevelRange(0, 0)),
+		new WildPokemonRate(80, .01, new LevelRange(0, 0)),
+		new WildPokemonRate(86, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(98, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(99, .10, new LevelRange(0, 0))
+	],
+	"SeafoamIsland4": [
+		new WildPokemonRate(41, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(42, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(86, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(87, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(98, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(99, .10, new LevelRange(0, 0))
+	],
+	"SeafoamIsland5": [
+		new WildPokemonRate(41, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(42, .30, new LevelRange(0, 0)),
+		new WildPokemonRate(86, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(87, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(98, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(99, .10, new LevelRange(0, 0))
+	],
+	"Route23": [
+		new WildPokemonRate(22, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(30, .25, new LevelRange(0, 0)),
+		new WildPokemonRate(33, .35, new LevelRange(0, 0)),
+		new WildPokemonRate(56, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(57, .05, new LevelRange(0, 0))
+	],
+	"VictoryRoad1": [
+		new WildPokemonRate(41, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(42, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(74, .55, new LevelRange(0, 0)),
+		new WildPokemonRate(75, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(67, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(95, .10, new LevelRange(0, 0))
+	],
+	"VictoryRoad2": [
+		new WildPokemonRate(42, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(74, .50, new LevelRange(0, 0)),
+		new WildPokemonRate(75, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(67, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(95, .10, new LevelRange(0, 0))
+	],
+	"VictoryRoad3": [
+		new WildPokemonRate(41, .20, new LevelRange(0, 0)),
+		new WildPokemonRate(74, .65, new LevelRange(0, 0)),
+		new WildPokemonRate(75, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(95, .10, new LevelRange(0, 0))
+	],
+	"UnknownDungeon1": [
+		new WildPokemonRate(28, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(42, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(44, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(70, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(75, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(111, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(112, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(132, .05, new LevelRange(0, 0))
+	],
+	"UnknownDungeon2": [
+		new WildPokemonRate(28, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(42, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(44, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(70, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(75, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(47, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(49, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(132, .05, new LevelRange(0, 0))
+	],
+	"UnknownDungeon3": [
+		new WildPokemonRate(42, .40, new LevelRange(0, 0)),
+		new WildPokemonRate(75, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(132, .15, new LevelRange(0, 0)),
+		new WildPokemonRate(111, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(112, .10, new LevelRange(0, 0)),
+		new WildPokemonRate(113, .05, new LevelRange(0, 0)),
+		new WildPokemonRate(108, .05, new LevelRange(0, 0))
+	]
 };

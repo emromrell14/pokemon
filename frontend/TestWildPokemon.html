@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <script>
+            window.onload = function() {
+                var fullList = $("#list");
+
+                var allMapNames = Object.keys(pokemonEncounters);
+                for (var i = 0; i < allMapNames.length; i++) {
+                    var mapName = allMapNames[i];
+                    fullList.append($("<li></li>").append(mapName));
+
+                    var subList = $("<ul></ul>");
+                    for (var j = 0; j < pokemonEncounters[mapName].length; j++) {
+                        var encounter = pokemonEncounters[mapName][j];
+                        var pokemonName = PokemonResource.getByResourceUri("/api/v1/pokemon/" + encounter.pokemonId + "/").name;
+                        subList.append($("<li></li>").append(pokemonName));
+                    }
+                    fullList.append(subList);
+                }
+            }
+        </script>
+        <script src="../backend/WildPokemonRate.js"></script>
+        <script src="../backend/LevelRange.js"></script>
+        <script src="../backend/Maps.js"></script>
+        <script src="../backend/PokemonCache.js"></script>
+        <script src="../backend/PokemonResource.js"></script>
+        <script src="../jquery-1.11.3.js"></script>
+    </head>
+    <body>
+        <ul id="list"></ul>
+    </body>
+</html>
