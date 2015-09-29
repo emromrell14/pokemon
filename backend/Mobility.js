@@ -59,19 +59,20 @@ Mobility.move = function(location, direction) {
 		return location;
 	}
 	var mapData = Maps.getCurrentMap();
-	var oldLocation = new Location(Maps.getCurrentMapName(), location.row, location.col);
+	var oldLocation = new Location(location.mapName, location.row, location.col);
+	var newLocation = new Location(location.mapName, location.row, location.col);
 	switch (direction) {
 		case "LEFT":
-			location.col -= 1;
+			newLocation.col -= 1;
 			break;
 		case "RIGHT":
-			location.col += 1;
+			newLocation.col += 1;
 			break;
 		case "UP":
-			location.row -= 1;
+			newLocation.row -= 1;
 			break;
 		case "DOWN":
-			location.row += 1;
+			newLocation.row += 1;
 			break;
 	}
 
@@ -79,18 +80,17 @@ Mobility.move = function(location, direction) {
 	if (linkLocation != null) {
 		return linkLocation;
 	}
-	var nextTile = mapData[location.row][location.col];
+	var nextTile = mapData[newLocation.row][newLocation.col];
 
 	Mobility.queryForPokemon(nextTile);
 
-	return location;
+	return newLocation;
 };
 
 Mobility.queryForPokemon = function(tileId) {
 	if (tileId == "grass") {
 		var rand = Math.floor(Math.random() * POKEMON_CHANCE);
 		if (rand == 0) {
-			setInFight(true);
 			foundPokemon(Maps.getRandomPokemonForCurrentMap());
 		}
 	}

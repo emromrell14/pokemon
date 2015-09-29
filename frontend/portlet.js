@@ -1,14 +1,10 @@
 var currentCell = {};
 var allElements;
-var inFight;
+var moveSemaphore;
 var activeBattle;
-var startingMap = "PalletTown";
+var startingMap = "ViridianCity";
 var BAR_WIDTH = 48;
 var EXP_BAR_WIDTH = 64;
-
-function setInFight(bool) {
-    inFight = bool;
-}
 
 window.onload = function() {
     init();
@@ -27,9 +23,22 @@ function setStartLocation() {
     currentCell.location = Maps.getTestStartLocation(Maps.getCurrentMapName());
 }
 
-function reloadMap() {
+function reloadMap(result, dir) {
+    //Clear the person image
+    currentCell.element.find("#foreground").attr("class", "");
+
+    //Set the new location
+    currentCell.location = result;
+
+    //Rebuild the UI
     $("#mainBoard").empty().append(buildPortlet());
+
+    //Reset the person's cell and put them on it
     currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
+    currentCell.element.find("#foreground").attr("class", dir);
+
+    //Allow the player to move again
+    moveSemaphore = false;
 }
 
 function buildPortlet() {
@@ -47,8 +56,7 @@ function buildPortlet() {
         for (var col = startingLocation.col; col < startingLocation.col + 10; col++) {
 			var td = $("<td></td>").attr("id", mapData[row][col]);
             tr.append(td);
-			var div = $("<div></div>").attr("id", "foreground");
-            td.append(div);
+            td.append($("<div></div>").attr("id", "foreground"));
             allElements[row][col] = td;
         }
     }
@@ -60,9 +68,9 @@ function getUpperLeftCorner(currentLocation, mapWidth, mapHeight) {
 }
 
 function getNormalizedValue(value, max) {
-    if (value < 4) {return 0;}
-    else if (value > max - 6) {return max - 10;}
-    else {return value - 4;}
+    if (value < 4) return 0;
+    else if (value > max - 6) return max - 10;
+    else return value - 4;
 }
 
 window.onkeydown = function(e) {
@@ -76,8 +84,8 @@ window.onkeydown = function(e) {
 };
 
 function executeAction() {
-    healAllPokemonInParty();
-    //console.log(currentCell.location);
+    //healAllPokemonInParty();
+    console.log(currentCell.location);
 }
 
 function healAllPokemonInParty() {
@@ -85,7 +93,7 @@ function healAllPokemonInParty() {
     for (var i = 0; i < allPokemonInParty.length; i++) {
         var pokemon = allPokemonInParty[i];
         pokemon.stats.hp = pokemon.stats.maxHp;
-        if (inFight) {
+        if (activeBattle != null) {
             activeBattle.changeHealthBarColorAndSize($("#yourHealthBar"), pokemon.stats.hp / pokemon.stats.maxHp, true, function() {
                 $("#yourHp").empty().append(Util.pad(4, activeBattle.yourPokemon.stats.hp, " ") + "/" + Util.pad(4, activeBattle.yourPokemon.stats.maxHp, " "));
                 //console.log(pokemon.info.name + " has been healed");
@@ -95,29 +103,32 @@ function healAllPokemonInParty() {
 }
 
 function attemptMove(dir) {
-    if (!inFight) {
+    if (activeBattle == null && !moveSemaphore) {
+        moveSemaphore = true;
         if (Mobility.canMove(currentCell.location, dir)) {
-            currentCell.element.find("#foreground").attr("class", "");
             var result = Mobility.move(currentCell.location, dir);
+
             if (Maps.getCurrentMapName() !== result.mapName) {
+                Maps.setCurrentMap(result.mapName);
                 $("#mainBoard").fadeOut(500, function() {
-                    Maps.setCurrentMap(result.mapName);
-                    currentCell.location = result;
-                    reloadMap();
-                    currentCell.element.find("#foreground").attr("class", dir);
+                    //This will put the person back on the map, and remove the move semaphore
+                    reloadMap(result, dir);
                 }).fadeIn(500);
             } else {
-                currentCell.location = result;
-                reloadMap();
+                reloadMap(result, dir);
             }
+        } else {
+            //Still change the direction that the person is facing, even if they don't move
+            currentCell.element.find("#foreground").attr("class", dir);
+            moveSemaphore = false;
         }
-
-        //Still change the direction that the person is facing, even if they don't move
-        currentCell.element.find("#foreground").attr("class", dir);
     }
 }
 
 function foundPokemon(theirPokemon) {
+    var yourPokemon = Party.getFirstLivePokemonInParty();
+    activeBattle = new Battle(yourPokemon, theirPokemon);
+
     $("#mainBoard").hide(1000, function() {
         $("#theirName").empty().append(theirPokemon.info.name.toUpperCase());
         $("#theirLevel").empty().append("L:" + Util.pad(3, theirPokemon.level, " "));
@@ -130,8 +141,6 @@ function foundPokemon(theirPokemon) {
         $("#moveOptions").hide();
         $("#optionsText").empty();
 
-        var yourPokemon = Party.getFirstLivePokemonInParty();
-        activeBattle = new Battle(yourPokemon, theirPokemon);
         activeBattle.changeHealthBarColorAndSize($("#theirHealthBar"), theirPokemon.stats.hp / theirPokemon.stats.maxHp, false);
 
         $("#fightScene").show(1000, function() {
