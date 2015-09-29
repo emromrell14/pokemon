@@ -2,6 +2,7 @@ var currentCell = {};
 var allElements;
 var inFight;
 var activeBattle;
+var startingMap = "PalletTown";
 var BAR_WIDTH = 48;
 var EXP_BAR_WIDTH = 64;
 
@@ -22,12 +23,13 @@ function init() {
 }
 
 function setStartLocation() {
-    Maps.setCurrentMap("PalletTown");
+    Maps.setCurrentMap(startingMap);
     currentCell.location = Maps.getTestStartLocation(Maps.getCurrentMapName());
 }
 
 function reloadMap() {
     $("#mainBoard").empty().append(buildPortlet());
+    currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
 }
 
 function buildPortlet() {
@@ -102,13 +104,11 @@ function attemptMove(dir) {
                     Maps.setCurrentMap(result.mapName);
                     currentCell.location = result;
                     reloadMap();
-                    currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
                     currentCell.element.find("#foreground").attr("class", dir);
                 }).fadeIn(500);
             } else {
                 currentCell.location = result;
                 reloadMap();
-                currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
             }
         }
 
@@ -135,8 +135,8 @@ function foundPokemon(theirPokemon) {
         activeBattle.changeHealthBarColorAndSize($("#theirHealthBar"), theirPokemon.stats.hp / theirPokemon.stats.maxHp, false);
 
         $("#fightScene").show(1000, function() {
-            scrollText("optionsText", "Wild " + theirPokemon.info.name.toUpperCase() + " appeared!", function() {
-                scrollText("optionsText", "Go, " + yourPokemon.info.name.toUpperCase() + "!", function() {});
+            scrollText("Wild " + theirPokemon.info.name.toUpperCase() + " appeared!", function() {
+                scrollText("Go, " + yourPokemon.info.name.toUpperCase() + "!", function() {});
                 $("#yourImage").hide(500, function() {
                     var yourImage = $("#yourImage");
                     yourImage.attr("src", "images/pokemon/back/" + yourPokemon.info.nationalId + ".png");
@@ -194,7 +194,7 @@ function pokemonOptionClicked() {
 
 function packOptionClicked() {
     $("#startOptions").hide();
-    scrollText("optionsText", "You don't have anything in your pack!", function() {
+    scrollText("You don't have anything in your pack!", function() {
         $("#startOptions").show();
     });
 }
@@ -203,13 +203,12 @@ function runOptionClicked() {
     $("#startOptions").hide();
 
     activeBattle.escapeAttempts++;
-    var canEscape = activeBattle.canRunAway();
-    if (canEscape) {
-        scrollText("optionsText", "Got away safely!", function() {
+    if (activeBattle.canRunAway()) {
+        scrollText("Got away safely!", function() {
             exitFightScene();
         });
     } else {
-        scrollText("optionsText", activeBattle.yourPokemon.info.name.toUpperCase() + " tried to escape, but couldn't get away!", function() {
+        scrollText(activeBattle.yourPokemon.info.name.toUpperCase() + " tried to escape, but couldn't get away!", function() {
             activeBattle.theyAttackYou(activeBattle.theirPokemon.getRandomMove(), function() {
                 showStartOptions();
             });
@@ -232,10 +231,10 @@ function exitFightScene() {
     });
 }
 
-function scrollText(paragraphId, newText, callback) {
+function scrollText(newText, callback) {
     var contentArray = newText.split("");
     var current = 0;
-    var elem = $("#" + paragraphId).empty();
+    var elem = $("#optionsText").empty();
     var interval = setInterval(function() {
         if(current < contentArray.length) {
             elem.text(elem.text() + contentArray[current++]);

@@ -33,15 +33,15 @@ Battle.prototype.theyAttackYou = function(move, callback) {
 	var damage = move.getDamageByPokemon(battle.theirPokemon, battle.yourPokemon);
 	battle.yourPokemon.stats.hp -= (damage < battle.yourPokemon.stats.hp ? damage : battle.yourPokemon.stats.hp);
 
-	scrollText("optionsText", "Enemy " + this.theirPokemon.info.name.toUpperCase() + " used " + move.info.name, function() {
+	scrollText("Enemy " + this.theirPokemon.info.name.toUpperCase() + " used " + move.info.name, function() {
 		battle.changeHealthBarColorAndSize($("#yourHealthBar"), battle.yourPokemon.stats.hp / battle.yourPokemon.stats.maxHp, true, function() {
 			$("#yourHp").empty().append(Util.pad(4, battle.yourPokemon.stats.hp, " ") + "/" + Util.pad(4, battle.yourPokemon.stats.maxHp, " "));
 			if (battle.yourPokemon.stats.hp > 0) {
 				callback();
 			} else {
-				scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " fainted.", function() {
+				scrollText(battle.yourPokemon.info.name.toUpperCase() + " fainted.", function() {
 					if (Party.getFirstLivePokemonInParty() != null) {
-						scrollText("optionsText", "Please select another pokemon to send out.", function() {
+						scrollText("Please select another pokemon to send out.", function() {
 							alert(Party.getAllPokemonInParty());
 						});
 					} else {
@@ -60,17 +60,17 @@ Battle.prototype.youAttackThem = function(move, callback) {
 
 	battle.theirPokemon.stats.hp -= (damage < battle.theirPokemon.stats.hp ? damage : battle.theirPokemon.stats.hp);
 
-	scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " used " + move.info.name, function() {
+	scrollText(battle.yourPokemon.info.name.toUpperCase() + " used " + move.info.name, function() {
 		battle.changeHealthBarColorAndSize($("#theirHealthBar"), battle.theirPokemon.stats.hp / battle.theirPokemon.stats.maxHp, true, function() {
 			if (battle.theirPokemon.stats.hp > 0) {
 				callback();
 			} else {
 				$("#theirImage").hide();
-				scrollText("optionsText", "Enemy " + battle.theirPokemon.info.name.toUpperCase() + " fainted!", function() {
+				scrollText("Enemy " + battle.theirPokemon.info.name.toUpperCase() + " fainted!", function() {
 					var expGained = battle.theirPokemon.getExperienceToGive();
 					battle.yourPokemon.stats.totalExp += expGained;
 
-					scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " gained " + expGained + " exp points!", function() {
+					scrollText(battle.yourPokemon.info.name.toUpperCase() + " gained " + expGained + " exp points!", function() {
 						var newPercentage = battle.yourPokemon.getExpPercentage();
 						if (newPercentage >= 1) {
 							battle.growLevel(function() {
@@ -215,7 +215,7 @@ Battle.prototype.growLevel = function(callback) {
 		//Change the level
 		$("#yourLevel").empty().append("L:" + Util.pad(3, (battle.yourPokemon.level), " "));
 
-		scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " grew to level " + battle.yourPokemon.level + "!", function() {
+		scrollText(battle.yourPokemon.info.name.toUpperCase() + " grew to level " + battle.yourPokemon.level + "!", function() {
 			battle.checkForEvolution(function() {
 				battle.checkForNewMove(function() {
 					yourExpBar.animate({width: (battle.yourPokemon.getExpPercentage() * EXP_BAR_WIDTH)}, 500, function() {
@@ -233,10 +233,10 @@ Battle.prototype.checkForEvolution = function(callback) {
 	//Check for evolution
 	var evolution = battle.yourPokemon.getEvolutionByLevel(battle.yourPokemon.level);
 	if (evolution != null) {
-		scrollText("optionsText", "Wait! " + battle.yourPokemon.info.name.toUpperCase() + " is evolving!", function() {
+		scrollText("Wait! " + battle.yourPokemon.info.name.toUpperCase() + " is evolving!", function() {
 			$("#yourImage").attr("src", "images/pokemon/back/" + evolution.info.nationalId + ".png");
 			$("#yourName").empty().append(evolution.info.name.toUpperCase());
-			scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " evolved into " + evolution.info.name.toUpperCase(), function() {
+			scrollText(battle.yourPokemon.info.name.toUpperCase() + " evolved into " + evolution.info.name.toUpperCase(), function() {
 				battle.yourPokemon.info = evolution.info;
 				battle.yourPokemon.refreshStats();
 				callback();
@@ -260,24 +260,24 @@ Battle.prototype.checkForNewMove = function(callback) {
 			var move = new Move(resource, resource.pp, resource.pp);
 			if (battle.yourPokemon.moves.length < MAX_MOVES) {
 				battle.yourPokemon.moves.push(move);
-				scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " learned " + move.info.name, function() {
+				scrollText(battle.yourPokemon.info.name.toUpperCase() + " learned " + move.info.name, function() {
 					callback();
 				});
 			} else {
-				scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " is trying to learn " + move.info.name + ", but " + battle.yourPokemon.info.name.toUpperCase() + " already knows " + MAX_MOVES + " moves...", function() {
-					scrollText("optionsText", "Would you like to overwrite a move to learn " + move.info.name + "?", function() {
+				scrollText(battle.yourPokemon.info.name.toUpperCase() + " is trying to learn " + move.info.name + ", but " + battle.yourPokemon.info.name.toUpperCase() + " already knows " + MAX_MOVES + " moves...", function() {
+					scrollText("Would you like to overwrite a move to learn " + move.info.name + "?", function() {
 						$("#optionsText").empty();
 						showYesNoOptions();
 						$("#yesOption").click(function() {
 							$("#startOptions").hide();
-							scrollText("optionsText", "Which move would you like to delete?", function() {
+							scrollText("Which move would you like to delete?", function() {
 								$("#optionsText").empty();
 								showMoveOptions(function() {
 									var oldMoveName = battle.yourPokemon.moves[this.value].info.name;
 									battle.replaceMove(this.value, move);
 									delay(1000, function() {
 										$("#moveOptions").hide();
-										scrollText("optionsText", battle.yourPokemon.info.name + " forgot " + oldMoveName + " and learned " + move.info.name, function() {
+										scrollText(battle.yourPokemon.info.name + " forgot " + oldMoveName + " and learned " + move.info.name, function() {
 											callback();
 										});
 									});
@@ -286,7 +286,7 @@ Battle.prototype.checkForNewMove = function(callback) {
 						});
 						$("#noOption").click(function() {
 							$("#startOptions").hide();
-							scrollText("optionsText", battle.yourPokemon.info.name.toUpperCase() + " did not learn " + move.info.name, function() {
+							scrollText(battle.yourPokemon.info.name.toUpperCase() + " did not learn " + move.info.name, function() {
 								callback();
 							});
 						});
