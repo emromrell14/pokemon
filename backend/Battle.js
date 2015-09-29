@@ -8,14 +8,6 @@ var Battle = function(yourPokemon, theirPokemon) {
 	this.escapeAttempts = 0;
 };
 
-Battle.prototype.setYourPokemon = function(pokemon) {
-	this.yourPokemon = pokemon;
-};
-
-Battle.prototype.setTheirPokemon = function(pokemon) {
-	this.theirPokemon = pokemon;
-};
-
 Battle.prototype.startTurn = function(yourMove) {
 	var battle = this;
 	var theirMove = battle.theirPokemon.getRandomMove();
@@ -144,7 +136,7 @@ Battle.prototype.changeHealthBarColorAndSize = function(image, newPercentage, an
 				//They are starting in the red zone
 				if (newPercentage >= YELLOW_BAR_END) {
 					//They are going into the yellow zone
-					this.changeHealthBarToYelloLimit(image, newPercentage, function() {
+					this.changeHealthBarToYellowLimit(image, newPercentage, function() {
 						if (newPercentage >= GREEN_BAR_END) {
 							//They are going into the green zone
 							battle.changeHealthBarToGreenLimit(image, newPercentage, function() {
@@ -191,7 +183,6 @@ Battle.prototype.changeHealthBarColorAndSize = function(image, newPercentage, an
 };
 
 Battle.prototype.changeHealthBarToGreenLimit = function(image, newPercentage, callback) {
-	var battle = this;
 	image.animate({width: (GREEN_BAR_END * BAR_WIDTH)}, function() {
 		image.attr("src", "images/yellowHealthBar.png");
 		callback();
@@ -199,7 +190,6 @@ Battle.prototype.changeHealthBarToGreenLimit = function(image, newPercentage, ca
 };
 
 Battle.prototype.changeHealthBarToYellowLimit = function(image, newPercentage, callback) {
-	var battle = this;
 	image.animate({width: (YELLOW_BAR_END * BAR_WIDTH)}, function() {
 		image.attr("src", "images/redHealthBar.png");
 		callback();

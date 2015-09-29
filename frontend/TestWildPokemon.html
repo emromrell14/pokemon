@@ -4,7 +4,7 @@
             window.onload = function() {
                 var fullList = $("#list");
 
-                var allMapNames = Object.keys(pokemonEncounters);
+                var allMapNames = Object.keys(maps);
                 for (var i = 0; i < allMapNames.length; i++) {
                     var mapName = allMapNames[i];
                     var header = $("<li></li>").append(mapName);
@@ -12,8 +12,8 @@
 
                     var subList = $("<ul></ul>");
                     var totalPercentage = 0;
-                    for (var j = 0; j < pokemonEncounters[mapName].length; j++) {
-                        var encounter = pokemonEncounters[mapName][j];
+                    for (var j = 0; j < maps[mapName].encounters.length; j++) {
+                        var encounter = maps[mapName].encounters[j];
                         totalPercentage += Math.round(encounter.encounterRate * 100);
                         var pokemonName = PokemonResource.getByResourceUri("/api/v1/pokemon/" + encounter.pokemonId + "/").name;
                         subList.append($("<li></li>").append(pokemonName));

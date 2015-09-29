@@ -15,10 +15,10 @@
 		<h1>Map Creator</h1>
 		<div class="section">
 			<p>Please choose the number of rows and columns you would like</p>
-			<p>Rows: <input id="tbRows" type="number" value="10" />
-			Columns: <input id="tbCols" type="number" value="10" />
+			<p><label for="tbRows">Rows: </label><input id="tbRows" type="number" value="10" />
+			<label for="tbCols">Columns: </label><input id="tbCols" type="number" value="10" />
 			<button id="btnResizeMap">Resize Map</button></p>
-			<p>Or load a current map: <select id="mapSelector"></select><button id="btnLoadMap" onclick="loadMap()">Load Map</button></p>
+			<p><label for="mapSelector">Or load a current map: </label><select id="mapSelector"></select><button id="btnLoadMap" onclick="loadMap()">Load Map</button></p>
 		</div>
 		<div class="section">
 			<button onclick="sectionClicked('ground')">Ground</button>

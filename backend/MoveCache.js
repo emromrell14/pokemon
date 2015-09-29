@@ -7505,4 +7505,4 @@ var moveCache = {
 		"pp": 0,
 		"resource_uri": "/api/v1/move/625/"
 	}
-}
+};

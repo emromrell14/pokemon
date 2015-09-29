@@ -74,8 +74,8 @@ window.onkeydown = function(e) {
 };
 
 function executeAction() {
-    //healAllPokemonInParty();
-    console.log(currentCell.location);
+    healAllPokemonInParty();
+    //console.log(currentCell.location);
 }
 
 function healAllPokemonInParty() {
