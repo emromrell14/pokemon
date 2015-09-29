@@ -87,6 +87,8 @@ function clickableGrid(rows, cols, map) {
 					cell.attr("title", leftLink.mapName + " (" + leftLink.row + ", " + leftLink.col + ")").append($("<div></div>").attr("class", "arrowLeft"));
 				} else if (rightLink) {
 					cell.attr("title", rightLink.mapName + " (" + rightLink.row + ", " + rightLink.col + ")").append($("<div></div>").attr("class", "arrowRight"));
+				} else {
+					cell.attr("title", "(" + row + ", " + col + ")");
 				}
 
 			}

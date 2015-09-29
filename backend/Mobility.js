@@ -13,6 +13,11 @@ Mobility.canWalk = function(tileId) {
 };
 
 Mobility.canMove = function(location, direction) {
+	var linkLocation = Maps.getLinkingLocation(direction, location);
+	if (linkLocation != null) {
+		return true;
+	}
+
 	var mapData = Maps.getCurrentMap();
 	var nextLoc;
 	switch (direction) {
