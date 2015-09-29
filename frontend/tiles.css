@@ -45,13 +45,13 @@
 #buildingGym30 {background-image: url("images/buildingGym30.png");}
 #buildingGym31 {background-image: url("images/buildingGym31.png");}
 #buildingGym35 {background-image: url("images/buildingGym35.png");}
-#cylinderBarrier {background-image: url("images/cylinderBarrier.png");}
 #cliffDownLeft {background-image: url("images/cliffDownLeft.png");}
 #cliffDown {background-image: url("images/cliffDown.png");}
 #cliffDownRight {background-image: url("images/cliffDownRight.png");}
 #cliffLeft {background-image: url("images/cliffLeft.png");}
 #cliffPassage {background-image: url("images/cliffPassage.png");}
 #cliffRight {background-image: url("images/cliffRight.png");}
+#cylinderBarrier {background-image: url("images/cylinderBarrier.png");}
 #door {background-image: url("images/door.png");}
 #fence {background-image: url("images/fence.png");}
 #grass {background-image: url("images/grass.png");}
@@ -64,6 +64,7 @@
 #mountainBottomLeft {background-image: url("images/mountainBottomLeft.png");}
 #mountainBottomRight {background-image: url("images/mountainBottomRight.png");}
 #mountainCenter {background-image: url("images/mountainCenter.png");}
+#mountainEntrance {background-image: url("images/mountainEntrance.png");}
 #mountainInnerBottomRight {background-image: url("images/mountainInnerBottomRight.png")}
 #mountainLeft {background-image: url("images/mountainLeft.png");}
 #mountainRight {background-image: url("images/mountainRight.png");}
@@ -75,6 +76,7 @@
 #signWhite {background-image: url("images/signWhite.png");}
 #signYellow {background-image: url("images/signYellow.png");}
 #smallTree {background-image: url("images/smallTree.png");}
+#treeCuttable {background-image: url("images/treeCuttable.png");}
 #water {background-image: url("images/water.png");}
 #waterLeft {background-image: url("images/waterLeft.png");}
 #waterTop {background-image: url("images/waterTop.png");}

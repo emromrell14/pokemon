@@ -2,6 +2,10 @@
 	<head>
 		<script src="../frontend/MapCreator.js"></script>
 		<script src="../backend/LevelRange.js"></script>
+		<script src="../backend/Location.js"></script>
+		<script src="../backend/Map.js"></script>
+		<script src="../backend/MapLink.js"></script>
+		<script src="../backend/WildPokemonRate.js"></script>
 		<script src="../backend/Maps.js"></script>
 		<script src="../jquery-1.11.3.js"></script>
 		<link rel="stylesheet" type="text/css" href="../frontend/MapCreator.css" />
@@ -53,6 +57,7 @@
 					<td><div id="mountainTopLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
 					<td><div id="mountainTopRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
 					<td><div id="mountainInnerBottomRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="mountainEntrance" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
 				</tr>
 				<tr id="buildingGreenShort" class="tileSection">
 					<td><div id="buildingGreenShort00" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
@@ -123,6 +128,7 @@
 					<td><div id="signWhite" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
 					<td><div id="signYellow" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
 					<td><div id="fence" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					<td><div id="treeCuttable" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
 				</tr>
 			</table>
 		</div>

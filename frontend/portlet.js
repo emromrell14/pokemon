@@ -54,10 +54,7 @@ function buildPortlet() {
 }
 
 function getUpperLeftCorner(currentLocation, mapWidth, mapHeight) {
-    return {
-        row: getNormalizedValue(currentLocation.row, mapHeight),
-        col: getNormalizedValue(currentLocation.col, mapWidth)
-    };
+    return new Location(currentLocation.mapName, getNormalizedValue(currentLocation.row, mapHeight), getNormalizedValue(currentLocation.col, mapWidth));
 }
 
 function getNormalizedValue(value, max) {
@@ -77,6 +74,11 @@ window.onkeydown = function(e) {
 };
 
 function executeAction() {
+    //healAllPokemonInParty();
+    console.log(currentCell.location);
+}
+
+function healAllPokemonInParty() {
     var allPokemonInParty = Party.getAllPokemonInParty();
     for (var i = 0; i < allPokemonInParty.length; i++) {
         var pokemon = allPokemonInParty[i];
@@ -84,7 +86,7 @@ function executeAction() {
         if (inFight) {
             activeBattle.changeHealthBarColorAndSize($("#yourHealthBar"), pokemon.stats.hp / pokemon.stats.maxHp, true, function() {
                 $("#yourHp").empty().append(Util.pad(4, activeBattle.yourPokemon.stats.hp, " ") + "/" + Util.pad(4, activeBattle.yourPokemon.stats.maxHp, " "));
-                console.log(pokemon.info.name + " has been healed");
+                //console.log(pokemon.info.name + " has been healed");
             });
         }
     }
@@ -98,13 +100,13 @@ function attemptMove(dir) {
             if (Maps.getCurrentMapName() !== result.mapName) {
                 $("#mainBoard").fadeOut(500, function() {
                     Maps.setCurrentMap(result.mapName);
-                    currentCell.location = result.location;
+                    currentCell.location = result;
                     reloadMap();
                     currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
                     currentCell.element.find("#foreground").attr("class", dir);
                 }).fadeIn(500);
             } else {
-                currentCell.location = result.location;
+                currentCell.location = result;
                 reloadMap();
                 currentCell.element = allElements[currentCell.location.row][currentCell.location.col];
             }
@@ -225,7 +227,7 @@ function moveSelected(button) {
 function exitFightScene() {
     $("#fightScene").hide(1000, function() {
         $("#mainBoard").show(1000, function() {
-            inFight = false;
+            activeBattle = null;
         });
     });
 }

@@ -104,7 +104,7 @@ function sectionClicked(id) {
 //noinspection JSUnusedGlobalSymbols
 function createMap() {
 	var map = "";
-	map += "[<br />";
+	map += "[";
 	for (var i = 0; i < allElements.length; i++) {
 		map += "[";
 		for (var j = 0; j < allElements[i].length; j++) {
@@ -115,9 +115,9 @@ function createMap() {
 		}
 		map += "]";
 		if (i != allElements.length - 1) {
-			map += ",<br />";
+			map += ",";
 		}
 	}
-	map += "<br />]";
+	map += "]";
 	$("#result").html(map);
 }
