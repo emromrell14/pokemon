@@ -36,6 +36,26 @@ div.colorBlock {
 	background-repeat: no-repeat;
 }
 
+div.arrowUp {
+	background-image: url("images/arrowUp.png");
+	min-height: 16px;
+}
+
+div.arrowLeft {
+	background-image: url("images/arrowLeft.png");
+	min-height: 16px;
+}
+
+div.arrowRight {
+	background-image: url("images/arrowRight.png");
+	min-height: 16px;
+}
+
+div.arrowDown {
+	background-image: url("images/arrowDown.png");
+	min-height: 16px;
+}
+
 div.clicked {
 	border: 2px solid black;
 }

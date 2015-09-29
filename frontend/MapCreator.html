@@ -8,17 +8,22 @@
 		<script src="../backend/WildPokemonRate.js"></script>
 		<script src="../backend/Maps.js"></script>
 		<script src="../jquery-1.11.3.js"></script>
-		<link rel="stylesheet" type="text/css" href="../frontend/MapCreator.css" />
-		<link rel="stylesheet" type="text/css" href="../frontend/tiles.css" />
+		<link rel="stylesheet" type="text/css" href="../frontend/MapCreator.css"/>
+		<link rel="stylesheet" type="text/css" href="../frontend/tiles.css"/>
 	</head>
 	<body>
 		<h1>Map Creator</h1>
+
 		<div class="section">
 			<p>Please choose the number of rows and columns you would like</p>
-			<p><label for="tbRows">Rows: </label><input id="tbRows" type="number" value="10" />
-			<label for="tbCols">Columns: </label><input id="tbCols" type="number" value="10" />
-			<button id="btnResizeMap">Resize Map</button></p>
-			<p><label for="mapSelector">Or load a current map: </label><select id="mapSelector"></select><button id="btnLoadMap" onclick="loadMap()">Load Map</button></p>
+
+			<p><label for="tbRows">Rows: </label><input id="tbRows" type="number" value="10"/>
+				<label for="tbCols">Columns: </label><input id="tbCols" type="number" value="10"/>
+				<button id="btnResizeMap">Resize Map</button>
+			</p>
+			<p><label for="mapSelector">Or load a current map: </label><select id="mapSelector"></select>
+				<button id="btnLoadMap" onclick="loadMap()">Load Map</button>
+			</p>
 		</div>
 		<div class="section">
 			<button onclick="sectionClicked('ground')">Ground</button>
@@ -31,112 +36,134 @@
 			<button onclick="sectionClicked('misc')">Misc</button>
 		</div>
 		<div class="section">
-			<table class="colorTable">
-				<tr id="ground" class="tileSection">
-					<td><div id="groundBrick" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="groundBrown" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="groundGreen" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="groundYellow" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="groundWhite" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="water" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="waterLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="waterTopLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="waterTop" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="waterTopRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="waterRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="grass" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-				</tr>
-				<tr id="mountain" class="tileSection">
-					<td><div id="mountainBottom" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="mountainBottomLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="mountainBottomRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="mountainCenter" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="mountainLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="mountainRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="mountainTop" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="mountainTopLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="mountainTopRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="mountainInnerBottomRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="mountainEntrance" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-				</tr>
-				<tr id="buildingGreenShort" class="tileSection">
-					<td><div id="buildingGreenShort00" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenShort01" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenShort03" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenShort10" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenShort12" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenShort13" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-				</tr>
-				<tr id="buildingGreenTall" class="tileSection">
-					<td><div id="buildingGreenTall10" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenTall11" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenTall12" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenTall13" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenTall20" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenTall22" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGreenTall23" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-				</tr>
-				<tr id="buildingBrickTall" class="tileSection">
-					<td><div id="buildingBrickTall00" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall01" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall05" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall10" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall11" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall15" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall20" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall21" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall22" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall23" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall24" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall25" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall30" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall31" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall33" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingBrickTall35" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-				</tr>
-				<tr id="buildingGym" class="tileSection">
-					<td><div id="buildingGym00" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym01" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym05" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym10" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym11" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym15" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym20" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym21" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym22" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym23" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym24" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym25" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym30" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym31" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="buildingGym35" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-				</tr>
-				<tr id="cliff" class="tileSection">
-					<td><div id="cliffLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="cliffDownLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="cliffDown" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="cliffDownRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="cliffRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="cliffPassage" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-				</tr>
-				<tr id="misc" class="tileSection">
-					<td><div id="door" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="smallTree" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="cylinderBarrier" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="signPokeCenter" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="signPokeMart" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="signWhite" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="signYellow" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="fence" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-					<td><div id="treeCuttable" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
-				</tr>
-			</table>
+			<div id="ground" class="tileSection">
+				<div id="groundBrick" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="groundBrown" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="groundGreen" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="groundYellow" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="groundWhite" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="water" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="waterLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="waterTopLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="waterTop" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="waterTopRight" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="waterRight" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="grass" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+			</div>
+			<div id="mountain" class="tileSection">
+				<table>
+					<tr>
+						<td><div id="mountainTopLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainTop" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainTop" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainTop" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainTop" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainTopRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					</tr>
+					<tr>
+						<td><div id="mountainLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainCenter" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainCenter" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainCenter" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainCenter" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					</tr>
+					<tr>
+						<td><div id="mountainBottomLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainInnerBottomLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainCenter" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainCenter" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainInnerBottomRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainBottomRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+					</tr>
+					<tr>
+						<td><div class="colorBlock"></div></td>
+						<td><div id="mountainBottomLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainBottom" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainEntrance" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div id="mountainBottomRight" onclick="changeCurrentTile(this)" class="colorBlock"></div></td>
+						<td><div class="colorBlock"></div></td>
+					</tr>
+				</table>
+			</div>
+			<div id="buildingGreenShort" class="tileSection">
+				<div id="buildingGreenShort00" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenShort01" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenShort03" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenShort10" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenShort12" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenShort13" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+			</div>
+			<div id="buildingGreenTall" class="tileSection">
+				<div id="buildingGreenTall10" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenTall11" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenTall12" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenTall13" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenTall20" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenTall22" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGreenTall23" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+			</div>
+			<div id="buildingBrickTall" class="tileSection">
+				<div id="buildingBrickTall00" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall01" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall05" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall10" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall11" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall15" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall20" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall21" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall22" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall23" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall24" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall25" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall30" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall31" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall33" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingBrickTall35" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+			</div>
+			<div id="buildingGym" class="tileSection">
+				<div id="buildingGym00" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym01" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym05" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym10" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym11" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym15" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym20" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym21" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym22" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym23" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym24" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym25" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym30" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym31" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="buildingGym35" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+			</div>
+			<div id="cliff" class="tileSection">
+				<div id="cliffLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="cliffDownLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="cliffDown" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="cliffDownRight" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="cliffRight" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="cliffPassage" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+			</div>
+			<div id="misc" class="tileSection">
+				<div id="door" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="smallTree" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="cylinderBarrier" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="signPokeCenter" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="signPokeMart" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="signWhite" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="signYellow" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="fence" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="treeCuttable" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+			</div>
 		</div>
 
-		<div id="mainBoard"></div><br />
+		<div id="mainBoard"></div>
+		<br/>
 
 		<button id="btnCreateMap" onclick="createMap()">Create Map!</button>
 
-		<p id="result" />
+		<p id="result"></p>
 	</body>
 </html>

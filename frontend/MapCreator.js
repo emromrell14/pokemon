@@ -30,13 +30,10 @@ function initMapSelector() {
 
 //noinspection JSUnusedGlobalSymbols
 function loadMap() {
-	//Remove any map that is already there
-	var mainBoard = $("#mainBoard").empty();
-
 	//Select the map from the dropdown list and load it up
 	Maps.setCurrentMap($("#mapSelector").find(":selected").text());
 	var map = Maps.getCurrentMap();
-	mainBoard.append(clickableGrid(map.length, map[0].length, map));
+	$("#mainBoard").empty().append(clickableGrid(map.length, map[0].length, map));
 }
 
 function resizeMap(rows, cols) {
@@ -77,6 +74,21 @@ function clickableGrid(rows, cols, map) {
 
 			if (map) {
 				cell.attr("id", map[row][col]);
+				var upLink = Maps.getLinkingLocation("UP", new Location(Maps.getCurrentMapName(), row, col));
+				var downLink = Maps.getLinkingLocation("DOWN", new Location(Maps.getCurrentMapName(), row, col));
+				var leftLink = Maps.getLinkingLocation("LEFT", new Location(Maps.getCurrentMapName(), row, col));
+				var rightLink = Maps.getLinkingLocation("RIGHT", new Location(Maps.getCurrentMapName(), row, col));
+
+				if (upLink) {
+					cell.attr("title", upLink.mapName + " (" + upLink.row + ", " + upLink.col + ")").append($("<div></div>").attr("class", "arrowUp"));
+				} else if (downLink) {
+					cell.attr("title", downLink.mapName + " (" + downLink.row + ", " + downLink.col + ")").append($("<div></div>").attr("class", "arrowDown"));
+				} else if (leftLink) {
+					cell.attr("title", leftLink.mapName + " (" + leftLink.row + ", " + leftLink.col + ")").append($("<div></div>").attr("class", "arrowLeft"));
+				} else if (rightLink) {
+					cell.attr("title", rightLink.mapName + " (" + rightLink.row + ", " + rightLink.col + ")").append($("<div></div>").attr("class", "arrowRight"));
+				}
+
 			}
 			allElements[row][col] = cell;
 		}
