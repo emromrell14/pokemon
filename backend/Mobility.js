@@ -1,4 +1,4 @@
-var POKEMON_CHANCE = 100;
+var POKEMON_CHANCE = 15;
 
 var walkableTiles = ["groundGreen", "groundBrick", "groundBrown", "groundWhite", "groundYellow", "door", "grass", "cliffPassage",
 						"groundIndoorBlue", "groundIndoorBrown", "groundIndoorDoor", "groundIndoorGray", "groundIndoorPink", "groundIndoorRed"];
