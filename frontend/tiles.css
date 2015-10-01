@@ -1,3 +1,4 @@
+#blackBlock {background-image: url("images/blackBlock.png");}
 #buildingGreenShort00 {background-image: url("images/buildingGreenShort00.png");}
 #buildingGreenShort01 {background-image: url("images/buildingGreenShort01.png");}
 #buildingGreenShort03 {background-image: url("images/buildingGreenShort03.png");}
@@ -58,6 +59,12 @@
 #groundBrick {background-image: url("images/groundBrick.png");}
 #groundBrown {background-image: url("images/groundBrown.png");}
 #groundGreen {background-image: url("images/groundGreen.png");}
+#groundIndoorBlue {background-image: url("images/groundIndoorBlue.png");}
+#groundIndoorBrown {background-image: url("images/groundIndoorBrown.png");}
+#groundIndoorDoor {background-image: url("images/groundIndoorDoor.png");}
+#groundIndoorGray {background-image: url("images/groundIndoorGray.png");}
+#groundIndoorPink {background-image: url("images/groundIndoorPink.png");}
+#groundIndoorRed {background-image: url("images/groundIndoorRed.png");}
 #groundWhite {background-image: url("images/groundWhite.png");}
 #groundYellow {background-image: url("images/groundYellow.png");}
 #mountainBottom {background-image: url("images/mountainBottom.png");}
@@ -77,6 +84,10 @@
 #signWhite {background-image: url("images/signWhite.png");}
 #signYellow {background-image: url("images/signYellow.png");}
 #smallTree {background-image: url("images/smallTree.png");}
+#stairsDownFront {background-image: url("images/stairsDownFront.png");}
+#stairsDownRight {background-image: url("images/stairsDownRight.png");}
+#stairsUpFront {background-image: url("images/stairsUpFront.png");}
+#stairsUpRight {background-image: url("images/stairsUpRight.png");}
 #treeBig00 {background-image: url("images/treeBig00.png");}
 #treeBig01 {background-image: url("images/treeBig01.png");}
 #treeBig10 {background-image: url("images/treeBig10.png");}

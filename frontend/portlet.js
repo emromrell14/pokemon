@@ -2,7 +2,7 @@ var currentCell = {};
 var allElements;
 var moveSemaphore;
 var activeBattle;
-var startingMap = "ViridianForest";
+var startingMap = "PalletTown";
 var BAR_WIDTH = 48;
 var EXP_BAR_WIDTH = 64;
 

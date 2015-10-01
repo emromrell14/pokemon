@@ -17,8 +17,8 @@
 		<div class="section">
 			<p>Please choose the number of rows and columns you would like</p>
 
-			<p><label for="tbRows">Rows: </label><input id="tbRows" type="number" value="10"/>
-				<label for="tbCols">Columns: </label><input id="tbCols" type="number" value="10"/>
+			<p><label for="tbRows">Rows: </label><input id="tbRows" type="number" value="10" min="10" />
+				<label for="tbCols">Columns: </label><input id="tbCols" type="number" value="10" min="10" />
 				<button id="btnResizeMap">Resize Map</button>
 			</p>
 			<p><label for="mapSelector">Or load a current map: </label><select id="mapSelector"></select>
@@ -32,6 +32,7 @@
 			<button onclick="sectionClicked('buildingGreenTall')">Tall Green Building</button>
 			<button onclick="sectionClicked('buildingBrickTall')">Tall Brick Building</button>
 			<button onclick="sectionClicked('buildingGym')">Gym</button>
+			<button onclick="sectionClicked('buildingIndoor')">Indoor</button>
 			<button onclick="sectionClicked('cliff')">Cliff</button>
 			<button onclick="sectionClicked('misc')">Misc</button>
 		</div>
@@ -138,6 +139,19 @@
 				<div id="buildingGym30" onclick="changeCurrentTile(this)" class="colorBlock"></div>
 				<div id="buildingGym31" onclick="changeCurrentTile(this)" class="colorBlock"></div>
 				<div id="buildingGym35" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+			</div>
+			<div id="buildingIndoor" class="tileSection">
+				<div id="blackBlock" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="groundIndoorBlue" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="groundIndoorBrown" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="groundIndoorDoor" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="groundIndoorGray" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="groundIndoorPink" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="groundIndoorRed" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="stairsDownFront" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="stairsDownRight" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="stairsUpFront" onclick="changeCurrentTile(this)" class="colorBlock"></div>
+				<div id="stairsUpRight" onclick="changeCurrentTile(this)" class="colorBlock"></div>
 			</div>
 			<div id="cliff" class="tileSection">
 				<div id="cliffLeft" onclick="changeCurrentTile(this)" class="colorBlock"></div>

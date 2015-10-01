@@ -1,6 +1,7 @@
 var POKEMON_CHANCE = 100;
 
-var walkableTiles = ["groundGreen", "groundBrick", "groundBrown", "groundWhite", "groundYellow", "door", "grass", "cliffPassage"];
+var walkableTiles = ["groundGreen", "groundBrick", "groundBrown", "groundWhite", "groundYellow", "door", "grass", "cliffPassage",
+						"groundIndoorBlue", "groundIndoorBrown", "groundIndoorDoor", "groundIndoorGray", "groundIndoorPink", "groundIndoorRed"];
 
 var leftJumpTile = "cliffLeft";
 var rightJumpTile = "cliffRight";
@@ -22,7 +23,7 @@ Mobility.canMove = function(location, direction) {
 	var nextLoc;
 	switch (direction) {
 		case "LEFT":
-			if (location.col == 0) return true;
+			if (location.col == 0) return false;
 			if (location.col < 0) return false;
 
 			nextLoc = mapData[location.row][location.col - 1];
@@ -31,7 +32,7 @@ Mobility.canMove = function(location, direction) {
 			}
 			break;
 		case "RIGHT":
-			if (location.col == mapData[0].length - 1) return true;
+			if (location.col == mapData[0].length - 1) return false;
 			if (location.col > mapData[0].length - 1) return false;
 
 			nextLoc = mapData[location.row][location.col + 1];
@@ -40,13 +41,13 @@ Mobility.canMove = function(location, direction) {
 			}
 			break;
 		case "UP":
-			if (location.row == 0) return true;
+			if (location.row == 0) return false;
 			if (location.row < 0) return false;
 
 			nextLoc = mapData[location.row - 1][location.col];
 			break;
 		case "DOWN":
-			if (location.row == mapData.length - 1) return true;
+			if (location.row == mapData.length - 1) return false;
 			if (location.row > mapData.length - 1) return false;
 
 			nextLoc = mapData[location.row + 1][location.col];
